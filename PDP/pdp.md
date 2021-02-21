@@ -4,6 +4,8 @@
 
 I am fascinated by the PDP range on minicomputers, thanks to the [Seattle Living Computer Museum](https://livingcomputers.org) (now closed down) and the PiDP kits ([PiDP-11](https://obsolescence.wixsite.com/obsolescence/pidp-11) and [PiDP-8](https://obsolescence.wixsite.com/obsolescence/pidp-8)) from Oscar Vermeulen.
 
+If you prefer your retro computers in literary form, you should read [The Soul of a New Machine](https://www.amazon.com/The-Soul-of-New-Machine-audiobook/dp/B01FCTJCR0) which captures the era in an engrossing read.
+
 ![](pdp.jpg)
 
 I like reading about the PDP era, and playing with the two systems. The assembly langauge used by both (which can be entered using the switches, but that's crazy, use an assembler!) is clearly the grandparent of 680x0 and Intel languages. The operating systems they used clearly lead to CP/M, MS-DOS and UNIX.
@@ -15,7 +17,9 @@ I enjoy collecting period books, paper-tape, punched-cards and even a DEC "flip-
 ![](pdp8logo.png)
 
 
-I love the vintage PDP programming reference cards, and I found a PDP-11 one on eBay. I also have a [PDP-8](http://homepage.divms.uiowa.edu/~jones/pdp8/index.html) booklet, but not the PDP-8i card - I've only seen scans of that (it would be older than me I guess). I recreated the PDP-8i card in Indesign, and hope to get some printed. Here are the files:
+I love the vintage PDP programming reference cards, and I found a PDP-11 card on eBay. I also have a [PDP-8](http://homepage.divms.uiowa.edu/~jones/pdp8/index.html) booklet, but not the PDP-8i card - I've only seen scans of that (it would be older than me I guess). I have recreated the PDP-8i card in Indesign, and hope to get some printed - I'll post here if that worked and how to get one. 
+
+Here are some related files:
 
 * [My recreation of a PDP-8i card in PDF](PDP8.pdf)
 * [My recreation of a PDP-8i card in Indesign format](PDP8.indd)
@@ -23,4 +27,4 @@ I love the vintage PDP programming reference cards, and I found a PDP-11 one on 
 * [PDP-8 Pocket Reference card original](pdp8_programmingcard_1974.pdf)
 * [Text of original PDP-8 card](http://homepage.divms.uiowa.edu/~jones/pdp8/refcard/74.html)
 
-* [PDP-11 Pocket Reference card original](pdp11_programmingcard_1975)
+* [PDP-11 Pocket Reference card original](pdp11_programmingcard_1975.pdf)
