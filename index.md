@@ -58,6 +58,8 @@ A list of some of my favourite kits you might be interested in building, if you'
 * [Retroshields](https://www.tindie.com/stores/8bitforce/) - Host real old CPUs on an Arduino
 * [Core memory shield](https://www.tindie.com/products/kilpelaj/core-memory-shield-for-arduino/) - Add 32 bits (bits!) of magnetic core memory (!) to your Arduino
 * [Tindie](https://www.tindie.com/browse/vintagecomputing/) - Retrocomputing projects of all kinds
+* [Ben Eater's Breadboard computers](eater.net) - Scared of soldering? Love wires? Build a computer.
+
 
 ## Other links
 
