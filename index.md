@@ -1,37 +1,35 @@
-## Welcome to GitHub Pages
+## Retro Stuff
 
-You can use the [editor on GitHub](https://github.com/GrantMeStrength/retro/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+My collection of pandemic-started retrocomputing projects.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![](images/hello.jpg)
 
-### Markdown
+## Other repos
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+* [RetroComputer Instruction Manual](https://github.com/GrantMeStrength/RetroComputerInstructionManual) - Altair and IMSAI reference
+* [KIM-1](https://github.com/GrantMeStrength/KIM1) - Collection of code and hardware related to KIM-1 and modern clones
+* [fModem](https://github.com/GrantMeStrength/fMODEM) - Software for a fake retro modem that can connect to WiFi
+* [FizzTerm](https://github.com/GrantMeStrength/FizzTerm) - Arduino system to catch and store data from a serial terminal
+* [FT1](https://github.com/GrantMeStrength/FT1) - Hardware plans for a retro styled terminal
+* [Core8080](https://github.com/GrantMeStrength/core8080) - iOS app to assemble Intel 8080 mnemonics 
+* [FORTH](https://github.com/GrantMeStrength/Forth) Forth projects related to Juptier Ace / Minstrel 4th
+* [Electronics](https://github.com/GrantMeStrength/Electronics) - Some PCB layouts
+* [TRS-80 GoTek](https://github.com/GrantMeStrength/TRS80gotek) - Configuring a GoTek floppy emulator for the TRS-80
+* [External Terminal](https://github.com/GrantMeStrength/ExternalTerminal) - Connecting an external terminal to a Mac
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+### Currently private
 
-- Bulleted
-- List
+* [Virtual K](https://github.com/GrantMeStrength/VirtualKim)
+* [Virtual KB](https://github.com/GrantMeStrength/VirtualKenbak)
 
-1. Numbered
-2. List
+## In this repo (or soon to be)
 
-**Bold** and _Italic_ and `Code` text
+* Zog - Experiments with a Z80-based collection of parts called Zog
+* RC2014 - Experiments with some RC2014 kits
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Other links
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/GrantMeStrength/retro/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+* [Instagram](https://www.instagram.com/ourpocketuniverse/)
+* [Twitter](https://twitter.com/johnkennedymsft)
