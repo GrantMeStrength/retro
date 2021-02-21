@@ -31,6 +31,33 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 * [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
 * [RC2014](rc2014/rc2014.md) - Experiments with some RC2014 kits (empty for now)
 
+## Retrocomputing Kits
+
+A list of some of my favourite kits you might be interested in building, if you're obsessed like I am.
+
+*Note: The combination of the global COVID19 pandemic and Brexit means that some of these kids are currently not available.*
+
+* [Alair-Duino](https://adwaterandstir.com/altair/) - Arduino based Altair8800 in case
+* [IMSAI8080esp](https://thehighnibble.com/imsai8080/) - Realistic IMSAI8080 kit
+* [Altair Clone](https://altairclone.com) - Replica of the Altair 8800 computer.
+* [PiDP-8](https://obsolescence.wixsite.com/obsolescence/pidp-8) - Raspberry Pi based PDP-8i minicomputer
+* [PiDP-11](https://obsolescence.wixsite.com/obsolescence/pidp-11) - Raspberry Pi based PDP-11/70 minicomputer
+* [Kim Uno](https://obsolescence.wixsite.com/obsolescence/kim-uno-summary-c1uuh) - Arduino based KIM-1 clone
+* [PAL-1](https://www.tindie.com/products/tkoak/pal-1-a-mos-6502-powered-computer-kit/) - 6502 based KIM-1 clone
+* [KIM Clone](https://www.corshamtech.com/product/kim-clone/) - KIM-1 clone
+* [Minstrel 3](https://www.thefuturewas8bit.com/minstrel3.html) - A ZX81 kit. A ZX80 kit is also listed.
+* [RC2014](https://rc2014.co.uk) - Z80 based barebones 
+* [VT132](https://thehighnibble.com/vt132/) - Standalone terminal card
+* [Gigatron TTL computer](https://gigatron.io) - TTL based computer
+* [Minstrel4th](https://www.thefuturewas8bit.com/minstrel4th.html) - Recreation of the Jupiter Ace
+* [KENBAK-1](https://adwaterandstir.com/kenbak/) - Arduino based KENBAK-1, the first personal computer
+* [Mini PET](https://www.thefuturewas8bit.com/minipet-b.html) - A Commdore PET kit
+* [COSMAC Elf membership card](http://www.retrotechnology.com/memship/memship.html) - The RCA1802 based computer
+* [RC6502](https://github.com/tebl/RC6502-Apple-1-Replica) - Build a 6502 system that can run as an Apple 1
+* [DigiRule](https://www.tindie.com/products/bradsprojects/digirule-the-interactive-binary-ruler/) - computer AND measuring tool in one
+* [Retroshields](https://www.tindie.com/stores/8bitforce/) - Host real old CPUs on an Arduino
+* [Core memory shield](https://www.tindie.com/products/kilpelaj/core-memory-shield-for-arduino/) - Add 32 bits (bits!) of magnetic core memory (!) to your Arduino
+* [Tindie](https://www.tindie.com/browse/vintagecomputing/) - Retrocomputing projects of all kinds
 
 ## Other links
 
