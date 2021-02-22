@@ -1,6 +1,6 @@
-## Retro Stuff
+## Retro Man
 
-My collection of pandemic-started retrocomputing projects. Some of this information is purely for my benefit as my memory isn't great and is tested by hopping between 8 bit CPUs and other retro systems, so don't expect a lot of exposition here. I hope there are at least some useful links and ideas.
+My collection of pandemic-started retrocomputing projects and other stuff. Some of this information is purely for my benefit as my memory isn't great and is tested by hopping between multiple 8 bit CPUs and other retro systems, so don't expect a lot of exposition here. I hope there are at least some useful links and ideas.
 
 I'm always interested in new (old) #retrocomputer projects. You'll find me talking about the latest shiny thing to catch my attention on Twitter or Instagram.
 
