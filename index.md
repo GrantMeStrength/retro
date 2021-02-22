@@ -31,6 +31,14 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 * [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
 * [RC2014](rc2014/rc2014.md) - Experiments with some RC2014 kits (empty for now)
 
+## Little bit related
+
+* [PicoArm](https://github.com/GrantMeStrength/PicoArm/blob/main/index.md) - Learning ARM. Learning about the Raspberry Pi Pico.
+* [Apple 1 Software](https://github.com/GrantMeStrength/Apple1-Software) - An archive of Apple 1 software
+* [MazeGame](https://github.com/GrantMeStrength/MazeGame) - A retrogame for Windows 10 what I wrote.
+* [FrogGame](https://github.com/GrantMeStrength/FrogGame) - A 'frogger' game for iOS using SpriteKit what I wrote.
+* [Taxi](https://github.com/GrantMeStrength/taxi) - another maze chase game for iOS what I wrote.
+
 ## Retrocomputing Kits
 
 A list of some of my favourite kits you might be interested in building, if you're obsessed like I am.
