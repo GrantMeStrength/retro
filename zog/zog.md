@@ -14,18 +14,18 @@ Status: Blocked until I can get Z88dk working. I have a [S-100 bus card](https:/
 
 ## Video
 
-I found a video card on eBay - the SSM VB1B. I've had luck with SSM cards, and this one was cheap, so...  I was getting ready to try it when someone spotted it was missing one of the voltage regulators. Oops! Luckily 7805 regulars is something I've got in my parts drawer, so I swapped out the existing regulator and replaced the missing one. I removed the Character Generator ROM (hard to find a replacement maybe?) and tested the voltages - all good. So I dropped int into the Altair 8800c clone and after some fiddling with various video leads and monitors.. it works! Mostly. Could do with some adjusting or maybe replacing some tired chips, but hey - not bad! 
+I found a video card on eBay - the [SSM VB1B](https://wiki.theretrowagon.com/wiki/SSM_VB1B). I've had luck with SSM cards, and this one was cheap, so... Even came with the [manual](http://www.s100computers.com/Hardware%20Manuals/SSM/SSM%20VDB-1.pdf). I see one on eBay today for ten times the price I paid, so I guess I lucked out. I was getting ready to try it when someone spotted it was missing one of the voltage regulators. Oops! Luckily 7805 regulators is something I've got in my parts drawer, so I swapped out the existing regulator and replaced the missing one. I removed the Character Generator ROM and some other odd look chips (hard to find a replacement maybe?) and tested the voltages - all good. So I put it all back together, added a video cable and dropped it into the Altair 8800c clone and after some fiddling with various video leads and monitors.. it works! Mostly. It ould do with some adjusting or maybe replacing some tired chips, but hey - not bad! 
+
+The (super cheap) composite to HDMI adaptor I have produces rolling junk on an LCD display, but the Apple IIc mono monitor worked.. and so did the LCD monitor when I connected the composite lead directly. Need to check the video signal with the 'scope and see if there are obvious issues.
 
 ![](1.jpeg)
 
 ![](3.jpeg)
 
-To display something, the card just needs something sent to $EC00 to $EFFF. The front panel wasn't doing it (the front panel is picky about what it can write to) but a small Z80 test program toggled in made the text flicker away. Success!
+To display something, the card just needs something poked into memory between $EC00 to $EFFF. The front panel wasn't doing it (the front panel is picky about what it can write to, and this card has some special magic to allow both the S-100 bus and the video generator to see the on-board RAM) but a small Z80 test program that I toggled in made the text update away. Success! The character set is actually considerably better than the ZX81 from 4 years later.. Lowercase, symbols and graphics. Not bad.
 
 ![](2.jpeg)
 
-
-
-I can't move this into Zog yet, as the Zog only has 5 volts and this card requires a few milliamps at 12 and -3 volts. However, DigiKey is rushing me a [small unit](https://www.digikey.com/en/products/detail/mornsun-america-llc/A0512S-1WR3/13168378) that can take +5 and provide +/- 12v which should be ideal. 
+I can't move this card into Zog yet, as the Zog only has a 5 volt supply and this card requires a few milliamps at 12 and -3 volts for that character ROM. However, DigiKey is mailing me a [small unit](https://www.digikey.com/en/products/detail/mornsun-america-llc/A0512S-1WR3/13168378) that can take +5 and provide +/- 12v which should be ideal. 
 
 ![](4.jpeg)
