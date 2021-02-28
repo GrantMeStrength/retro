@@ -11,3 +11,21 @@ The SSM card has two sockets for memory on it: in my case, the first holds a ROM
 I've recently been using the [EPROM-EMU](https://www.tindie.com/products/mygeekyhobby/eprom-emulator-diy-arduino/) to speed up development, and can send Z80 binary code to it without issue. However, I'm currently unable to get [z88dk](https://z88dk.org/site/) to compile C for it, and that's what I am hoping to use a development platform to write a simple OS.
 
 Status: Blocked until I can get Z88dk working. I have a [S-100 bus card](https://deramp.com/downloads/mfe_archive/010-S100%20Computers%20and%20Boards/01-Jade/10-Jade%20S100%20Boards/Jade%20Bus%20Probes/Jade%20S100%20Bus%20Probe%20card.pdf) to build which might help diagnose which is going on, but I suspect the non-RC2014 memory map of the SSM card is the issue and if I add 32Kb of RAM at 0xC000 it might work. Or there is some interupt stuff going on in which case who knows.
+
+## Video
+
+I found a video card on eBay - the SSM VB1B. I've had luck with SSM cards, and this one was cheap, so...  I was getting ready to try it when someone spotted it was missing one of the voltage regulators. Oops! Luckily 7805 regulars is something I've got in my parts drawer, so I swapped out the existing regulator and replaced the missing one. I removed the Character Generator ROM (hard to find a replacement maybe?) and tested the voltages - all good. So I dropped int into the Altair 8800c clone and after some fiddling with various video leads and monitors.. it works! Mostly. Could do with some adjusting or maybe replacing some tired chips, but hey - not bad! 
+
+![](1.jpeg)
+
+![](3.jpeg)
+
+To display something, the card just needs something sent to $EC00 to $EFFF. The front panel wasn't doing it (the front panel is picky about what it can write to) but a small Z80 test program toggled in made the text flicker away. Success!
+
+![](2.jpeg)
+
+
+
+I can't move this into Zog yet, as the Zog only has 5 volts and this card requires a few milliamps at 12 and -3 volts. However, DigiKey is rushing me a [small unit](https://www.digikey.com/en/products/detail/mornsun-america-llc/A0512S-1WR3/13168378) that can take +5 and provide +/- 12v which should be ideal. 
+
+![](4.jpeg)
