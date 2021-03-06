@@ -69,15 +69,15 @@ org 0
 
 	; start
 
-	; Must remember to create a stack!
-	ld sp, RAMTOP
-	di
+	
+	ld sp, RAMTOP				; Must remember to create a stack!
+	di							; Not sure this is an issue yet but anyway
 
 
 
 	; First fill RAM with 0 	; Mostly for neatness
 	ld hl,$2000
-	ld bc, $7f0					; Don't mess up the stack dude and accidentally clear it
+	ld bc, $7f0					; Don't mess up the stack dude and accidentally clear it 
 	ld a,0
 	call FILL
 
@@ -90,7 +90,7 @@ org 0
 	
 
 
-stop: jp stop
+stop: jp stop					; just wait here
 
 
 
@@ -146,13 +146,10 @@ dumpde:
 	ret
 	
 
-
-
-
 FILL:
-;; a = contents
-;; HL = start address of block
-;; BC = length of block in bytes
+; a = contents
+; HL = start address of block
+; BC = length of block in bytes
 ld e,l
 ld d,h
 inc de
@@ -188,13 +185,13 @@ PUTCHAR:
 	push hl
 	push de
 	ld a,c
-	ld hl, (cursor) 			; get current cursor
+	ld hl, (cursor) 			; get current cursor position
 	inc hl
 	ld (cursor),hl		
 	dec hl
 	cp 13						; CP 'a' with 13 to test for a CR?
 	jr nz, no_newline			; no, no CR
-	jp newline				; yes, do the CR stuff.
+	jp newline					; yes, do the CR stuff.
 no_newline:						
 	ld (hl), a					; write into display
 	ld a, h						; test for end of screen memory
@@ -220,13 +217,13 @@ newline:
 	ld (cursor), hl
 	jp no_end_of_screen
 
+
+
+CLS:
+
 	; CLS by filling ec00 to f000  with 0
-
-	CLS:
-
-	; fill RAM
 	ld hl,$ec00
-	ld bc, $400				;; Don't mess up the stack dude
+	ld bc, $400	
 	ld a,32
 	call FILL
 	ret
@@ -269,7 +266,7 @@ leave2: 	ret
 		
 
 RAM_CHECK:
-
+		; used when I wanted to check where the RAM was in the memory map!
 		ld hl, $ed00
 		ld de, $2000
 lp:
@@ -334,4 +331,4 @@ message2: db "Zog!",13
 
 ## What's next
 
-Well, I still would like to get C code compiled and running on it. And know that I see a video display, it seems that a keyboard for input isn't too much to ask.
+Well, I still would like to get C code compiled and running on it. And now that I see a video display, it seems that a keyboard for input isn't too much to ask.
