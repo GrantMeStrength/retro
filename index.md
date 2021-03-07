@@ -27,6 +27,7 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 
 ## In this repo
 
+* [Pico](pico/readme.md) - Some notes about developing on the Raspberry Pi Pico
 * [PDP Minicomputers](PDP/pdp.md) - Information related to the Digital Equipment Corp minicomputers
 * [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
 * [RC2014](rc2014/rc2014.md) - Experiments with some RC2014 kits (empty for now)
