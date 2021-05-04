@@ -8,7 +8,7 @@ I had planned to make my fortune by selling these games to Boldfield Limited Com
 
 The Jupiter Ace had a character-mapped screen, with a limited number of User Defined Graphics. This meant writing games with smooth animation was a challenge.
 
-At once point I investigated if I could fake a kind of higher resolution by displaying the User Defined Graphics on the screen and then writing into them on the fly - hoping to get a 256 by 192 resolution screen, at least in parts of the screen (there aren't enough UDG to cover the entire screen). Unfortunately writing to the UDG memory every frame quickly caused it to be become corrupt, so I had to give up that approach.
+At one point I investigated if I could fake a kind of higher resolution by displaying the User Defined Graphics on the screen and then writing into them on the fly - hoping to get a 256 by 192 resolution screen, at least in parts of the screen (there aren't enough UDG to cover the entire screen). Unfortunately writing to the UDG memory every frame quickly caused it to be become corrupt, so I had to give up that approach.
 
 The Ace was described as "fast", and it was in the sense that instead of a slow BASIC, as on the ZX81 or ZXSpectrum, it came with Forth in ROM. Forth is nothing if not fast, and was perfect for writing simple games. Under the (thin plastic) hood it was still a Z80 and a handful of chips, with a cassette interface for saving and loading programs to tape. Running machine code wasn't any faster than a Spectrum. 
 
