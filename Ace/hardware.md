@@ -16,4 +16,6 @@ The second place I tried was ABRA Electronics. Their website said they had them 
 
 Thankfully good old [JameCo](https://www.jameco.com) had them (why didn't I check there first? No idea.) so they arrived the other day.
 
-If you want to build your own without the original PCB, [here's the definitive guide](http://jupiter-ace.co.uk/hardware_diy_ace.html). As the Ace uses no custom chips at all, it should be "easy".
+If you want to build your own without the original PCB, [here's the definitive guide](http://jupiter-ace.co.uk/hardware_diy_ace.html). As the Ace uses no custom chips at all, it should be "easy". 
+
+If you want to build a new one from a kit, [ask this folks to start making the kit again](https://www.thefuturewas8bit.com/minstrel4th.html).
