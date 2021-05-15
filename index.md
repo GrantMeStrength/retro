@@ -32,6 +32,7 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 * [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
 * [RC2014](rc2014/rc2014.md) - Experiments with some RC2014 kits (empty for now)
 * [Jupiter Ace stuff](Ace/index.md) - Programs and hardware
+* [Projects](Projects/index.md) - Some notes to work-in-progress projects and experiments
 
 ## Little bit related
 
