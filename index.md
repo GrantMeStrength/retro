@@ -31,6 +31,7 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 * [PDP Minicomputers](PDP/pdp.md) - Information related to the Digital Equipment Corp minicomputers
 * [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
 * [RC2014](rc2014/rc2014.md) - Experiments with some RC2014 kits (empty for now)
+* [Jupiter Ace stuff](Ace/index.md) - Programs and hardware
 
 ## Little bit related
 
