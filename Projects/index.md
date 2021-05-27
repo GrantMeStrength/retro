@@ -29,7 +29,33 @@ The [SCAMP](https://www.tindie.com/products/johncatsoulis/scamp/) is a microcomp
 
 ### May 15, 2021
 
-I've a crazy idea to recreate a simple version of the ENIAC using Raspbery Pi PICO boards to model the individual components (accumulators mostly). I've gather five PICOs, and a breadboard system for mounting them, so when I've time to read the books I've collected properly I can make some progress. [Great intro video here](https://www.youtube.com/watch?v=c-5n5J4wOig).
+I've a crazy idea to recreate a simple version of the ENIAC using Raspbery Pi PICO boards (PINIAC) to model the individual components (accumulators, mostly). I've gathered five PICOs, and a breadboard system for mounting them, so when I've time to read the books I've collected properly I can make some progress. [Great intro video here](https://www.youtube.com/watch?v=c-5n5J4wOig).
+
+### May 26, 2021
+
+I have been tinkering, starting off my trying to connect two Pico devices over I2C. (The I2C system still uses the offensive and outdated naming scheme 'master' and 'slave'. I will use 'sequencer' and 'node' instead as it is more descriptive and less horrible. You will also see 'controller' and 'peripheral' being used.)
+
+In theory, I2C is the perfect way of connecting devices - it's a fast serial connection, supporting multiple devices on a simple two cable bus. My idea was to use one Pico as the controller, sending timing signals and program data. Subsequent Pico devices would hang onto the bus, listening for their name and acting when called. 
+
+Setting up a Pico to be a sequencer is simple, as in this MicroPython example:
+
+```
+from machine import Pin, I2C
+
+# Set up device
+i2c = I2C(0, scl=Pin(9), sda=Pin(8), freq=100000)
+i2c.scan()
+
+# Send data
+12c.writeto(0x42, b'123') # Send 123 to the node device called 0x42
+
+```
+
+However, it turns out that the Micropython implementation does not yet support setting up a device as a I2C node.
+
+Thankfully I found [this video](https://www.youtube.com/watch?v=Wh-SjhngILU), which includes sample code in C++ for setting up a Pico.
+
+Before I can try it, [I need to install the C++ toolchain on my Mac - see chapter nine](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf), and right at this moment I do not have the energy to face that particular task. Next time.
 
 ## PiTrex
 
