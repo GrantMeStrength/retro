@@ -47,6 +47,31 @@ This also included swapping out the IN commands used to read the keyboard with I
 I've noted some games don't seem to have sound. Sometimes this was due to the machine code sound routines doing weird low-level stuff that emulators can't do.
 At least in one case, it's due to the game driving an AY-8912 sound card - an expansion option that at least one person (me) had bought at the time.
 
+## Bugs
+
+So many bugs are coming to light now that I look at this software after ~40 years!
+
+### General
+
+Some games look at the IN port to detect keyboard presses. The reason for using IN is that it allows for multiple simultaneous keys to be detected - something that INKEY cannot do. Some emulators do not support this, and sometimes that means the game can't even start. FROGGER is one example where changing a single IN check to an INKEY check means the game starts.
+
+### Robohunt
+
+Before the player is chased, the game should make a sound to let you know you have a few seconds (depending on difficulty level) before the robots come after you. However, instead of writing 
+
+```
+10 254 OUT
+```
+
+to toggle the speaker, I wrote:
+
+```
+254 10 OUT
+```
+
+which does nothing. You can edit the word called O (that's an "oooh") to make this change, if your version of the game doesn't make sound. I will add this updated version to this archive. If you want to make the change yourself, just.. no, this is best left as a nice exercise for the reader - as a math book might say! It's worth pointing out that on some emulators the buzzing sound it makes is awful and you're better off without it (unless you're a fan of the Vectrex - a joke for those in the know.)
+
+Side note: The 'SAM' character in this and other games was based on my math teacher at secondary school, Dr. Sam Stevenson, who sported an excellent moustache and tolerated me playing with the school computers (BBC B Micros).
 
 ## Thanks
 

@@ -9,3 +9,8 @@ So for example, the process to play Frogger would be:
 255 239 OUT 0 0 BLOAD jad
 64680 call FROGGER
 G
+
+
+## Update
+
+ROBHUNT2 fixes a bug that stopped some sounds. It may or may not be better as a result :-)
