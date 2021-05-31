@@ -47,11 +47,11 @@ i2c = I2C(0, scl=Pin(9), sda=Pin(8), freq=100000)
 i2c.scan()
 
 # Send data
-12c.writeto(0x42, b'123') # Send 123 to the node device called 0x42
+i2c.writeto(0x42, b'123') # Send 123 to the node device called 0x42
 
 ```
 
-However, it turns out that the Micropython implementation does not yet support setting up a device as a I2C node.
+However, it turns out that the MicroPython implementation does not yet support setting up a device as a I2C node.
 
 Thankfully I found [this video](https://www.youtube.com/watch?v=Wh-SjhngILU), which includes sample code in C++ for setting up a Pico.
 
@@ -60,6 +60,145 @@ Before I can try it, [I need to install the C++ toolchain on my Mac - see chapte
 ## May 30, 2021
 
 The official Raspberry Pi instructions for getting the C/C++ toolchain working on the Mac are just awful. If I get it working I'll post it here, but seriously, they're confusing, wrong and awful.
+
+## May 31, 2021
+
+Deep inside the pico sdk is a file that explains how to use C++ on the Pico, so I've got some C++ running on the device:
+
+```
+/*
+
+ This is code for a Pico to set up as an i2c peripheral.
+ It will eventually act as an accumulator or other device,
+ sharing data with a controller node.
+
+ For now just receive a value and then return a counter.
+
+ Remember to update the CMakeLists.txt file:
+ target_link_libraries(PINIAC pico_stdlib hardware_i2c)
+
+*/
+
+
+#include <stdio.h>
+#include "pico/stdlib.h"
+#include "hardware/i2c.h"
+
+#define I2C_ADDR 0x3e			// The address of this Pico on the i2c bus
+#define IC2_1 8
+#define IC2_2 9
+
+
+   int main() {
+
+	// i2c setup
+    i2c_init(i2c0, 10000);
+    i2c_set_slave_mode(i2c0, true, I2C_ADDR);
+    gpio_set_function(IC2_1, GPIO_FUNC_I2C);
+    gpio_set_function(IC2_2, GPIO_FUNC_I2C);
+    gpio_pull_up(IC2_1);
+    gpio_pull_up(IC2_2);
+
+	// Data for i2c
+
+	uint8_t rxdata[4];
+    uint8_t txdata[2];
+
+	// Counter just to have something to return
+
+	uint8_t counter = 0;
+
+    // Set up LED for status
+
+	const uint LED_PIN = PICO_DEFAULT_LED_PIN;
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
+    uint8_t blink = 0;
+
+
+	// Do some power-up blinking
+
+	for (int i=0; i<13; i++)
+	{
+		gpio_put(LED_PIN, blink);
+		blink++;
+		if (blink>1) blink = 0;
+		sleep_ms(250);
+	}
+
+	// Main loop
+
+	while (true) {
+    	
+	 	// Receive data from controller
+     	// 3 bytes received - byte 0 is cmd (used as lower byte) byte 2 is higher - byte 3 is 0
+     	// Wait here until some data arrives
+		if (i2c_get_read_available(i2c0) < 3) continue;
+     	i2c_read_raw_blocking (i2c0, rxdata, 3);	
+		int input_value = rxdata[0]+(rxdata[1]<<8);
+
+		// Blink LED so we know something was received
+		if (blink>1) blink = 0;
+		gpio_put(LED_PIN, blink);
+		blink++;
+		
+   		}	
+   }
+```
+
+I tried getting MicroPython code running on the Pico to act as the controller, but it wasn't working well so I decided to use a Raspberry Pi 4 (for now) and here's the Python from Thonny that sends a byte to two Picos in turn (0x3d and 0x3e) both running the same C code above.
+
+```
+# Talk to i2c devices
+
+import smbus
+import time
+
+# I2C channel 1 is connected to the GPIO pins
+channel = 1
+
+#  pico
+address1 = 0x3d
+address2 = 0x3e
+
+
+data = 42
+msg = (data & 0xff0) >> 4
+msg = [msg, (msg & 0xf) << 4]
+
+# Initialize I2C (SMBus)
+bus = smbus.SMBus(channel)
+
+time.sleep(1)
+i = 1000
+
+while 1:
+
+    # Sending
+    
+    print("Sending 1..");
+    try:    
+        bus.write_i2c_block_data(address1, i&0xff, [i>>8])
+    except Exception as e:
+        print("Write error:" + str(e))
+        continue
+
+    print("Sent")
+    time.sleep(1)
+    
+    print("Sending 2..");
+    try:    
+        bus.write_i2c_block_data(address2, i&0xff, [i>>8])
+    except Exception as e:
+        print("Write error:" + str(e))
+        continue
+
+    print("Sent")
+    time.sleep(1)
+
+
+```
+
 
 ## PiTrex
 
