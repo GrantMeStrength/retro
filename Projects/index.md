@@ -57,6 +57,10 @@ Thankfully I found [this video](https://www.youtube.com/watch?v=Wh-SjhngILU), wh
 
 Before I can try it, [I need to install the C++ toolchain on my Mac - see chapter nine](https://datasheets.raspberrypi.org/pico/getting-started-with-pico.pdf), and right at this moment I do not have the energy to face that particular task. Next time.
 
+## May 30, 2021
+
+The official Raspberry Pi instructions for getting the C/C++ toolchain working on the Mac are just awful. If I get it working I'll post it here, but seriously, they're confusing, wrong and awful.
+
 ## PiTrex
 
 ### May 15, 2021

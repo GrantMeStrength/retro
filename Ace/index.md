@@ -73,6 +73,11 @@ which does nothing. You can edit the word called O (that's an "oooh") to make th
 
 Side note: The 'SAM' character in this and other games was based on my math teacher at secondary school, Dr. Sam Stevenson, who sported an excellent moustache and tolerated me playing with the school computers (BBC B Micros).
 
+## Sam and the Time Bombs
+
+For some reason, you can't move your character over a space that you've just walked over. This means that no matter how carefully you try, each level leads to stalemate pretty quickly. I believe I didn't actually finish this game, and was just too happy to have ported a piece of music to the third party soundcard (Thanks, Soapy!)
+
+
 ## Thanks
 
 Thanks to the [Jupiter Ace Archive Site](https://jupiter-ace.co.uk) for recovering, capturing and storing my software. Without them, they'd have been lost forever.

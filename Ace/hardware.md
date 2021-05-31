@@ -18,4 +18,16 @@ Thankfully good old [JameCo](https://www.jameco.com) had them (why didn't I chec
 
 If you want to build your own without the original PCB, [here's the definitive guide](http://jupiter-ace.co.uk/hardware_diy_ace.html). As the Ace uses no custom chips at all, it should be "easy". 
 
-If you want to build a new one from a kit, [ask this folks to start making the kit again](https://www.thefuturewas8bit.com/minstrel4th.html).
+If you want to build a new one from a kit, [ask these folks to start making the kit again](https://www.thefuturewas8bit.com/minstrel4th.html).
+
+## May 30, 2021
+
+My PCB arrived (thanks, Mum!) and I immediately got stuck into soldering the amassed collection of components. 
+
+The only I had forgotten was, ironically, the easiest to get - 1K resistors. Thankfully I had time on Saturday to visit Vetco.net before it shut down for the Memorial Day break and stock up on the 30-ish that the kid required.
+
+Finally I finished it, plugged it in and - garbage. Just random junk on the screen. And in fact, removing the Z80 or swapping in another Z80 didn't help. A check of the clock signal showed things were not great:
+
+![](../images/ace-clock.png)
+
+The trouble, as far as I can tell, is the transistor. The 2N2369 isn't easy to get hold of these days - but it's a very fast switching transistor - faster than any of the substitutes listed, and which I was using. So without a fast transistor I'm stuck until the one I found on Mouser arrives (hopefully next week).
