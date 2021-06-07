@@ -971,3 +971,20 @@ I've returned to the idea of writing my own Forth, and I've started gathering re
 * [larsbrinkhoff / nybbleForth](https://github.com/larsbrinkhoff/nybbleForth)
 * [tehologist / forthkit](https://github.com/tehologist/forthkit)
 * [FlashForth](https://authorzilla.com/y5nbe/flashforth-5-tutorial-guide.html)
+
+
+## Jade S-100 Bus Probe
+
+### June 6, 2021
+
+![](http://s100computers.com/Hardware%20Folder/Jade/Bus%20Probe/Bus%20Probe-2.jpg)
+
+I had [bought this PCB](http://s100computers.com/Hardware%20Folder/Jade/Bus%20Probe/Bus_Probe.htm) last year, but finally got it sent over from the UK. It would be helpful in working out what Zog the Z80 pile of parts was actally doing - but also it would look amazing. Blinkenlights!
+
+I soldered it up very neatly - and then discovered two things in quick succession: 
+
+* Firstly, I had forgotten to order a 74LS30 which is a pivotal chip that controls the ENABLE line for almost everything. Amazon is sending some asap.
+
+* Secondly, I had soldered in every single bloody LED the wrong way round. I blame the instructions which clearly stated the wrong orientation (or rather, stated a confusing self-contradictory description). In the old days, was othe OTHER leg on LEDs actually the longer? It makes no sense. My fingertips are still numb from the burns.
+
+Anyway, I had to unsolder all 96 LEDs and resolder them. I'll know when the 74LS30 chip arrives if I broke a lot of them in the process, and if the the board actually works - I am not certain all is well with it, as trying to bypass the '30 didn't achieve much. I don't want to have to test all the ICs on the board and learn that JAMECO let me down again. Fingers crossed it'll be fine.
