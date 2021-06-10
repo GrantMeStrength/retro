@@ -988,3 +988,17 @@ I soldered it up very neatly - and then discovered two things in quick successio
 * Secondly, I had soldered in every single bloody LED the wrong way round. I blame the instructions which clearly stated the wrong orientation (or rather, stated a confusing self-contradictory description). In the old days, was othe OTHER leg on LEDs actually the longer? It makes no sense. My fingertips are still numb from the burns.
 
 Anyway, I had to unsolder all 96 LEDs and resolder them. I'll know when the 74LS30 chip arrives if I broke a lot of them in the process, and if the the board actually works - I am not certain all is well with it, as trying to bypass the '30 didn't achieve much. I don't want to have to test all the ICs on the board and learn that JAMECO let me down again. Fingers crossed it'll be fine.
+
+### June 8, 2021
+
+I got the missing 74LS30 chip, and.. it made no difference. This is because - as I worked out by banging my head against a wall - the resistors I was using were wrong.
+
+You would think it would be hard to screw up resistors, but I managed it. The Jade card uses resisitors packaged together in the style of a 14 pin IC. "Resistor networks in a DIL packlage". Very cool, saves a lot of space and a lot of soldering.
+
+But it turns out that there are variations on these packages. For example, a 14 pin IC can have 7 resistors in it - makes sense, right?
+
+However, an alternative packaging format gives them a common connection and 13 other legs - so there are 13 resistors in each "chip".
+
+These just aren't very common these days - most ICs that require resistors for pull-up purposes seem to have them built-in. However, for driving good old-fashioned LEDs from 5v TTL logic, you need resistors. And as the Jade card has 96 LEDS, that's a lot of resistors. And I really should have noticed that there were more LEDs than resistors when I bought the first style of chip - I was just happy to find them being sold somewhere.
+
+Needsless to say I had bought the wrong type. Finding the correct type is not easy, but I finally found one company with them in stock. They aren't great though - they demanded a minimum order of 25, then emailed that they didn't have 25 and so on and yeah, I'll believe them when they are in my hands. They also appear to have overcharged me so I can't recommend them at the moment.
