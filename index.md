@@ -6,6 +6,18 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 
 ![](images/hello.jpg)
 
+
+
+## In this repo
+
+* [Pico](pico/readme.md) - Some notes about developing on the Raspberry Pi Pico
+* [PDP Minicomputers](PDP/pdp.md) - Information related to the Digital Equipment Corp minicomputers
+* [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
+* [Jupiter Ace stuff](Ace/index.md) - Programs and hardware
+* [Projects](Projects/index.md) - Some notes to work-in-progress projects and experiments
+* [PINIAC](Projects/PINIAC/readme.md) - Notes on trying to model the ENIAC using Raspbery Pi Picos.
+
+
 ## Other repos
 
 * [RetroComputer Instruction Manual](https://github.com/GrantMeStrength/RetroComputerInstructionManual) - Altair and IMSAI reference
@@ -20,19 +32,11 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 * [External Terminal](https://github.com/GrantMeStrength/ExternalTerminal) - Connecting an external terminal to a Mac
 
 
+
 ### Currently private
 
 * [Virtual K](https://github.com/GrantMeStrength/VirtualKim)
 * [Virtual KB](https://github.com/GrantMeStrength/VirtualKenbak)
-
-## In this repo
-
-* [Pico](pico/readme.md) - Some notes about developing on the Raspberry Pi Pico
-* [PDP Minicomputers](PDP/pdp.md) - Information related to the Digital Equipment Corp minicomputers
-* [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
-* [RC2014](rc2014/rc2014.md) - Experiments with some RC2014 kits (empty for now)
-* [Jupiter Ace stuff](Ace/index.md) - Programs and hardware
-* [Projects](Projects/index.md) - Some notes to work-in-progress projects and experiments
 
 ## Little bit related
 
@@ -79,6 +83,11 @@ A list of some of my favourite kits you might be interested in building, if you'
 
 <hr>
 
+![](images/terminal.jpg)
+
+A 3D printed old-school terminal, with a Raspberry Pi running Cool-Retro-Term. Details on the [Projects](Projects/index.md) page.
+
+
 ![](images/kim.jpg)
 
 A home-made case for the [Kim Uno](https://obsolescence.wixsite.com/obsolescence/kim-uno-summary-c1uuh). The plans are in [this repo](https://github.com/GrantMeStrength/KIM1).
@@ -86,3 +95,8 @@ A home-made case for the [Kim Uno](https://obsolescence.wixsite.com/obsolescence
 ![](images/jupiter.jpg)
 
 Another DIY case, this one for the [Minstrel4th](https://www.thefuturewas8bit.com/minstrel4th.html). The plans are in [this repo](https://github.com/GrantMeStrength/Forth).
+
+![](images/pal1a.jpeg)
+
+A lid and keycaps for the [PAL-1](https://www.tindie.com/products/tkoak/pal-1-a-mos-6502-powered-computer-kit/) clone of the KIM-1. Details on the [KIM-1](https://github.com/GrantMeStrength/KIM1) page.
+
