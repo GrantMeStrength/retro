@@ -988,3 +988,61 @@ I soldered it up very neatly - and then discovered two things in quick successio
 * Secondly, I had soldered in every single bloody LED the wrong way round. I blame the instructions which clearly stated the wrong orientation (or rather, stated a confusing self-contradictory description). In the old days, was othe OTHER leg on LEDs actually the longer? It makes no sense. My fingertips are still numb from the burns.
 
 Anyway, I had to unsolder all 96 LEDs and resolder them. I'll know when the 74LS30 chip arrives if I broke a lot of them in the process, and if the the board actually works - I am not certain all is well with it, as trying to bypass the '30 didn't achieve much. I don't want to have to test all the ICs on the board and learn that JAMECO let me down again. Fingers crossed it'll be fine.
+
+### June 13, 2021
+
+I cannot recommend Master Electronics.
+
+Me: I would like to buy 8 of this component please. 
+
+Company: Sorry, minimum order is 25. 
+
+Me: Well, ok. They aren’t very expensive and I can’t find them anywhere else. Ok. 
+
+Company: Sorry we only have 23. 
+
+Me: Er. Ok. I will take 23 then. 
+
+Company: That’ll be (large amount) because we gouge you on shipping. 
+
+Me: Ouch. Well Ok I guess. 
+
+Company: Thanks for the money. BTW we counted wrong we only have 22. 
+
+Me: That’s OK as I only wanted 8. 
+
+Company: We just charged you an extra (large amount) to pay to ship you (at gouging rates) the extra one on back order. 
+
+Me: What? That’s crazy. I don’t want it. I told you that. 
+
+Company: Oh. Well this is awkward. Now you have to fill in an RMA and maybe we will give you a refund. Or most likely credit. 
+
+Me: Are you kidding me?
+
+
+## LISP
+
+### June 12, 2021
+
+LISP seems to be a fundamental language that I've never actually gotten around to learning properly. I'd like to know the fundamental trick of LISP that makes it interesting. 
+
+So far the cleanest LISP installation for Mac seems to be CLISP, which is easy to install from the command line using BREW. Here are the [installation and getting started instructions](https://opensource.com/article/21/5/learn-lisp) I've found.
+
+I didn't realize LISP gave us the concept of a [REPL](https://en.wikipedia.org/wiki/Read–eval–print_loop)!
+
+```
+(defun hello ()
+           (format t "Hello, World!~%"))
+
+(hello)
+
+Hello, World!
+
+```
+
+
+### Resources
+
+* [LISP on Wikipedia](https://en.wikipedia.org/wiki/Lisp_(programming_language)) <- best intro
+* [The Common LISP cookbook](https://lispcookbook.github.io/cl-cookbook/)
+* [Installation and getting started](https://opensource.com/article/21/5/learn-lisp)

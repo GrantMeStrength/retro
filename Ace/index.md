@@ -77,6 +77,12 @@ Side note: The 'SAM' character in this and other games was based on my math teac
 
 For some reason, you can't move your character over a space that you've just walked over. This means that no matter how carefully you try, each level leads to stalemate pretty quickly. I believe I didn't actually finish this game, and was just too happy to have ported a piece of music to the third party soundcard (Thanks, Soapy!)
 
+## More updates
+
+As I help beta test the excellent forthcoming (haha) Jupiter Ace emulator, we found that there are discrepancies between how the original Jupiter Ace and the Minstrel4th handles using IN and OUT to read the keyboard, and drive the speaker. So, some of the comments above about bugs in software might not actually be true - at least, if you are using an original Ace.
+
+Kevin, the author of the Jupiter Ace emulator, is bending over backwards to make the emulator as accurate as possible. Amazing attention to detail.
+
 
 ## Thanks
 
