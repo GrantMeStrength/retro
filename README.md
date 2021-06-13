@@ -6,7 +6,7 @@
 
 ![](images/4004a.jpeg)
 
-[A real Intel 4004 running real software](projects/readme.md)
+[A real Intel 4004 running real software](https://github.com/GrantMeStrength/retro/blob/gh-pages/Projects/index.md)
 
 
 
