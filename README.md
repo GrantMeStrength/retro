@@ -1,3 +1,6 @@
+## Hello!
+
+For a full list of current and past experiments, please see the [Index](index.md).
 
 ## What's "New"
 
@@ -15,7 +18,5 @@
 
 
 ![](images/pal1a.jpeg)
-
-For a full list of current and past experiments, please see the [Index](index.md).
 
 [A lid and keys for the PAL-1 clone of the KIM-1](https://github.com/grantmestrength/kim1)
