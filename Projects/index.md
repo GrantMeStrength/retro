@@ -136,13 +136,17 @@ Hello, World!
 * [LISP on Wikipedia](https://en.wikipedia.org/wiki/Lisp_(programming_language)) <- best intro
 * [The Common LISP cookbook](https://lispcookbook.github.io/cl-cookbook/)
 * [Installation and getting started](https://opensource.com/article/21/5/learn-lisp)
+* [On LISP](https://archive.org/details/ost-computer-science-onlisp/page/n3/mode/2up)
+* [MakerLisp](https://www.makerlisp.com) <- cool, stand-alone modern LISP machine
 
 
 ## Intel 4004
 
 ### June 12, 2021
 
-In time for its 50th (!) anniversary I have a real [Intel 4004](https://www.4004.com) microprocessor, and what's more thanks to [8bitForce](http://www.8bitforce.com/projects/4004/) I have it actually running. Erturk designed a special board that uses an Arduino to provide the support hardware and ROM data for the 4004 to run its original application: an early [electronic calculator](http://www.vintagecalculators.com/html/busicom_141-pf_and_intel_4004.html). The history is fascinating, and the timeline leads directly to both the Intel 80x86 architecture we're using today, AND the creation of the Z80 and CP/M branch of the computing tree that made home computers an actual thing.
+In time for its 50th (!) anniversary I have a real [Intel](http://www.intel.com/museum/archives/4004.htm) [4004](https://www.4004.com) microprocessor, and what's more thanks to [8bitForce](http://www.8bitforce.com/projects/4004/) I have it actually running. Erturk designed a special board that uses an Arduino to provide the support hardware and ROM data for the 4004 to run its original application: an early [electronic calculator](http://www.vintagecalculators.com/html/busicom_141-pf_and_intel_4004.html). 
+
+The history is fascinating, and the timeline leads directly to both the Intel 80x86 architecture we're using today, AND the creation of the Z80 and CP/M branch of the computing tree that made home computers an actual thing in the 1980s.
 
 ![](../images/4004a.jpeg)
 

@@ -4,6 +4,9 @@ For a full list of current and past experiments, please see the [Index](index.md
 
 ## What's "New"
 
+**KIM/PAL Audio files, June 2021**
+
+[Some audio files for setting up and testing the PAL-1 cassette interface](https://github.com/grantmestrength/kim1)
 
 **Intel 4004, June 2021**
 
