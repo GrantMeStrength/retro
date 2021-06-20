@@ -332,3 +332,549 @@ message2: db "Zog!",13
 ## What's next
 
 Well, I still would like to get C code compiled and running on it. And now that I see a video display, it seems that a keyboard for input isn't too much to ask.
+
+## Reboot
+
+OK, back to playing with the Zog. 
+
+The goal is to get a working C compiler, and I was blocked before because I couldn't see what was going on when I tried to configure the various settings to make the compiler work with Zog. Now that I have the JADE Bus Probe, I have a *little* more chance to see what is happening inside the system. Only problem: I've forgotten pretty much everything and the development system I was using has long been repurposed. So back to basics, and this time I AM KEEPING NOTES.
+
+First off, re-installing all the tools. I use a Raspberry Pi to actually assemble the Z80 code and send it to the EPROM emulation system because it's simpler to set up on the Pi than on a Mac or PC. The goal is to get to the stage where I can assemble Z80 and send it to the EPROM emulator.
+
+Here are the steps:
+
+1. Install the tools including the Z80 assembler and C compiler
+
+1.1 Install z88dk and tools
+
+1.1.1 [Install SNAP](https://snapcraft.io/docs/installing-snap-on-raspbian)
+
+1.1.2 ```sudo apt install snapd```
+
+1.1.3 ```sudo reboot```
+
+1.1.4 ```sudo snap install core```
+
+1.2.1 [Install z88dk](https://github.com/z88dk/z88dk/wiki/Snap-usage)
+
+1.2.2 ```sudo snap install --edge z88dk```
+
+1.2.3 ```sudo apt install z80dasm``` (the useful compiler)
+
+1.3.1 [Install Visual Studio Code](https://code.visualstudio.com/docs/setup/raspberry-pi) (can't do any harm - but remoting in from Mac/PC much nicer)
+
+1.3.2 ```sudo apt install code```
+
+The EPROM Emulator code is really a Python script and two libraries.
+
+2. Install the [EPROM Emulator](https://github.com/Kris-Sekula/EPROM-EMU-NG)
+
+2.1 ```pip3 install pyserial``` (don't forget the 3)
+
+2.2  ```pip install pysimplegui``` 
+
+2.3 Copy the ```EPROM_NG_v2.0rc3.py``` file from the GitHub repo.
+
+Now let's try to remember the [syntax](https://github.com/z88dk/z88dk/wiki/Tool-z80asm-syntax) for creating a HEX file from the Z88dk assembler that the EPROM Emulator can work with (not trivial!)
+
+
+To assemble a file called ```zog.asm`` in the directory ``zog```, use:
+
+```~/../../snap/z88dk/current/bin/z88dk-z80asm -b zog.asm```
+
+The ```-b``` causes the creation of the ```.bin``` file, not just the ```.o``` file.
+
+Clearly this is too much to type, so it's convenient add the path for z88dk to the shell:
+
+```export PATH=~/../../snap/z88dk/current/bin/:$PATH ```
+
+To make this permanent, it would be necessary to edit .bashrc or whatever it's called.
+
+This .bin file can be sent to the EPROM emulator, either from the GUI or from the command line, like this:
+
+```python3 ../EPROM-EMU-NG/Software/EPROM_NG_v2.0rc3.py -mem 27128 -spi y -auto n zog.bin /dev/ttyUSB0```
+
+* -spi = store it in the EPROM emulators flash memory
+* -mem = the EPROM type / size
+* -auto = perform a reset of the CPU (there's a lead connected from the emulator circuit)
+
+
+# Detour - Hardware setup for the Altair 8800 System
+
+The Zog has a buddy - an Altair 8800 clone. This is another S-100 bus system, this one housed in a proper case with a proper front panel of LEDs and decent power supplies. It can boot into CP/M, and has 64Kb of RAM and an SD-Card based storage system.
+
+I built it early into the pandemic, and then promptly forgot how it works. As part of getting this Altair 8800 clone back into a known state, I had to remove the Z80 card that was inside it, and revert to the all-in-one JAIR8080 card. Once that was working (the SD card had failed) I could replace the Z80 card. Here's a photo reference mostly for my benefit so I remember all the settings.
+
+First, the way the internal serial port is connected:
+
+![](zoghw2.jpg)
+Connected to the left-most upper serial port.
+
+
+![](zoghw3.jpg)
+Connected to the left-most 25 way serial port.
+
+![](zoghw4.jpg)
+
+
+The cable is Male-Female and a Null-Modem adaptor is required.
+
+![](zoghw5.jpg)
+
+![](zoghw6.jpg)
+
+The connector for the front panel. Staight-through.
+
+### Now the jumpers
+
+![](zoghw1.png)
+
+Summary from the manual
+
+![](zoghw7.jpg)
+
+![](zoghw8.jpg)
+
+Configured for 8080 all-in-one mode.
+
+
+![](zoghw9.jpg)
+
+![](zoghw10.jpg)
+
+Configured for Z80 on a separate code more. The JAIR8080 is still providing the I/O and memory.
+
+![](zoghw11.jpg)
+
+The front-panel cable, again straight-through but flipped over behind.
+
+![](zoghw12.jpg)
+
+And all is working!
+
+A reminder from Josh, the creator of the JAIR8080 as to some settings:
+
+```
+"All the files for the SD Card, with the manual, etc are on www.s100computers.com
+
+Go to Boards for sale, scroll down to the ~5th from the bottom.
+Look for the Rev 1 Link
+Then look at the bottom of that for the Rev 2 files
+"Here is the Rev 2 Manual and other information about this board (in a .zip file)."
+SD Card Image and Manual
+
+J8 is the RAM, yes, all in (for running my ROM) and J9, put the left 1 in for ROM.
+Shadow ROM jumper put in the top.
+
+SD Cards are funny, not all work well with the JAIR.  You want no bigger than 2GB and you might need to try a few different ones."
+```
+
+## Programming the Zog
+
+I've been tinkering with improving the code that displays the memory dump, making it scroll up when it reachest the bottom of the screen. This isn't working yet, but I'll save it here until I've another chance to update it:
+
+```
+ ; Zog and the the V1Vb Video card
+; Assemble with z88dk-z80asm -b hello.asm
+; python3 ../EPROM.py hello.bin //dev/ttyUSB0
+
+; Zog Memory Map
+; ROM 			0000 to 1fff
+; RAM 			2000 to 27ff
+; SCREEN RAM 	EC00 to FFFF
+; screen is 32 columns by 15 characters
+; (it's really 16 but my TV only displays 15)
+
+; Scroll routine Not working yet!!
+
+; RAM based values 
+RAMTOP = $27ff
+cursor = $2000
+
+
+org 0
+
+	; start
+
+	
+	ld sp, RAMTOP				; Must remember to create a stack!
+	di							; Not sure this is an issue yet but anyway
+
+
+
+	; First fill RAM with 0 	; Mostly for neatness
+	ld hl,$2000
+	ld bc, $7f0					; Don't mess up the stack dude and accidentally clear it 
+	ld a,0
+	call FILL
+
+
+	ld hl,$00
+	push hl
+
+	
+	call CLS					; Clear screen memory and thus display
+	call RESET_CURSOR			; Get cursor to top of screen
+	call PRINT_HELLO_STRING		; Print message
+	call RESET_CURSOR
+	; Just keep printing numbers
+
+	;ld c,65
+lop1:
+	;push bc
+	;call PUTCHARSCROLL
+	;call PAUSE
+	;pop bc
+	;inc c
+	;jr lop1
+
+
+
+lop0:
+	pop hl
+	push hl
+	call DUMP					; Dump a page of memory at hl
+	;call PAUSE
+
+	pop hl
+	add hl, $200
+	push hl
+	jr lop0
+
+
+stop: jp stop					; just wait here
+
+
+
+; ------------- UTILITIES ------------------------
+
+PAUSE:
+
+	push de
+	push af
+
+	ld de,$fff
+pLop:	dec de
+	ld a,d
+	or e
+	jr nz, pLop
+
+	pop af
+	pop de
+	ret
+
+
+; Dump a page of memory starting at hl
+DUMP:
+	; First display the address
+	;;ld hl, $2000
+	ld b,14
+dlop:
+	push hl
+	call Num2Hex
+	; Now display 8 bytes
+	ld c,'.'
+	call PUTCHARSCROLL
+	ld c,'.'
+	call PUTCHARSCROLL
+	ld c,'.'
+	call PUTCHARSCROLL
+	ld c,'.'
+	call PUTCHARSCROLL
+	pop de
+
+	push bc
+	push hl
+	call dumpde
+	call SPACE
+	call dumpde
+	call SPACE
+	call dumpde
+	call SPACE
+	call dumpde
+	call CR
+	call PAUSE
+	pop hl
+	pop bc
+	add hl,32
+	djnz dlop
+	ret
+
+	; Display bytes at DE
+dumpde:
+	ld a, (de)
+	ld h,a
+	inc de
+	ld a,(de)
+	ld l,a
+
+	push de
+	call Num2Hex
+	pop de
+	inc de
+	ret
+	
+
+FILL:
+; a = contents
+; HL = start address of block
+; BC = length of block in bytes
+ld e,l
+ld d,h
+inc de
+ld (hl),a
+ldir
+ret
+
+
+RESET_CURSOR:
+		ld hl, $ec00
+		ld (cursor), hl
+ret
+
+
+CR:
+	ld c,13
+	call PUTCHARSCROLL
+	ret
+
+SPACE:
+	ld c,32
+	call PUTCHARSCROLL
+	ret
+
+
+PUTCHAR:
+	; Display contents of A in next available screen location
+	; CR will take a new line
+	; When bottom of screen reached, will start at top again
+	; Preserve all regs
+	
+	
+	push af
+	push bc
+	push hl
+	push de
+	ld a,c
+	ld hl, (cursor) 			; get current cursor position
+	inc hl
+	ld (cursor),hl		
+	dec hl
+	cp 13						; CP 'a' with 13 to test for a CR?
+	jr nz, no_newline			; no, no CR
+	jp newline					; yes, do the CR stuff.
+no_newline:						
+	ld (hl), a					; write into display
+	ld a, h						; test for end of screen memory
+	cp $ef
+	jr nz, no_end_of_screen
+	ld a, l
+	cp $8f
+	jr nz, no_end_of_screen
+	; end of screen is efdf
+
+	ld hl, 0
+	ld (cursor), hl
+no_end_of_screen:
+	pop de
+	pop hl
+	pop bc
+	pop af
+	ret
+newline:						
+	add hl, 64
+	ld a, l
+	and a, $c0
+	ld l, a
+	ld (cursor), hl
+	jp no_end_of_screen
+
+
+PUTCHARSCROLL:
+	; Display contents of A in next available screen location
+	; CR will take a new line
+	; When edge of screen reached, take a new line
+	; When bottom of screen reached, Scroll up
+	; Preserve all regs
+	
+	push af
+	push bc
+	push hl
+	push de
+	
+	ld hl, (cursor) 			; get current cursor position -
+	inc hl
+	ld (cursor),hl		
+	dec hl
+	; End of line?  if l and bit 5 = true then it's end of the current line
+	ld a,l
+	and 32
+	call nz, move_down_a_line
+
+	ld a,c
+	cp 13						; CP 'a' with 13 to test for a CR?
+	jr nz, no_newline2			; no, no CR
+	jp newline2					; yes, do the CR stuff.
+no_newline2:						
+	ld (hl), a					; write into display
+	ld a, h						; test for end of screen memory
+	cp $ef
+	jr nz, no_end_of_screen2
+	ld a, l
+	cp $3f
+	jr nz, no_end_of_screen2
+	; end of screen scroll everything up move cursor to col 0, line 15
+
+	
+
+	; Shift everything up a line
+	; HL = start address of block
+	; BC = length of block in bytes
+	ld hl, $EC40 ; from
+	ld de, $EC00 ; to
+	ld bc, 991 ; count
+	ldir
+
+	; clear last line
+
+	ld hl,$ef80
+	ld bc, $80	
+	ld a,32
+	call FILL
+	
+	; move cursor to col 0, line 15
+	ld hl, $ef00
+	ld (cursor), hl
+
+
+
+no_end_of_screen2:
+	pop de
+	pop hl
+	pop bc
+	pop af
+	ret
+newline2:						
+	call move_down_a_line
+	jp no_end_of_screen2
+
+
+move_down_a_line:
+	add hl, 64
+	ld a, l
+	and a, $c0
+	ld l, a
+	ld (cursor), hl
+	ret
+
+CLS:
+
+	; CLS by filling ec00 to f000  with 0
+	ld hl,$ec00
+	ld bc, $400	
+	ld a,32
+	call FILL
+	ret
+
+
+
+
+
+PRINT_HELLO_STRING:
+
+		ld de, message
+sloop:	ld a,(de)
+		ld c,a
+		call PUTCHAR
+		cp 13
+		jp z, leave
+		inc de
+		jr sloop
+leave: 	ret
+
+
+
+PRINT_STRING:
+
+		; de = string address
+		; bc = offset from base address
+		; bc returns as-is
+
+		ld hl, $ec00
+		add hl, bc
+
+tloop:	ld a,(de)
+		cp 13
+		jp z, leave2
+		ld (hl),a
+		inc de
+		inc hl
+		jr tloop
+leave2: 	ret
+		
+
+RAM_CHECK:
+		; used when I wanted to check where the RAM was in the memory map!
+		ld hl, $ed00
+		ld de, $2000
+lp:
+		ld a, 42
+		ld (de), a
+		ld a, (de)
+		cp 42
+		jp nz, stop
+		ld a,65
+		ld (hl),a
+		inc hl
+		inc de
+		inc de
+		inc de
+		inc de
+		jp lp
+
+
+; PRINT 4 DIGIT HEX STRING
+	; hl = current value
+	
+Num2Hex:
+	ld	a,h
+	call	hNum1
+	ld	a,h
+	call	hNum2
+	ld	a,l
+	call	hNum1
+	ld	a,l
+	jr	hNum2
+
+hNum1:	
+	rra
+	rra
+	rra
+	rra
+hNum2:	
+	or	$F0
+	daa
+	add	a,$A0
+	adc	a,$40
+	ld c,a
+	call PUTCHAR
+	ret
+
+
+
+; Say Zog
+	ld de, message2
+	ld bc, 256
+;	call PRINT_STRING
+	add bc, 320
+	ld de, message2
+;	call PRINT_STRING
+
+
+message: db "Zog Memory Dumpication",13	
+;message: db "0123456789012345678901234567890123",13	
+
+message2: db "Zog!",13
+
+
+```
