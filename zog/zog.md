@@ -403,6 +403,8 @@ This .bin file can be sent to the EPROM emulator, either from the GUI or from th
 
 The Zog has a buddy - an Altair 8800 clone. This is another S-100 bus system, this one housed in a proper case with a proper front panel of LEDs and decent power supplies. It can boot into CP/M, and has 64Kb of RAM and an SD-Card based storage system.
 
+The system is based around a single card - the JAIR8080 which contains the 8080 CPU, memory, ROM, SD card, and I/O (serial and parallel). It's amazing. I just need to connect it to the Altair front panel card, and that's it. However, although the 8080 is cool, I like the Z80 and so I've a vintage Z80 card in there too - the JAIR can switch of the 8080 and provide all the rest of the hardware to the Z80. Clever.
+
 I built it early into the pandemic, and then promptly forgot how it works. As part of getting this Altair 8800 clone back into a known state, I had to remove the Z80 card that was inside it, and revert to the all-in-one JAIR8080 card. Once that was working (the SD card had failed) I could replace the Z80 card. Here's a photo reference mostly for my benefit so I remember all the settings.
 
 First, the way the internal serial port is connected:
@@ -442,7 +444,7 @@ Configured for 8080 all-in-one mode.
 
 ![](zoghw10.jpg)
 
-Configured for Z80 on a separate code more. The JAIR8080 is still providing the I/O and memory.
+Configured for use with a Z80 on a separate card. The JAIR8080 is still providing the I/O and memory.
 
 ![](zoghw11.jpg)
 
