@@ -18,6 +18,10 @@ The past week has been non-stop 3D printing. These guys, er, [Kevin](https://www
 
 ![](../images/terminal.jpg)
 
+### June 20, 2021
+
+I finally found the specific USB power supply and USB dock that the Callisto was designed to work with, got a nice short micro-USB to HDMI plug, and housed the Raspberry Pi 4 in a case with a heatsink and quiet fan (it got hot in there, running Cool Reto Term). In other words, the project is complete for now. With a USB-to-Serial dongle attached the hub, it makes a great terminal for my S-100 Altair and other systems.
+
 
 ## SCAMP
 
@@ -37,6 +41,9 @@ I spent the weekend building this:
 
 I was following [these instructions](https://www.instructables.com/Making-a-Tiny-Mac-From-a-Raspberry-Pi-Zero/). Gosh it's cute! From a distance my poor craftmanship is hardly noticeable! And that isn't a simulated image, it's a small screen with a Raspberry Pi Zero running a Mac OS 7 emulator. 
 
+### June 21, 2021
+
+After watching the [Macintosh Librarian](https://youtu.be/dP-2JRLjxUA) remix the this project to build a Mac SE/30, I've fired up the printer again (this time with a better colour filament) to see how it works out.
 
 ## PiTrex
 
@@ -109,6 +116,18 @@ Company: Oh. Well this is awkward. Now you have to fill in an RMA and maybe we w
 
 Me: Are you kidding me?
 
+### June 18, 2021
+
+The resistors arrived (very badly packaged! I will NOT be using this company again). They did agree to cancel the order for the remaining resistor (which I seriously doubt they would ever be able to fulfill anyway). The ones they sent are a fabulous yellow/brown/tan colour. And they work fine (once I straightened out the legs). I was worried than 150 Ohms would be too low a resistance, and the LEDs would be too bright, but it turns out the LEDs I had bought from JameCo were not particularly modern and/or low current, so they were just right.
+
+![](../images/R1.jpeg)
+![](../images/R2.jpeg)
+
+The Bus Probe looks amazing with the LEDs all blinking, and I need to spend some time learning exactly what they are telling me! Also, I need to straighten some of them out after their soldering ordeal.
+
+![](../images/bus.jpeg)
+
+
 
 ## LISP
 
@@ -151,3 +170,7 @@ The history is fascinating, and the timeline leads directly to both the Intel 80
 ![](../images/4004a.jpeg)
 
 ![](../images/4004b.jpeg)
+
+### June 20, 2021
+
+Moving the Intel 4004 project to a [dedicated page](4004/4004.md).
