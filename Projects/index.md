@@ -173,4 +173,4 @@ The history is fascinating, and the timeline leads directly to both the Intel 80
 
 ### June 20, 2021
 
-Moving the Intel 4004 project to a [dedicated page](4004/4004.md).
+Moving the Intel 4004 project to a [dedicated page](https://github.com/GrantMeStrength/retro/blob/gh-pages/4004/4004.md).
