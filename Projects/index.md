@@ -88,9 +88,13 @@ I soldered it up very neatly - and then discovered two things in quick successio
 
 Anyway, I had to unsolder all 96 LEDs and resolder them. I'll know when the 74LS30 chip arrives if I broke a lot of them in the process, and if the the board actually works - I am not certain all is well with it, as trying to bypass the '30 didn't achieve much. I don't want to have to test all the ICs on the board and learn that JAMECO let me down again. Fingers crossed it'll be fine.
 
-## June 10, 2021
+### June 10, 2021
 
-D'oh. The resistor packages I bought were the wrong sort. Turns out there are different types and I picked the wrong one. The ones I actually need are difficult to find in stock - but a company called Master Electronics seems to have some.
+D'oh. The reason bypassing the 74LS30 didn't do much is that the resistor packages (multiple resistors in a single IC-like DIP case) I bought were the wrong sort. Turns out there are different types and I picked the wrong one. 
+
+![](../images/resistorpacks.png)
+
+The ones I actually need (on the right) are difficult to find in stock - but a company called Master Electronics seems to have some.
 
 ### June 13, 2021
 
@@ -133,7 +137,9 @@ The Bus Probe looks amazing with the LEDs all blinking, and I need to spend some
 
 ![](../images/bus.jpeg)
 
+### June 20, 2021
 
+The Probe worked in both the Zog system and Altair, and was sort of useful (but mostly cool) when I was [writing some code](https://github.com/GrantMeStrength/retro/blob/gh-pages/zog/zog.md).
 
 ## LISP
 
