@@ -4,6 +4,13 @@ For a full list of current and past experiments, please see the [Index](index.md
 
 ## What's "New"
 
+**Mini Vectrex, and updated Virtual KIM-1 app and manual, June 27th 2021**
+
+![](images/vec3.jpeg)
+
+* [A 3D printed Vectrex](https://github.com/GrantMeStrength/retro/blob/gh-pages/Projects/index.md)
+* [An update to the KIM-1 app for iOS in TestFlight](https://github.com/grantmestrength/kim1)
+
 **The Altair 8800 Clone Configuration, June 2021**
 
 ![](zog/zoghw12.jpg)
