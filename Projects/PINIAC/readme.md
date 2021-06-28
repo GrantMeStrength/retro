@@ -12,7 +12,7 @@ I've a crazy idea to recreate a simple version of the ENIAC using Raspbery Pi PI
 
 I have been tinkering, starting off my trying to connect two Pico devices over I2C. (The I2C system still uses the offensive and outdated naming scheme 'master' and 'slave'. I will use 'sequencer' and 'node' instead as it is more descriptive and less horrible. You will also see 'controller' and 'peripheral' being used.)
 
-In theory, I2C is the perfect way of connecting devices - it's a fast serial connection, supporting multiple devices on a simple two cable bus. My idea was to use one Pico as the controller, sending timing signals and program data. Subsequent Pico devices would hang onto the bus, listening for their name and acting when called. 
+In theory, I2C is the perfect way of connecting devices - it's a fast serial connection, supporting multiple devices on a simple two cable bus. My idea was to use one Pico as the controller, sending timing signals and program data. Subsequent Pico devices would hang onto the bus, listening for their name and acting when called.
 
 Setting up a Pico to be a sequencer is simple, as in this MicroPython example:
 
@@ -36,11 +36,11 @@ Before I can try it, [I need to install the C++ toolchain on my Mac - see chapte
 
 ## May 30, 2021
 
-The official Raspberry Pi instructions for getting the C/C++ toolchain working on the Mac are just awful. If I get it working I'll post it here, but seriously, they're confusing, wrong and awful.
+The official Raspberry Pi instructions for getting the C/C++ toolchain working on the Mac are not great. If I get it working I'll post it here, but seriously, they're a bit confusing.
 
 ## May 31, 2021
 
-Deep inside the pico sdk is a file that explains how to use C++ on the Pico, so I've got some C++ running on the device:
+Deep inside the Pico sdk is a file that explains how to use C++ on the Pico, so I've got some C++ running on the device:
 
 ```
 /*
@@ -325,6 +325,9 @@ Anyway, here is the code for the Pico node and the Pi controller that sends and 
    }
 ```
 
+Now the Python controller/sequencer code:
+
+
 ```
 # Talk to i2c devices
 
@@ -386,14 +389,14 @@ while 1:
 
 Happy Birthday, Mum!
 
-I had a successful day today with the PINIAC project. I finished the C code for each of the three Units I wanted to model - an Accumulator, Multiplier and Function Table. I found some useful documentation:
+I had a successful day today with the PINIAC project. I finished the C code for each of the three Units I wanted to model - an Accumulator, a Multiplier and a Function Table. I found some useful documentation:
 
 * [The ENIAC Then and Now, Brian L. Stuart](https://www.cs.drexel.edu/~bls96/eniac/eniac4.pdf)
 * [The Electronic Numerical Integrator and Computer, Mark P Neyer](https://www.cs.xu.edu/~neyer/MachineOrg/ENIACPaper.pdf)
 
-And this helped me cobble together an idea of how ENIAC worked and how I could simulate it (in a much, much, much simpler way). My hardware consists of a Raspberry Pi acting as the clock/master programmer unit, and three Raspberry Picos acting as the other three units. They are all connected via the I2C serial bus, which when finally working, simplifies interdevice communication a lot (although is susceptible to out-of-sync issues so isn't perfect)
+And this helped me cobble together an idea of how ENIAC worked and how I could simulate it (in a much, much, much simpler way). My hardware consists of a Raspberry Pi acting as the clock/sequencer unit, and three Raspberry Pico's (Picae?) acting as the other three units. They are all connected via the I2C serial bus, which when finally working, simplifies interdevice communication a lot (although is susceptible to out-of-sync issues so isn't perfect)
 
-The biggest issue I found was that ENIAC Units were able to communicate with each other directly, for example, the Multiplier would ask the Accumulator for the number to use in its sum. In my system, the Pi controller needs to quickly go behing everyone's back and get the Accumulator to provide a number and then send it to the Multiplier - pretending the Multiplier had asked. 
+The biggest issue I found was that ENIAC Units were able to communicate with each other directly, for example, the Multiplier would ask the Accumulator for the number to use in its sum. In my system, the Pi controller needs to quickly go behind everyone's back and get the Accumulator to provide a number and then send it to the Multiplier - pretending the Multiplier had asked. 
 
 ![](../../images/piniac1.jpg)
 
@@ -416,40 +419,45 @@ The C source code the each of the Units (in one file, use the NODE1, NODE2 or NO
 
 /*
 
-Accumulator
+The different types of Node, and their functions:
+
+
+>Accumulator
 
 1. Receive a number, add it to the number currently stored in the accumulator
 2. Transmit the number
 3. Transmit the -ve of the number
 
-A "Number" is 10 digits
-
-00000000
-99999999
 
 
-Multiplier
+>Multiplier
 
 1. Find the product of two numbers - the first number is sent from an 
    accumulator or maybe a function table / constant transmitter.
 
 
-Divider / Square Root
+>Divider / Square Root
 
 1. Find the quotient. A number is sent from an accumulator or other source
 
 
-Function Table
+>Function Table
 
 1. Return the value corresponding to a 2 digit address
 2. Return the -ve of a value corresponding to a 2 digit address
 
 
-Constant Transmitter
+>Constant Transmitter
 
 1. Returns a number read from punched card reader. I don't have one of
    these to test it with, unfortunately.
 
+Note:  A "Number" is 10 digits
+
+00000000
+99999999
+
+This part is not yet implemented - I'm just using standard integers.
 
 Note: The ENIAC could transmit numbers between units directly, but
 as the PINIAC uses the IC2 bus, this isn't possible - SET commands are
@@ -463,7 +471,7 @@ python program can use to 'fake it' by reading and writing values.
 #include "hardware/uart.h"
 #include "hardware/i2c.h"
 
-#define NODE2
+#define NODE2 // Define the Node type for each Pico
 
 
 // The address of this Pico on the i2c bus
@@ -729,7 +737,7 @@ if (value1 == MULT_SET ) // Set memory contents
 
 ![](../../images/piniac2.jpg)
 
-The Python code for the master programmer. There are just a few extra lines for driving a Pimoroni Micro Dot Phat LED display just for laughs - easy to ignore.
+The Python code for the sequencer/programmer. There are just a few extra lines for driving a Pimoroni Micro Dot Phat LED display just for laughs - easy to ignore.
 
 ```
 # PINIAC
@@ -911,7 +919,9 @@ while 1:
 
 ```
 
+## Running
 
+This seems to work! The sequencer can send out instructions to the other nodes, who do work, and return the correct values!
 
 
 ## Resources
