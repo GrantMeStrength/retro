@@ -6,12 +6,29 @@
 
 After 3D printing a "mini Macintosh", I realized that rotating the screen and doing a bit of a redesign of the case would make a pretty decent mini Vectrex. I tested MAME with the Vectrex ROMs on the Pi Zero, and it worked great, so it would be a *working* Vectrex. It was also pretty straightforward to rotate the screen to portrait rather than landscape mode.
 
-Over the (incredibly hot) weekend I designed and printed a couple of cases, and learnt from some mistakes. The first attempt was just too mini - there was no space for the Pi and its connector and 40-way cable. The second attempt got the size right, but I messed up the location of the support posts for the Pi Zero, and the screen was too tight. The Mark 3 is printing now, and maybe it'll be good enough! I have to say that simply not printing a bottom to the case makes it easy to avoid having to create ingenious schemes to mate two halves, while still allowing access for assembly. And a little base could be printed later if required.
+Over the (incredibly hot) weekend I designed and printed a couple of cases, and learnt from some mistakes. The first attempt was just too mini - there was no space for the Pi and its connector and 40-way cable. The second attempt got the size right, but I messed up the location of the support posts for the Pi Zero, and the screen was too tight. I am happy that I've gotten it just right now - with the location of the Pi Zero, and the way the screen is seated.
 
 ![](../images/vec1.png)
 ![](../images/vec2.png)
 ![](../images/vec3.jpeg)
 ![](../images/vec4.jpeg)
+
+To build this, you'll need:
+
+* Black filament and a 3D printer (I used the Ender 3)
+* The .STL files (I put the model up on [Thingiverse](https://www.thingiverse.com/thing:4897404))
+* A Raspberry Pi Zero. The "W" model is better, as it has wireless which makes installing stuff easier. Solder 40 male pins onto the Pi header.
+* An LCD screen that is exactly 5cm by 7cm, specifically [this one from Amazon](https://www.amazon.com/gp/product/B07H8ZY89H/ref=ppx_yo_dt_b_asin_title_o00_s01).
+* A short 40 way female-to-female ribbon cable. 10cm to 20cm - but no more or it won't fit.
+* A suitable SD card.
+
+Preparing the Pi isn't too tricky. Use the standard Raspberry Pi installer to put the default system on it. Follow the instructions that came with the LCD screen to install the necessary drivers. Follow [these instructions](https://www.raspberrypi.org/forums/viewtopic.php?t=120793) to rotate the screen to portrait mode.
+
+Then go to [RetroPi](https://retropie.org.uk) and install RetroPi. Remember to set up the Pi to boot to console and not desktop, or you'll get an error when RetroPi starts up. Do a quick web search and find Vectrex ROMs and install them in the right location. Plug a USB-to-go connector into the Pi, and a suitable joystick into that (I use an XBox controller). That's it!
+
+
+
+
 
 ## Callisto 2 Terminal
 
