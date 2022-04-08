@@ -74,7 +74,7 @@ A list of some of my favourite kits you might be interested in building, if you'
 * [Core memory shield](https://www.tindie.com/products/kilpelaj/core-memory-shield-for-arduino/) - Add 32 bits (bits!) of magnetic core memory (!) to your Arduino
 * [Tindie](https://www.tindie.com/browse/vintagecomputing/) - Retrocomputing projects of all kinds
 * [Ben Eater's Breadboard computers](eater.net) - Scared of soldering? Love wires? Build a computer.
-
+* [Hackaday Sol-20](https://hackaday.io/project/181676-sol-20-reproduction/details) - building a version of the blue computer with the wooden sides
 
 ## Other links
 

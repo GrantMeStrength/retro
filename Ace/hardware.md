@@ -49,3 +49,30 @@ If you have seen circuit diagrams for the Jupiter Ace, they probably came from [
 ![](ace-cct1.png)
 ![](ace-cct2.png)
 ![](ace-cct3.jpg)
+
+
+## September 8, 2021
+
+It's been a while! But, to quote Professor Farnsworth, "Good news, everyone!"
+
+Here's something I just wrote because I celebrate successes by writing stuff:
+
+Have you ever had a project that almost became an obsession? Something that was broken but you felt that could you maybe, possibly fix it - and that fact was like an itch in your brain that you couldn’t scratch?
+
+I've been trying to assemble a Jupiter Ace using an original PCB for a while now - since January of this year in fact. What’s a Jupiter Ace? It’s a British 8-bit computer from the early 1980s, which tried to differentiate itself from the crowd of other systems in the Cambrian Explosion of home computers by using FORTH rather than BASIC as its built-in language. (History lesson: in the early days of home computers, the computers plugged into your TV and when you powered them on, they loaded BASIC from ROM - there was no floppy or hard disks back then). In 1982, I had an Ace and loved it. I found it a great machine for coding games and playing with electronics.
+
+Unfortunately my knowledge of electronics then was basic, and somehow I came into possession of not one but two 16Kb memory expansion packs, and I thought I could wire them together and make a 32Kb memory expansion. It might have worked in theory, but in practice, it broke my Ace. It probably just destroyed one of the logic chips by pulling too much current. In hindsight, it would have been an easy fix if I knew what I was doing. I didn’t, and in my shame and despair, I removed the Z80 and ROMs from the PCB and (sigh) threw it away. I did keep the case and keyboard.
+
+Now, after all that time, I have righted the wrong and finally gotten my rebuilt Ace working. It was close to working for months, and I had tried all sorts of things including checking every single trace on the PCB (I created a Photoshop file of layers for each track on the board, and traced them with a multimeter), created new vintage EPROMS with test images, using scopes and logic probes to check for issues with the data and address buses, learning the circuit diagram inside out.. but last night I finally got it running.
+
+Months ago I had read somewhere how a capacitor designated C8 had occasionally messed up the HALT signal timing of the Z80 CPU for some folks, leading to memory corruption. At the time, I had tried experimenting with removing C8 and using different values, but it made no difference. However, as I was doing these tests, I was unknowingly using a RAM chip that was somehow out of spec and was literally never going to work.
+
+When I found replacement RAM chips (after multiple eBay episodes), the issues were still there, but so much was almost working. It would start up, respond to the keyboard - but display garbage. It was so close I kept thinking there was a short between some data bus lines or some of the 74LS logic chips were actually mislabeled CMOS chips and messing up switching levels. 
+
+This weekend I was using a logic analyzer to see what was going on on the data bus, and it looked like all the lines were working independently - but it was impossible to read the exact values of what was going on through the bus without a more expensive analyzer that could also take memory read/write signals into account (look at a program called PulseView - it has a Z80 debugging module in it, that's what I was hoping to use. Did you know you can get an 8 channel logic analyser on Amazon for about $10? Amazing!). 
+
+What I should have been paying more attention to was the various control signals around the Z80, especially as I had a secondary working Ace for comparison. I swear I did scope them both side-by-side and saw nothing out of the ordinary, but I had clearly missed it - the HALT signal.
+
+Then, in some usual random googling ("Jupiter ace hardware design" "debugging z80 hardware" "why is my life empty and meaningless"), I came across that link to the C8 issue again. Before clicking "buy" on a 16 channel logic analyzer, I tried removing it to see what might happen. And bugger me but the screen immediately cleared to the single, little white square we know and love. I typed VLIST and the FORTH dictionary appeared. It was working!
+
+The only thing left to do is clean up the keyboard a little, as the conductive pads are less than conductive now (there's some conductive paint coming from Amazon, and I'm hoping a little dab on the back of each key will help), and it should be good as new. Sure, there's a little crack in the yellowed case, and instead of an RF modulator, I fitted a ZX81 video mod to get a composite signal, but I think I can call this project done. Finally. After decades.
