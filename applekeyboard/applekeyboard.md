@@ -43,16 +43,19 @@ The Apple IIe keyboard has been ordered from eBay.
 * [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
 
 
-
 -- Script in Progress ---
+
+
+```python
 
 # CircuitPython/Raspberry Pi Pico'firmware' based on The Smallest Keyboard
 # and adapted for Apple IIe keyboard. The order that the Pico's pins that are wired to the keyboard connector
 # will determine the row_pins, column_pins and modifier_pins
 
 
-
 # https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html
+
+
 
 import time
 import board
@@ -142,15 +145,13 @@ while True:
 
 
 
-
-		
-
+```
 
 
----
 
 Copied from here: http://apple2.info/wiki/index.php?title=Pinouts#Apple_.2F.2Fe_Motherboard_keyboard_connector
 
+```
 J16 (Numeric Pad)         J17 (Keyboard)
 11      X5                X6      26 25   Y7
 10      X6                SHFT*   24 23   Y6
@@ -188,6 +189,8 @@ Y7      7&      U       K       ,<      +=       P      UP       DOWN
 Y8      8*      I       ;:      .>      0)       [{     SPACE   LEFT
 
 Y9      9(      O       L       /?      -_       ]}      '"      RIGHT
+
+
 Notes:
 1)      This is the US layout
 2)      Early //e keyboard ROMs had ? LEFT ESC RIGHT SPACE replacing
@@ -203,3 +206,5 @@ Notes:
 6)      The SHIFT, CONTROL, CAPSLOCK and RESET switches simply ground the
         appropriate pin of the connector (RESET via the CTRL line if the 
         jumpers are in the standard setting).
+
+```
