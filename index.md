@@ -54,6 +54,7 @@ A list of some of my favourite kits you might be interested in building, if you'
 
 * [Alair-Duino](https://adwaterandstir.com/altair/) - Arduino based Altair8800 in case
 * [IMSAI8080esp](https://thehighnibble.com/imsai8080/) - Realistic IMSAI8080 kit
+* [Cromemco Z1](https://thehighnibble.com/cromemcoZ1/) - Closely related to the above, but distinct. The Cromemco Z1 kit.
 * [Altair Clone](https://altairclone.com) - Replica of the Altair 8800 computer.
 * [PiDP-8](https://obsolescence.wixsite.com/obsolescence/pidp-8) - Raspberry Pi based PDP-8i minicomputer
 * [PiDP-11](https://obsolescence.wixsite.com/obsolescence/pidp-11) - Raspberry Pi based PDP-11/70 minicomputer
@@ -82,6 +83,10 @@ A list of some of my favourite kits you might be interested in building, if you'
 * [Twitter](https://twitter.com/johnkennedymsft)
 
 <hr>
+
+![](images/keyboard1.jpg)
+
+An in-progress project to give an Apple IIe keyboard a USB interface. Details on the [Apple Keyboard](applekleyboard/applekleyboard.md) page.
 
 ![](images/terminal.jpg)
 
