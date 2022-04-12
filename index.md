@@ -86,7 +86,7 @@ A list of some of my favourite kits you might be interested in building, if you'
 
 ![](images/keyboard1.jpg)
 
-An in-progress project to give an Apple IIe keyboard a USB interface. Details on the [Apple Keyboard](applekleyboard/applekleyboard.md) page.
+An in-progress project to give an Apple IIe keyboard a USB interface. Details on the [Apple Keyboard](https://github.com/GrantMeStrength/retro/blob/gh-pages/applekeyboard/applekeyboard.md) page.
 
 ![](images/terminal.jpg)
 
