@@ -45,18 +45,11 @@ The Apple IIe keyboard has been ordered from eBay.
 * [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 -- Script in Progress --- no caps lock support just yet --- 
-=======
-=======
->>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
--- Script in Progress ---
->>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 
 
-```python
 
 
 ```python
@@ -65,13 +58,7 @@ The Apple IIe keyboard has been ordered from eBay.
 # and adapted for Apple IIe keyboard. The order that the Pico's pins that are wired to the keyboard connector
 # will determine the row_pins, column_pins and modifier_pins
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# CircuitPython/Raspberry Pi Pico'firmware' for The Smallest Keyboard
-=======
->>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
-=======
->>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
+
 
 # https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html
 
@@ -175,21 +162,10 @@ while True:
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
----
-=======
-```
-
-
->>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
-
-=======
 ```
 
 
 
->>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 Copied from here: http://apple2.info/wiki/index.php?title=Pinouts#Apple_.2F.2Fe_Motherboard_keyboard_connector
 
 ```
