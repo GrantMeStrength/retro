@@ -64,11 +64,6 @@ This super-fancy diagram demonstrates the wiring I used.
 
 
 
-
--- Script in Progress --- no caps lock support just yet --- 
-
-
-
 ```python
 
 # Apple IIe Keyboard to USB Interface using a Raspberry Pi Pico
