@@ -1,6 +1,8 @@
 # Connecting an Apple II keyboard to other systems
 
 
+![](../images/applekey2.jpg)
+
 The Apple IIe keyboard is a passive matrix of switches. This means it should be relatively easy to connect to some other systems, by means of a microcontroller.
 For example, it could be used in a real Apple II but connected to, say, a Raspberry Pi running an emulator - thus replacing broken, missing or just tired Apple original electronics.
 It would also be an option for connecting to other random systems, such as [Zog](https://github.com/GrantMeStrength/retro/blob/gh-pages/zog/zog.md).
@@ -44,13 +46,13 @@ The Apple IIe keyboard has been ordered from eBay.
 
 
 
--- Script in Progress ---
+-- Script in Progress --- no caps lock support just yet --- 
 
 # CircuitPython/Raspberry Pi Pico'firmware' based on The Smallest Keyboard
 # and adapted for Apple IIe keyboard. The order that the Pico's pins that are wired to the keyboard connector
 # will determine the row_pins, column_pins and modifier_pins
 
-
+# CircuitPython/Raspberry Pi Pico'firmware' for The Smallest Keyboard
 
 # https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html
 
@@ -66,13 +68,14 @@ led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
 led.value = True
 #optional delay before creating the HID for maximum compatibility
-time.sleep(1)
+time.sleep(0.5)
 led.value = False
-time.sleep(1)
+time.sleep(0.5)
 led.value = True
 
 #create the HID
 kbd = Keyboard(usb_hid.devices)
+
 
 #set up the row, column, and modifier arrays
 rows = [] #  - ROW is OUTPUTS - Y in the Apple diagrams
@@ -90,38 +93,43 @@ for column in column_pins:
     column_key.pull = digitalio.Pull.DOWN
     columns.append(column_key)
 
-#this is 'overkill' for code consistency and hardware flexibility; you could alternatively connect modifiers directly to a constant high or low and read the switches without an enable/disable pin
-#modifier_enable = []
-#modifier_enable_pin = [board.GP22]
-#for mod in modifier_enable_pin:
-#    mod_enable = digitalio.DigitalInOut(mod)
-#    mod_enable.direction = digitalio.Direction.OUTPUT
-#    modifier_enable.append(mod_enable)
+# The open/close Apple modifiers short to +5, the shift/control/caps short to ground
+# so the code needs to be slightly different for each
 
-modifiers = []
-modifier_pins = [board.GP26, board.GP27, board.GP22, board.GP21, board.GP14]
-for mod_pin in modifier_pins:
+modifiers1 = []
+modifier_pins1 = [board.GP27, board.GP28]
+for mod_pin in modifier_pins1:
     mod_key = digitalio.DigitalInOut(mod_pin)
     mod_key.direction = digitalio.Direction.INPUT
-    mod_key.pull = digitalio.Pull.DOWN
-    modifiers.append(mod_key)
+    #mod_key.pull = digitalio.Pull.DOWN
+    modifiers1.append(mod_key)
+mod_keymap1 = [Keycode.RIGHT_ALT, Keycode.LEFT_ALT]
 
-#array of modifier keycodes
-mod_keymap = [Keycode.RIGHT_ALT, Keycode.LEFT_ALT, Keycode.CONTROL, Keycode.OPTION, Keycode.SHIFT]
+modifiers2 = []
+modifier_pins2 = [board.GP22, board.GP14, board.GP26]
+for mod_pin in modifier_pins2:
+    mod_key = digitalio.DigitalInOut(mod_pin)
+    mod_key.direction = digitalio.Direction.INPUT
+    mod_key.pull = digitalio.Pull.UP
+    modifiers2.append(mod_key)
+mod_keymap2 = [Keycode.CONTROL, Keycode.SHIFT, Keycode.CAPS_LOCK]
+
 
 #array of keycodes; if you want to remap see: https://circuitpython.readthedocs.io/projects/hid/en/latest/api.html#adafruit-hid-keycode-keycode /'None' values have no physical connection
+
 keymap = [Keycode.ESCAPE,Keycode.TAB,Keycode.A,Keycode.Z,Keycode.FORWARD_SLASH,Keycode.RIGHT_BRACKET,Keycode.KEYPAD_ASTERISK,Keycode.ESCAPE,
 	Keycode.ONE, Keycode.Q, Keycode.D, Keycode.X, Keycode.DOWN_ARROW, Keycode.UP_ARROW, Keycode.LEFT_ARROW, Keycode.RIGHT_ARROW,
 	Keycode.TWO, Keycode.W ,Keycode.S, Keycode.C ,Keycode.ZERO, Keycode.FOUR,Keycode.EIGHT,Keycode.LEFT_BRACKET,
 	Keycode.THREE, Keycode.E, Keycode.H, Keycode.V, Keycode.ONE, Keycode.FIVE,Keycode.NINE,Keycode.KEYPAD_MINUS,
-	Keycode.FOUR, Keycode.R, Keycode.F, Keycode.S, Keycode.TWO, Keycode.SIX, Keycode.PERIOD, Keycode.RETURN,
-	Keycode.SIX, Keycode.Y, Keycode.G, Keycode.N, Keycode.THREE, Keycode.SEVEN, Keycode.KEYPAD_PLUS, Keycode.COMMA,
+	Keycode.FOUR, Keycode.R, Keycode.F, Keycode.B, Keycode.TWO, Keycode.SIX, Keycode.PERIOD, Keycode.RETURN,
+	Keycode.SIX, Keycode.Y, Keycode.G, Keycode.N, Keycode.THREE, Keycode.SEVEN, Keycode.EQUALS, Keycode.COMMA,
 	Keycode.FIVE, Keycode.T, Keycode.J, Keycode.M, Keycode.BACKSLASH, Keycode.QUOTE, Keycode.RETURN, Keycode.DELETE,
-	Keycode.SEVEN, Keycode.U, Keycode.K, Keycode.COMMA, Keycode.KEYPAD_PLUS, Keycode.P, Keycode.UP_ARROW, Keycode.DOWN_ARROW,
+	Keycode.SEVEN, Keycode.U, Keycode.K, Keycode.COMMA, Keycode.EQUALS, Keycode.P, Keycode.UP_ARROW, Keycode.DOWN_ARROW,
 	Keycode.EIGHT, Keycode.I, Keycode.SEMICOLON, Keycode.PERIOD, Keycode.ZERO, Keycode.LEFT_BRACKET, Keycode.SPACE, Keycode.LEFT_ARROW,
 	Keycode.NINE, Keycode.O, Keycode.L, Keycode.FORWARD_SLASH, Keycode.MINUS, Keycode.RIGHT_BRACKET, Keycode.QUOTE, Keycode.RIGHT_ARROW]
 
 #main loop
+
 while True:
     #for m_e in modifier_enable:
         #m_e.value=1 #set the modifier pin to high
@@ -132,18 +140,17 @@ while True:
                 while c.value: #wait until the key is released, which avoids sending duplicate keypresses
                     time.sleep(0.01) #sleep briefly before checking back
                 key = rows.index(r) * 8 + columns.index(c) #identify the key pressed via the index of the current row (r) and column (c)
-                for m in modifiers: #check each modifier to see if it is pressed
+                for m in modifiers1: #check each Apple Key modifier to see if it is pressed
                     if m.value: #if pressed
-                        m_key = modifiers.index(m) #identify which modifier
-                        kbd.press((mod_keymap[m_key])) #and press (and hold) it
+                        m_key = modifiers1.index(m) #identify which modifier
+                        kbd.press((mod_keymap1[m_key])) #and press (and hold) it
+                for m in modifiers2: #check Shift, Control Caps modifier to see if it is pressed
+                    if not m.value: #if pressed
+                        m_key = modifiers2.index(m) #identify which modifier
+                        kbd.press((mod_keymap2[m_key])) #and press (and hold) it
                 kbd.press((keymap[key])) #press the (non-modifier) key
                 kbd.release_all() #then release all keys pressed
         r.value=0 #return the row to a low state, in preparation for the next row in the loop
-
-
-
-
-		
 
 
 
@@ -177,7 +184,7 @@ Y2      20      W       S       C   |   0       4       8       (
                                     |
 Y3      34      E       H       V   |   1       5       9       -
                                     |
-Y4      4$      R       F       S   |   2       6       .       RETURN
+Y4      4$      R       F       B   |   2       6       .       RETURN
                                     |
 Y5      6"      Y       G       N   |   3       7       +       ,
                                     +----------------------------------
