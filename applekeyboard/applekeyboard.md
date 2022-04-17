@@ -1,5 +1,4 @@
-# Connecting an Apple II keyboard to other systems
-
+# Connecting an Apple II keyboard to other systems via USB
 
 ![](../images/applekey2.jpg)
 
@@ -9,7 +8,7 @@ It would also be an option for connecting to other random systems, such as [Zog]
 
 That's what this section is about.
 
-## Circuit Diagram
+## Keyboard Circuit Diagram
 
 * [Apple IIe keyboard schematic](https://www.applefritter.com/node/7257)
 * [Apple IIe schematic - Look for J17](https://www.apple.asimov.net/documentation/hardware/schematics/Schematic%20Diagram%20of%20the%20Apple%20IIe.pdf)
@@ -18,17 +17,31 @@ That's what this section is about.
 
 ## Microcontroller choice
 
-It appears that while Arduinos are my usual go-to, a Teensy is better as it can appear as a USB keyboard very easily.
-If you want a Caps Lock LED, the Teensy 2 or 2++ doesn't quite have enough pins, and needs a shift register to help.
-If you can live without the LED, no other ICs are required.
-
-The problem is that Teensy's are hard to find at the moment. 
+It appears that while Arduinos are my usual go-to, a Teensy is better as it can act as a USB keyboard very easily. The problem is that Teensy's are hard to find at the moment. 
 
 I briefly considered the Pi Pico (as I have several) and then thought "ah, the Pico is 3.3v and the Apple keyboard needs 5v."
-Then I realized: the Apple keyboard is passive. It doesn't care if it's 5v, 3.3v or 12 volts - it's just switches. Ok, the LED needs 5, but so?
+
+Then I realized: the Apple IIe keyboard is passive. It doesn't care if it's 5v, 3.3v or 12 volts - it's just switches. Ok, the little light needs 5v, but so? It'll work fine with 3.3v from the Pico.
+
 So my plan is to write software using the Pico to decode the keyboard, because like the Teensy, it can act as a keyboard HID and it also has plenty of pins. And I have some Picos in my parts drawer.
 
 The Apple IIe keyboard has been ordered from eBay.
+
+## Progress
+
+The Pico I had, the Apple IIe keyboard took a little longer to get here, but it did. The circuit I had soldered together on strip board seems to work fine. The software for the Pico is written in Circuit Python, as this works with the Adafruit Keyboard HID library and also makes a super-convenient development platform - just save the source code from your editor (VS Code in this case) and the Pico automatically reboots and runs it. Really nice!
+
+The first version worked, but the Control and Shift keys did not. I checked the keyboard schematic and realized that the Open / Close Apple keys were connected to 5v and the other modifier keys were connected to Ground.
+
+After making the changes to the software, I found Caps Lock didn't work. Really I should I have expected it - it wasn't magically going to do a Shift. This is something the driver software needs to track on this keyboard. The Caps Lock button is a locking physical switch, and its state is read like other modifiers - but it needs tracked separately. I've adjusted the code to support it. 
+
+## Circuit
+
+The only electronics required is the Pico. It can be connected directly to the ribbon cable from the Apple IIe keyboard, as the keyboard is passive and has no electronics of its own. I built a circuit on stripboard, and I'm working on getting some PCBs to make it neater and more reliable. I will include the Gerber files in this repo when I do.
+
+This super-fancy diagram demonstrates the wiring I used.
+
+![](../images/applekey3.jpg)
 
 ## Software
 
@@ -45,23 +58,19 @@ The Apple IIe keyboard has been ordered from eBay.
 * [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
 
 
-
-
--- Script in Progress --- no caps lock support just yet --- 
-
-
-
-
 ```python
 
-# CircuitPython/Raspberry Pi Pico'firmware' based on The Smallest Keyboard
-# and adapted for Apple IIe keyboard. The order that the Pico's pins that are wired to the keyboard connector
-# will determine the row_pins, column_pins and modifier_pins
-
-
-
-# https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html
-
+# Apple IIe Keyboard to USB Interface using a Raspberry Pi Pico
+# John Kennedy, April 2022
+#
+# Based in part on CircuitPython/Raspberry Pi Pico'firmware' for The Smallest Keyboard
+# https://hackaday.io/project/178204-the-smallest-keyboard
+#
+# The keymapping depends on the wiring of the Apple IIe keyboard connector to the 
+# Raspberry Pi Pico. This code therefore matches a specific writing diagram included
+# in the github repo at https://github.com/GrantMeStrength/retro/blob/gh-pages/applekeyboard/applekeyboard.md
+#
+# It's a bit buggy about Caps Lock right now, but often works.
 
 
 import time
@@ -71,7 +80,7 @@ import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
-
+capslock = False
 led = digitalio.DigitalInOut(board.LED)
 led.direction = digitalio.Direction.OUTPUT
 led.value = True
@@ -83,7 +92,6 @@ led.value = True
 
 #create the HID
 kbd = Keyboard(usb_hid.devices)
-
 
 #set up the row, column, and modifier arrays
 rows = [] #  - ROW is OUTPUTS - Y in the Apple diagrams
@@ -104,24 +112,36 @@ for column in column_pins:
 # The open/close Apple modifiers short to +5, the shift/control/caps short to ground
 # so the code needs to be slightly different for each
 
+# Apple Keys
 modifiers1 = []
 modifier_pins1 = [board.GP27, board.GP28]
 for mod_pin in modifier_pins1:
     mod_key = digitalio.DigitalInOut(mod_pin)
     mod_key.direction = digitalio.Direction.INPUT
-    #mod_key.pull = digitalio.Pull.DOWN
+    #mod_key.pull = digitalio.Pull.DOWN # Don't need to specify
     modifiers1.append(mod_key)
 mod_keymap1 = [Keycode.RIGHT_ALT, Keycode.LEFT_ALT]
 
+# Control Shift
 modifiers2 = []
-modifier_pins2 = [board.GP22, board.GP14, board.GP26]
+modifier_pins2 = [board.GP22, board.GP14]
 for mod_pin in modifier_pins2:
     mod_key = digitalio.DigitalInOut(mod_pin)
     mod_key.direction = digitalio.Direction.INPUT
     mod_key.pull = digitalio.Pull.UP
     modifiers2.append(mod_key)
-mod_keymap2 = [Keycode.CONTROL, Keycode.SHIFT, Keycode.CAPS_LOCK]
+mod_keymap2 = [Keycode.CONTROL, Keycode.SHIFT]
 
+#Caps lock
+caps_mod_key = digitalio.DigitalInOut(board.GP26)
+caps_mod_key.direction = digitalio.Direction.INPUT
+caps_mod_key.pull = digitalio.Pull.UP
+capslock = not caps_mod_key.value
+if capslock == True :
+    # Started with Caps On
+    kbd.press(Keycode.CAPS_LOCK)
+    time.sleep(0.25)
+capslock = not capslock
 
 #array of keycodes; if you want to remap see: https://circuitpython.readthedocs.io/projects/hid/en/latest/api.html#adafruit-hid-keycode-keycode /'None' values have no physical connection
 
@@ -131,7 +151,7 @@ keymap = [Keycode.ESCAPE,Keycode.TAB,Keycode.A,Keycode.Z,Keycode.FORWARD_SLASH,K
 	Keycode.THREE, Keycode.E, Keycode.H, Keycode.V, Keycode.ONE, Keycode.FIVE,Keycode.NINE,Keycode.KEYPAD_MINUS,
 	Keycode.FOUR, Keycode.R, Keycode.F, Keycode.B, Keycode.TWO, Keycode.SIX, Keycode.PERIOD, Keycode.RETURN,
 	Keycode.SIX, Keycode.Y, Keycode.G, Keycode.N, Keycode.THREE, Keycode.SEVEN, Keycode.EQUALS, Keycode.COMMA,
-	Keycode.FIVE, Keycode.T, Keycode.J, Keycode.M, Keycode.BACKSLASH, Keycode.QUOTE, Keycode.RETURN, Keycode.DELETE,
+	Keycode.FIVE, Keycode.T, Keycode.J, Keycode.M, Keycode.BACKSLASH, Keycode.GRAVE_ACCENT, Keycode.RETURN, Keycode.DELETE,
 	Keycode.SEVEN, Keycode.U, Keycode.K, Keycode.COMMA, Keycode.EQUALS, Keycode.P, Keycode.UP_ARROW, Keycode.DOWN_ARROW,
 	Keycode.EIGHT, Keycode.I, Keycode.SEMICOLON, Keycode.PERIOD, Keycode.ZERO, Keycode.LEFT_BRACKET, Keycode.SPACE, Keycode.LEFT_ARROW,
 	Keycode.NINE, Keycode.O, Keycode.L, Keycode.FORWARD_SLASH, Keycode.MINUS, Keycode.RIGHT_BRACKET, Keycode.QUOTE, Keycode.RIGHT_ARROW]
@@ -139,14 +159,22 @@ keymap = [Keycode.ESCAPE,Keycode.TAB,Keycode.A,Keycode.Z,Keycode.FORWARD_SLASH,K
 #main loop
 
 while True:
-    #for m_e in modifier_enable:
-        #m_e.value=1 #set the modifier pin to high
+
+    # check the status of the caps-lock key
+    if capslock != caps_mod_key.value :
+         #print("Toggle caps to ",capslock)
+         capslock = caps_mod_key.value
+         kbd.press(Keycode.CAPS_LOCK)
+         led.value = not capslock
+         time.sleep(0.10)
+             
+
     for r in rows: #for each row
         r.value=1 #set row r to high
         for c in columns: #and then for each column
             if c.value: #if a keypress is detected (high row output --> switch closing circuit --> high column input)
                 while c.value: #wait until the key is released, which avoids sending duplicate keypresses
-                    time.sleep(0.01) #sleep briefly before checking back
+                    time.sleep(0.05) #sleep briefly before checking back
                 key = rows.index(r) * 8 + columns.index(c) #identify the key pressed via the index of the current row (r) and column (c)
                 for m in modifiers1: #check each Apple Key modifier to see if it is pressed
                     if m.value: #if pressed
@@ -160,11 +188,7 @@ while True:
                 kbd.release_all() #then release all keys pressed
         r.value=0 #return the row to a low state, in preparation for the next row in the loop
 
-
-
 ```
-
-
 
 Copied from here: http://apple2.info/wiki/index.php?title=Pinouts#Apple_.2F.2Fe_Motherboard_keyboard_connector
 
