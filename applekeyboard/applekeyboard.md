@@ -58,6 +58,8 @@ This super-fancy diagram demonstrates the wiring I used.
 * [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
 
 
+## My Python code for driving the Pico
+
 ```python
 
 # Apple IIe Keyboard to USB Interface using a Raspberry Pi Pico
