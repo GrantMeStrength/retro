@@ -1,5 +1,4 @@
-# Connecting an Apple II keyboard to other systems
-
+# Connecting an Apple II keyboard to other systems via USB
 
 ![](../images/applekey2.jpg)
 
@@ -18,11 +17,7 @@ That's what this section is about.
 
 ## Microcontroller choice
 
-It appears that while Arduinos are my usual go-to, a Teensy is better as it can act as a USB keyboard very easily.
-If you want a Caps Lock LED, the Teensy 2 or 2++ doesn't quite have enough pins, and needs a shift register to help.
-If you can live without the LED, no other ICs are required.
-
-The problem is that Teensy's are hard to find at the moment. 
+It appears that while Arduinos are my usual go-to, a Teensy is better as it can act as a USB keyboard very easily. The problem is that Teensy's are hard to find at the moment. 
 
 I briefly considered the Pi Pico (as I have several) and then thought "ah, the Pico is 3.3v and the Apple keyboard needs 5v."
 
@@ -61,7 +56,6 @@ This super-fancy diagram demonstrates the wiring I used.
 
 * [Circuitpython Raspberry Pi Pico USB HID Keyboard (the smallest keyboard, part 2)](https://youtu.be/V2ivH2PEoiA)
 * [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
-
 
 
 ```python
