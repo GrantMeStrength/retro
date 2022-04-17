@@ -46,11 +46,17 @@ The Apple IIe keyboard has been ordered from eBay.
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 -- Script in Progress --- no caps lock support just yet --- 
 =======
+=======
+>>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 -- Script in Progress ---
 >>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
+
+
+```python
 
 
 ```python
@@ -60,7 +66,10 @@ The Apple IIe keyboard has been ordered from eBay.
 # will determine the row_pins, column_pins and modifier_pins
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # CircuitPython/Raspberry Pi Pico'firmware' for The Smallest Keyboard
+=======
+>>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 =======
 >>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 
@@ -167,6 +176,7 @@ while True:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ---
 =======
 ```
@@ -174,6 +184,12 @@ while True:
 
 >>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 
+=======
+```
+
+
+
+>>>>>>> 27779c3252a7f9e600324564355309bdc532f0bd
 Copied from here: http://apple2.info/wiki/index.php?title=Pinouts#Apple_.2F.2Fe_Motherboard_keyboard_connector
 
 ```
