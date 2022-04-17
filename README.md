@@ -4,6 +4,13 @@ For a full list of current and past experiments, please see the [Index](index.md
 
 ## What's "New"
 
+**Using a Raspberry Pi Pico with an Apple IIe keyboard**
+
+![](images/keyboard1.jpg)
+
+An in-progress project to give an Apple IIe keyboard a USB interface. Details on the [Apple Keyboard](https://github.com/GrantMeStrength/retro/blob/gh-pages/applekeyboard/applekeyboard.md) page.
+
+
 **Mini Vectrex, and updated Virtual KIM-1 app and manual, June 27th 2021**
 
 ![](images/vec3.jpeg)
