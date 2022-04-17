@@ -163,8 +163,6 @@ while True:
 
 ```
 
-
-
 Copied from here: http://apple2.info/wiki/index.php?title=Pinouts#Apple_.2F.2Fe_Motherboard_keyboard_connector
 
 ```
