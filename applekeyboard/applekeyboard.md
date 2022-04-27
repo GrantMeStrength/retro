@@ -6,13 +6,6 @@ The Apple IIe keyboard is a passive matrix of switches. This means it should be 
 For example, it could be used in a real Apple II but connected to, say, a Raspberry Pi running an emulator - thus replacing broken, missing or just tired Apple original electronics.
 It would also be an option for connecting to other random systems, such as [Zog](https://github.com/GrantMeStrength/retro/blob/gh-pages/zog/zog.md).
 
-That's what this section is about.
-
-## Keyboard Circuit Diagram
-
-* [Apple IIe keyboard schematic](https://www.applefritter.com/node/7257)
-* [Apple IIe schematic - Look for J17](https://www.apple.asimov.net/documentation/hardware/schematics/Schematic%20Diagram%20of%20the%20Apple%20IIe.pdf)
-* [Keyboard pinout](https://gist.github.com/papodaca/5d854b296a5f7943e245)
 
 
 ## Microcontroller choice
@@ -23,9 +16,9 @@ I briefly considered the Pi Pico (as I have several) and then thought "ah, the P
 
 Then I realized: the Apple IIe keyboard is passive. It doesn't care if it's 5v, 3.3v or 12 volts - it's just switches. Ok, the little light needs 5v, but so? It'll work fine with 3.3v from the Pico.
 
-So my plan is to write software using the Pico to decode the keyboard, because like the Teensy, it can act as a keyboard HID and it also has plenty of pins. And I have some Picos in my parts drawer.
+So my plan was to write software using the Pico to decode the keyboard, because like the Teensy, it can act as a keyboard HID and it also has plenty of pins. And I have some Picos in my parts drawer.
 
-The Apple IIe keyboard has been ordered from eBay. I then discovered that [MacEffects sell a brand new one](https://maceffects.com/products/apple-iie-mechanical-keyboard)!
+The Apple IIe keyboard has been ordered from eBay. (I then discovered that [MacEffects sell a brand new one](https://maceffects.com/products/apple-iie-mechanical-keyboard)!)
 
 ## Progress
 
@@ -44,19 +37,6 @@ The only electronics required is the Pico. It can be connected directly to the r
 
 You can download the Gerber files from this repo to get some made yourself.
 
-## Software
-
-* [Pico as a keyboard](https://learn.adafruit.com/diy-pico-mechanical-keyboard-with-fritzing-circuitpython/code-the-pico-keyboard)
-* [RetroConnector](https://github.com/option8/RetroConnector/tree/master/IIe-USB)
-* [Apple IIe Keyboard USB](https://github.com/xunker/apple_iie_keyboard_usb)
-* [Keyduino](https://github.com/afiler/keyduino)
-* [Arduino USB HID Keyboard](https://mitchtech.net/arduino-usb-hid-keyboard/)
-* [Using USB Keyboard](https://www.pjrc.com/teensy/td_keyboard.html)
-
-## Using a Pico to scan a keyboard
-
-* [Circuitpython Raspberry Pi Pico USB HID Keyboard (the smallest keyboard, part 2)](https://youtu.be/V2ivH2PEoiA)
-* [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
 
 ## Step by Step - Hardware
 
@@ -284,3 +264,28 @@ Notes:
         jumpers are in the standard setting).
 
 ```
+
+## References
+
+
+
+### Keyboard Circuit Diagram
+
+* [Apple IIe keyboard schematic](https://www.applefritter.com/node/7257)
+* [Apple IIe schematic - Look for J17](https://www.apple.asimov.net/documentation/hardware/schematics/Schematic%20Diagram%20of%20the%20Apple%20IIe.pdf)
+* [Keyboard pinout](https://gist.github.com/papodaca/5d854b296a5f7943e245)
+
+
+### Software
+
+* [Pico as a keyboard](https://learn.adafruit.com/diy-pico-mechanical-keyboard-with-fritzing-circuitpython/code-the-pico-keyboard)
+* [RetroConnector](https://github.com/option8/RetroConnector/tree/master/IIe-USB)
+* [Apple IIe Keyboard USB](https://github.com/xunker/apple_iie_keyboard_usb)
+* [Keyduino](https://github.com/afiler/keyduino)
+* [Arduino USB HID Keyboard](https://mitchtech.net/arduino-usb-hid-keyboard/)
+* [Using USB Keyboard](https://www.pjrc.com/teensy/td_keyboard.html)
+
+### Using a Pico to scan a keyboard
+
+* [Circuitpython Raspberry Pi Pico USB HID Keyboard (the smallest keyboard, part 2)](https://youtu.be/V2ivH2PEoiA)
+* [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
