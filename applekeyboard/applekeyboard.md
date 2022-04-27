@@ -25,7 +25,7 @@ Then I realized: the Apple IIe keyboard is passive. It doesn't care if it's 5v, 
 
 So my plan is to write software using the Pico to decode the keyboard, because like the Teensy, it can act as a keyboard HID and it also has plenty of pins. And I have some Picos in my parts drawer.
 
-The Apple IIe keyboard has been ordered from eBay.
+The Apple IIe keyboard has been ordered from eBay. I then discovered that [MacEffects sell a brand new one](https://maceffects.com/products/apple-iie-mechanical-keyboard)!
 
 ## Progress
 
@@ -37,11 +37,12 @@ After making the changes to the software, I found Caps Lock didn't work. Really 
 
 ## Circuit
 
-The only electronics required is the Pico. It can be connected directly to the ribbon cable from the Apple IIe keyboard, as the keyboard is passive and has no electronics of its own. I built a circuit on stripboard, and I'm working on getting some PCBs to make it neater and more reliable. I will include the Gerber files in this repo when I do.
+The only electronics required is the Pico. It can be connected directly to the ribbon cable from the Apple IIe keyboard, as the keyboard is passive and has no electronics of its own. I built a circuit on stripboard, and then got a PCB made.
 
-This super-fancy diagram demonstrates the wiring I used.
 
 ![](../images/applekey3.jpg)
+
+You can download the Gerber files from this repo to get some made yourself.
 
 ## Software
 
@@ -56,6 +57,38 @@ This super-fancy diagram demonstrates the wiring I used.
 
 * [Circuitpython Raspberry Pi Pico USB HID Keyboard (the smallest keyboard, part 2)](https://youtu.be/V2ivH2PEoiA)
 * [Adafruit HID Keyboard library](https://docs.circuitpython.org/projects/hid/en/latest/_modules/adafruit_hid/keycode.html)
+
+## Step by Step - Hardware
+
+1. Get a Raspberry Pi Pico.
+2. Attach the GPIO pins to the ribbon cable from the keyboard.
+3. That's it really.
+
+If you like you can use the PCB I designed, and then the pins in the software listing below will be correct. You can then use a connector for the Apple ribbon cable, and solder the Pico directly to the PCB to make a svelt little board.
+
+![](../images/applekey1.jpg)
+
+## Step by Step - Software
+
+1. Go to [Circuit Python for Pico](https://circuitpython.org/board/raspberry_pi_pico/) page and download the stable release, and copy the .UF2 file to the Pico. To make the Pico appear on your computer as a USB device, hold down the BOOTSEL button as you plug it into the USB port. The BOOTSEL button is the only button on a typical Pico.
+
+2. Go to the [Adafruit HID Library](https://docs.circuitpython.org/projects/hid/en/latest/index.html) page to read about the Adafruit HID Library. Then go to the Git page and download [adafruit-circuit-[ython-hid-xx-mpy-xx.zip](https://github.com/adafruit/Adafruit_CircuitPython_HID/releases/tag/5.2.2). Unarchive it.
+
+3. Copy the folder  **adafruit_hid** to the **libs** folder on the Pico's root directory. The Pico will have unmounted itself, and re-appeared as a device called **CIRCUITPY**.
+
+4. You can test things by connecting to the Pico with a terminal program (I use Serial on the Mac), which will bring up the interactive Python prompt. If you can enter this without errors, it's all good:
+
+```
+import time
+import board
+import digitalio
+import usb_hid
+from adafruit_hid.keyboard import Keyboard
+from adafruit_hid.keycode import Keycode
+
+```
+
+Now find the file called **code.py** on the Pico's root directory and open it in your favourite code editor. Use the following program to replace everything in this file, including the "hello world" code. The program **code.py** is executed every time the Pico is reset.
 
 
 ## My Python code for driving the Pico
@@ -72,8 +105,6 @@ This super-fancy diagram demonstrates the wiring I used.
 # Raspberry Pi Pico. This code therefore matches a specific writing diagram included
 # in the github repo at https://github.com/GrantMeStrength/retro/blob/gh-pages/applekeyboard/applekeyboard.md
 #
-# It's a bit buggy about Caps Lock right now, but often works.
-
 
 import time
 import board
@@ -97,14 +128,14 @@ kbd = Keyboard(usb_hid.devices)
 
 #set up the row, column, and modifier arrays
 rows = [] #  - ROW is OUTPUTS - Y in the Apple diagrams
-row_pins = [board.GP2, board.GP3, board.GP4, board.GP5, board.GP6, board.GP7, board.GP17, board.GP16, board.GP8, board.GP13]
+row_pins = [board.GP15, board.GP16, board.GP18, board.GP19, board.GP20, board.GP21, board.GP5, board.GP4, board.GP22, board.GP1]
 for row in row_pins:
     row_key = digitalio.DigitalInOut(row)
     row_key.direction = digitalio.Direction.OUTPUT
     rows.append(row_key)
 
 columns = [] # COLUMNS in INPUTS - X in the Apple diagrams
-column_pins = [board.GP9, board.GP11, board.GP10, board.GP12, board.GP18, board.GP19, board.GP15, board.GP20]
+column_pins = [board.GP26, board.GP28, board.GP10, board.GP0, board.GP6, board.GP7, board.GP3, board.GP8]
 for column in column_pins:
     column_key = digitalio.DigitalInOut(column)
     column_key.direction = digitalio.Direction.INPUT
@@ -116,7 +147,7 @@ for column in column_pins:
 
 # Apple Keys
 modifiers1 = []
-modifier_pins1 = [board.GP27, board.GP28]
+modifier_pins1 = [board.GP14, board.GP13]
 for mod_pin in modifier_pins1:
     mod_key = digitalio.DigitalInOut(mod_pin)
     mod_key.direction = digitalio.Direction.INPUT
@@ -126,7 +157,7 @@ mod_keymap1 = [Keycode.RIGHT_ALT, Keycode.LEFT_ALT]
 
 # Control Shift
 modifiers2 = []
-modifier_pins2 = [board.GP22, board.GP14]
+modifier_pins2 = [board.GP11, board.GP2]
 for mod_pin in modifier_pins2:
     mod_key = digitalio.DigitalInOut(mod_pin)
     mod_key.direction = digitalio.Direction.INPUT
@@ -135,7 +166,7 @@ for mod_pin in modifier_pins2:
 mod_keymap2 = [Keycode.CONTROL, Keycode.SHIFT]
 
 #Caps lock
-caps_mod_key = digitalio.DigitalInOut(board.GP26)
+caps_mod_key = digitalio.DigitalInOut(board.GP12)
 caps_mod_key.direction = digitalio.Direction.INPUT
 caps_mod_key.pull = digitalio.Pull.UP
 capslock = not caps_mod_key.value
@@ -177,7 +208,8 @@ while True:
             if c.value: #if a keypress is detected (high row output --> switch closing circuit --> high column input)
                 while c.value: #wait until the key is released, which avoids sending duplicate keypresses
                     time.sleep(0.05) #sleep briefly before checking back
-                key = rows.index(r) * 8 + columns.index(c) #identify the key pressed via the index of the current row (r) and column (c)
+                key = rows.index(r) * 8 + columns.index(c) #identify the key pressed via the index of the current row (r) and column (c)         
+                print(key)
                 for m in modifiers1: #check each Apple Key modifier to see if it is pressed
                     if m.value: #if pressed
                         m_key = modifiers1.index(m) #identify which modifier
@@ -189,6 +221,7 @@ while True:
                 kbd.press((keymap[key])) #press the (non-modifier) key
                 kbd.release_all() #then release all keys pressed
         r.value=0 #return the row to a low state, in preparation for the next row in the loop
+
 
 ```
 
