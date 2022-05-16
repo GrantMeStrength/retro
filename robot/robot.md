@@ -4,41 +4,45 @@
 
 ## Goals
 
-1. A moving robot that can autonomously navigate the corridors at work to go from one office to another, which is not in line of sight.
-Sensors can avoid collisions, and a camera and machine learning model can detect corners / doors / singage, and work with an internal map to find the destination. Humans along the way will be greated.
+1. A moving robot that can autonomously navigate the corridors at work to go from one office to another, with the target office not in line of sight.
+Sensors can avoid collisions, and a camera and machine learning model can detect corners / doors / singage / people, and work with an internal map to find the destination. Humans along the way will be greated.
 
 2. A simple telepresence device, allowing remote colleagues to explore the office via a web interface.
 
 
 ## Robot body & motors
 
-Buggy designs are great and everything, and yes, they are practical. But are they cool? Will they look good navigating a corridor in work? No. They will not. Also, they're often small and the motors are not great on carpet. So why not build on the hard work of pioneering robot designs - like Japanese toy maker Tomy? In the 1980's Tomy made several robots toys (under the brand [Omnibot](http://www.theoldrobots.com/omnibot.html)) which not only have a fanatical following among middle-aged nerds to this day, starred in the TV show [How I met your mother](https://how-i-met-your-mother.fandom.com/wiki/The_Robot), but also appear on eBay in various states of decay. If you get lucky you can pick up a nice example (usually missing the remote control) and either play with it or replace the "brain" with a Raspberry Pi. 
+Buggy designs are great and everything, and yes, they are practical. But are they cool? Will they look good navigating a corridor in work? No. They will not. Also, they're often small and the motors are not great on carpet. So why not build on the hard work of pioneering robot designs - like Japanese toy maker Tomy? In the 1980's Tomy made several robots toys (under the brand [Omnibot](http://www.theoldrobots.com/omnibot.html)) which not only have a fanatical following among middle-aged nerds to this day, even starring in the TV show [How I met your mother](https://how-i-met-your-mother.fandom.com/wiki/The_Robot), but also appear on eBay in various states of decay. If you get lucky you can pick up a nice example (usually missing the remote control) for cheap and either play with it or replace the "brain" with a Raspberry Pi. 
 
-(Believe it or not, you can also purchase new wheel tred and hand gripper rubber to replace the originals, which often fall apart or turn into gloop. See [Daboo Designs](https://daboodesigns.com/collections/all/tomy-omnibot)).
+(Believe it or not, you can also purchase brand new wheel tred and hand gripper rubber to replace the originals, as they often fall apart or turn into gloop. See [Daboo Designs](https://daboodesigns.com/collections/all/tomy-omnibot)) for spares.
 
-I am using an Omnibot 5402 model, given a serious overhaul.
+For this project, I am using an Omnibot 5402 model, given a serious overhaul.
 
 ## Sensors
 
+The robot has been outfitted with the following sensors:
 
 ### Raspberry Pi camera
 
-The standard Pi camera is mounted on the front of the robot.
+The standard Pi camera is mounted on the front of the robot. I hope to use it with a Machine Learning system to recognize objects and help with navigation.
 
 ### LIDAR module
 
-[This LiDAR range finder](https://www.amazon.com/dp/B088NVX2L7?psc=1&ref=ppx_yo2ov_dt_b_product_details) works great - much easier to interface with the Raspberry Pi compared to the sonar devices. The disadvantage is that it's harder to use more than one device, so the robot will have to rotate a bit to look around it.
+![](../images/robot3.png)
+
+[This LiDAR range finder](https://www.amazon.com/dp/B088NVX2L7?psc=1&ref=ppx_yo2ov_dt_b_product_details) works really - much easier to interface with the Raspberry Pi compared to the sonar devices. The disadvantage is that it's harder to use more than one device, so the robot will have to rotate a bit to look around it. It should stop the robot crashing into things.
 
 ### IMU 
 
-No IMU yet. Waiting to see if one will help.
+No plans for an IMU yet. 
 
 ## Accuators / Output
 
+In order to *do stuff*, the robot has:
 
 ### Motors
 
-The Omnibot has two 6v DC motors. Nothing fancy, but they're good motors and can go forward, backwards or rotate. To drive them from a Raspberry Pi you will need a small board that accepts 3.3v logic and an external power source for the motors, and connects to them directly. Such as the **L298N Dual H Bridge DC Stepper Motor Driver Controller Board** which is cheap and readily available. 
+The Omnibot has two 6v DC motors. Nothing fancy, but they're good motors and can go forward, backwards or rotate. To drive them from a Raspberry Pi you will need a small board that accepts 3.3v logic and applies an external power source for the motors. The **L298N Dual H Bridge DC Stepper Motor Driver Controller Board** which is cheap and readily available. 
 
 ### LEDs
 
@@ -46,7 +50,18 @@ The Omnibot has a pair of LEDs which are controlled by the robot's original circ
 
 ### Sound
 
-The Pi's headphone jack can be amplified or connected to a speaker/amp combo to replay sounds - it just takes a line of Python like this to replay a sound sample.
+The Pi's headphone jack can be amplified or connected to a speaker/amp combo to replay sounds - it just takes a simple command like this to replay a sound sample:
+
+```
+aplay sound-file.wav
+```
+
+or from within Python:
+
+```
+import os
+os.system('aplay sound-file.wav')
+```
 
 However, it's a little more fun to use a speech synthesiser. I was going to use one of my classic old 1980's speech chips, but then I found that - of course - it's all possible in software now. A program for the Pi called [Festival](https://learn.adafruit.com/speech-synthesis-on-the-raspberry-pi/installing-the-festival-speech-package) does it all, and even sounds like a 1980's chip. I'm sure there are better quality Text To Speech systems, but this is exactly what I was looking for.
 
@@ -54,7 +69,6 @@ However, it's a little more fun to use a speech synthesiser. I was going to use 
 
 ```
 sudo apt-get install -y libasound2-plugins festival
-
 ```
 
 **Use Festival in Python**
@@ -83,5 +97,7 @@ pip3 install sparkfun-circuitpython-serlcd
 ```
 
 ### Plans
+
+![](../images/robot2.jpg)
 
 I laser-cut replacement front panels for the Omnibot, and a base for the Raspberry Pi and motor driver to go on. Plans included in the repo.
