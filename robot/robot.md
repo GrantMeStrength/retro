@@ -90,6 +90,7 @@ Someone kindly made some: [CircuitPython library for the Sparkfun SerLCD display
 A list of additional files required.
 
 ```
+sudo apt-get install python3-flask
 sudo apt-get install -y libasound2-plugins festival
 sudo pip3 install adafruit-blinka
 pip3 install RPI.GPIO
@@ -101,3 +102,251 @@ pip3 install sparkfun-circuitpython-serlcd
 ![](../images/robot2.jpg)
 
 I laser-cut replacement front panels for the Omnibot, and a base for the Raspberry Pi and motor driver to go on. Plans included in the repo.
+
+### Streaming video
+
+https://github.com/EbenKouao/pi-camera-stream-flask
+
+and then 
+
+https://www.pythonpool.com/solved-importerror-numpy-core-multiarray-failed-to-import/
+
+```
+pip install -U numpy 
+```
+
+and then
+
+https://github.com/HackerShackOfficial/Smart-Security-Camera/issues/20
+
+and making sure debug message is False, rather than True
+
+Video streaming seems to cause the Raspberry Pi's temp to jump a lot, and so it's a good idea to fit a heatsink and fan. There's plenty of room inside the Omnibot for this.
+
+### Ajax
+
+The standard Python Flask examples use a button, which visits a specific URL providing an argument as it does so. The specific URL is, of course, the same page that the button is on. 
+
+However, although nice and simple, this means the web page refreshes which is slow and annoying, and tends to cause the live video streaming some issues. Much better to use an slightly more modern approach, such as Ajax.
+
+I found a [nice example here](https://stackoverflow.com/questions/17745836/jquery-button-click-to-send-ajax-request-with-flask-and-python) which uses jQuery to do the hard work, making it possible to have a much nice experience.
+
+### Machine learning
+
+Now things can get interesting. The Pi camera is working and streaming - and that required an extra fan to stop the poor Raspberry Pi getting too hot and bothered. What about feeding the camera into a ML model to use it to help navigation?
+
+Hurray for people way smarter than me who publish notes on how to do this kind of thing! [How to Set Up and Run TensorFlow Lite Object Detection Models on the Raspberry Pi](https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md) is one very useful example. Shame that the Coral hardware is unavailable these days, but it is still working at 4 to 5 frames per second which is fine.
+
+
+### Code
+
+```
+# WebRobot2
+# Using modular approach
+
+import RPi.GPIO as gpio
+import time
+import os
+from time import sleep
+from datetime import datetime
+import board
+import serial
+import numpy as np
+from sparkfun_serlcd import Sparkfun_SerLCD_I2C
+from flask import Flask, render_template, Response, request, send_from_directory
+from camera import VideoCamera
+from gpiozero import CPUTemperature
+from threading import Timer
+
+
+from RobotMotorControl import *
+from RobotSound import *
+from RobotLCDDisplay import *
+from RobotLidar import getData
+
+
+
+RobotMotorControl.blinkOn()
+
+RobotSound.play("sound101.wav")
+
+RobotMotorControl.blinkOff()
+
+def update_data(interval):
+    Timer(interval, update_data, [interval]).start()
+    distance,strength,temperature = getData() # read values
+    RobotLCDDisplay.displayData(distance, strength)
+
+# This is pretty cool - could be used to poll lidar and 
+# check for emergency stops as well as this temp stuff
+update_data(1)
+
+# RobotLidar.py
+
+import serial
+
+class RobotLidar:
+
+    initialized = False
+    ser : serial.Serial()
+
+
+def init():
+    if RobotLidar.initialized == False :
+        RobotLidar.initialized = True
+        RobotLidar.ser = serial.Serial("/dev/serial0", 115200,timeout=0) # mini UART serial device
+        if RobotLidar.ser.isOpen() == False:
+            RobotLidar.ser.open() # open serial port if not open
+
+        
+def getData():
+
+    if RobotLidar.initialized == False:
+        init()
+
+    while True:
+        counter = RobotLidar.ser.in_waiting # count the number of bytes of the serial port
+        if counter > 8:
+            bytes_serial = RobotLidar.ser.read(9) # read 9 bytes
+            RobotLidar.ser.reset_input_buffer() # reset buffer
+
+            if bytes_serial[0] == 0x59 and bytes_serial[1] == 0x59: # check first two bytes
+                distance = bytes_serial[2] + bytes_serial[3]*256 # distance in next two bytes
+                strength = bytes_serial[4] + bytes_serial[5]*256 # signal strength in next two bytes
+                temperature = bytes_serial[6] + bytes_serial[7]*256 # temp in next two bytes
+                temperature = (temperature/8.0) - 256.0 # temp scaling and offset
+                return distance/100.0,strength,temperature
+
+# LED text display
+
+from gpiozero import CPUTemperature
+import board
+
+# Enable I2C communication
+from sparkfun_serlcd import Sparkfun_SerLCD_I2C
+
+class RobotLCDDisplay:
+
+    initialized = False
+    serlcd : Sparkfun_SerLCD_I2C
+
+    def __init__(self):
+        print("hello i don't think i exist")
+        RobotLCDDisplay.initialized = False
+        i2c = board.I2C()
+        RobotLCDDisplay.serlcd = Sparkfun_SerLCD_I2C(i2c)
+        RobotLCDDisplay.initialized = True
+
+    def init() :
+        if RobotLCDDisplay.initialized == False :
+            i2c = board.I2C()
+            RobotLCDDisplay.serlcd = Sparkfun_SerLCD_I2C(i2c)
+            RobotLCDDisplay.initialized = True
+    
+
+    def displayTemp():
+        RobotLCDDisplay.init()
+        temp = CPUTemperature().temperature
+        RobotLCDDisplay.serlcd.set_cursor(0, 0)
+        RobotLCDDisplay.serlcd.write('Temp {0:2.2f} C '. format(temp))
+
+
+    def displayData(range, strength):
+        RobotLCDDisplay.init()
+        temp = CPUTemperature().temperature
+        RobotLCDDisplay.serlcd.set_cursor(0, 0)
+        RobotLCDDisplay.serlcd.write('Temp {0:2.2f} C '. format(temp))
+        RobotLCDDisplay.serlcd.set_cursor(0, 1)
+        RobotLCDDisplay.serlcd.write('R {0:2.2f} m S {0:2.0f}'. format(range, strength))
+# Sound and speech
+# Functions for making bleeps and TTS
+
+import os
+import sys 
+
+from RobotMotorControl import *
+
+class RobotSound :
+
+    def play(sound):
+	    os.system('aplay ' + sound)
+
+    def speak(text):
+	    blinkOn()
+	    os.system('echo "' + text + '" | festival --tts')
+	    blinkOff()
+
+
+# Robot-Motor-Control
+
+# Functions for controlling motors and lights
+
+import RPi.GPIO as gpio
+import time
+
+class RobotMotorControl:
+
+    initialized = False
+
+    def __init__(self):
+        RobotMotorControl.initialized = False
+
+    def init():    
+
+        if RobotMotorControl.initialized == False :
+            gpio.setmode(gpio.BCM)
+            gpio.setup(6, gpio.OUT)
+            gpio.setup(13, gpio.OUT)
+            gpio.setup(12, gpio.OUT)
+            gpio.setup(26, gpio.OUT)
+            gpio.setup(24, gpio.OUT)
+            gpio.setup(23, gpio.OUT)
+            RobotMotorControl.initialized = True
+
+    def stop():
+        RobotMotorControl.init()
+        gpio.output(6, False)
+        gpio.output(13, False)
+        gpio.output(12, False)
+        gpio.output(26, False)
+
+    def backward():
+        RobotMotorControl.init()
+        gpio.output(6, False)
+        gpio.output(13, True)
+        gpio.output(12, True)
+        gpio.output(26, False)
+
+    def forward():
+        RobotMotorControl.init()
+        gpio.output(6, True)
+        gpio.output(13, False)
+        gpio.output(12, False)
+        gpio.output(26, True)
+
+    def left_turn():
+        RobotMotorControl.init()
+        gpio.output(6, True)
+        gpio.output(13, False)
+        gpio.output(12, True)
+        gpio.output(26, False)
+
+    def right_turn():
+        RobotMotorControl.init()
+        gpio.output(6, False)
+        gpio.output(13, True)
+        gpio.output(12, False)
+        gpio.output(26, True)
+
+
+    def blinkOn():
+        RobotMotorControl.init()
+        gpio.output(24, True)
+        gpio.output(23, True)
+
+    def blinkOff():
+        RobotMotorControl.init()
+        gpio.output(23, False)
+        gpio.output(24, False)
+
+```
