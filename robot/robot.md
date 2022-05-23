@@ -50,6 +50,9 @@ The Omnibot has two 6v DC motors. Nothing fancy, but they're good motors and can
 
 The Omnibot has a pair of LEDs which are controlled by the robot's original circuit board. As these are 1980's LEDs, the 3.3v from a Raspberry Pi output pin can't drive them, so I swapped them for 2000's LEDs which are nice and bright. 
 
+I further updated the LEDs to tri-colour ones. These are LEDs with four legs, and can display Red, Green, Blue or various combinations. It does require three GPIO pins to control them, but worth it.
+
+
 ### Sound
 
 The Pi's headphone jack can be amplified or connected to a speaker/amp combo to replay sounds - it just takes a simple command like this to replay a sound sample:
@@ -84,7 +87,8 @@ os.system('echo "Destroy all humans!" | festival --tts')
 ### Display
 
 A SparkFun SerLCD board provides 2 lines of 16 characters of text: just to have some visual clue of what is happening on the front of the robot. The board was originally designed for use with Arduino but works well perfect for the Pi - if you can find the drivers.
-Someone kindly made some: [CircuitPython library for the Sparkfun SerLCD displays](https://github.com/fourstix/Sparkfun_CircuitPython_SerLCD). I did find that about 1 time in 50 the driver crashes, so wrap all the Python that displays text in a try/except clause.
+
+Someone kindly made some: [CircuitPython library for the Sparkfun SerLCD displays](https://github.com/fourstix/Sparkfun_CircuitPython_SerLCD). I did find that about 1 time in 50 the driver crashes, so I needed to wrap all the Python code that displays text in a try/except clause.
 
 
 ### Imports
@@ -123,19 +127,19 @@ https://github.com/HackerShackOfficial/Smart-Security-Camera/issues/20
 
 and making sure debug message is False, rather than True
 
-Video streaming seems to cause the Raspberry Pi's temp to jump a lot, and so it's a good idea to fit a heatsink and fan. There's plenty of room inside the Omnibot for this.
+Video streaming seems to cause the Raspberry Pi's temp to jump a lot, and so it's a good idea to fit a heatsink and fan. There's plenty of room inside the Omnibot for this. Without the fan, the Pi was getting up to 60' C and crashing / throttling. With a fan and headsink, it stays in the 40' C range.
 
 ### Ajax
 
-The standard Python Flask examples use a button, which visits a specific URL providing an argument as it does so. The specific URL is, of course, the same page that the button is on. 
+The standard Python Flask examples use a button, causing a jump to a specific URL providing an argument as it does so. The specific URL is, of course, the same page that the button is on. 
 
-However, although nice and simple, this means the web page refreshes which is slow and annoying, and tends to cause the live video streaming some issues. Much better to use an slightly more modern approach, such as Ajax.
+However, although nice and simple, this means the web page refreshes itself which is slow and annoying, and tends to cause the live video streaming some issues. Much better to use an slightly more modern approach, such as Ajax.
 
 I found a [nice example here](https://stackoverflow.com/questions/17745836/jquery-button-click-to-send-ajax-request-with-flask-and-python) which uses jQuery to do the hard work, making it possible to have a much nice experience.
 
 ### Machine learning
 
-Now things can get interesting. The Pi camera is working and streaming - and that required an extra fan to stop the poor Raspberry Pi getting too hot and bothered. What about feeding the camera into a ML model to use it to help navigation?
+Now things can get interesting. The Pi camera is working and streaming - and that definitely required the fan to stop the poor Raspberry Pi getting too hot and bothered. What about feeding the camera into a ML model to use it to help navigation?
 
 Hurray for people way smarter than me who publish notes on how to do this kind of thing! [How to Set Up and Run TensorFlow Lite Object Detection Models on the Raspberry Pi](https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md) is one very useful example. Shame that the Coral hardware is unavailable these days, but it is still working at 4 to 5 frames per second which is fine.
 
