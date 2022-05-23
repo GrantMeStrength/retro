@@ -32,6 +32,8 @@ The standard Pi camera is mounted on the front of the robot. I hope to use it wi
 
 [This LiDAR range finder](https://www.amazon.com/dp/B088NVX2L7?psc=1&ref=ppx_yo2ov_dt_b_product_details) works really - much easier to interface with the Raspberry Pi compared to the sonar devices. The disadvantage is that it's harder to use more than one device, so the robot will have to rotate a bit to look around it. It should stop the robot crashing into things.
 
+[Software for the LiDAR](https://makersportal.com/blog/distance-detection-with-the-tf-luna-lidar-and-raspberry-pi).
+
 ### IMU 
 
 No plans for an IMU yet. 
