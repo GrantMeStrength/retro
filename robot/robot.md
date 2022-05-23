@@ -12,11 +12,11 @@ Sensors can avoid collisions, and a camera and machine learning model can detect
 
 ## Robot body & motors
 
-Buggy designs are great and everything, and yes, they are practical. But are they cool? Will they look good navigating a corridor in work? No. They will not. Also, they're often small and the motors are not great on carpet. So why not build on the hard work of pioneering robot designs - like Japanese toy maker Tomy? In the 1980's Tomy made several robots toys (under the brand [Omnibot](http://www.theoldrobots.com/omnibot.html)) which not only have a fanatical following among middle-aged nerds to this day, even starring in the TV show [How I met your mother](https://how-i-met-your-mother.fandom.com/wiki/The_Robot), but also appear on eBay in various states of decay. If you get lucky you can pick up a nice example (usually missing the remote control) for cheap and either play with it or replace the "brain" with a Raspberry Pi. 
+Buggy designs are great and everything, and yes, they are practical. But are they cool? Will they look good navigating a corridor in work? No. They will not. Also, they're often small and the motors are not great on carpet. So why not build on the hard work of pioneering robot designer - like Japanese toy maker Tomy? In the 1980s Tomy made several robots toys (under the brand [Omnibot](http://www.theoldrobots.com/omnibot.html)) which not only have a fanatical following among middle-aged nerds to this day, even starring in the TV show [How I met your mother](https://how-i-met-your-mother.fandom.com/wiki/The_Robot), but also appear on eBay in various states of decay. If you get lucky you can pick up a nice example (usually missing the remote control) for cheap and either play with it or replace the "brain" with a Raspberry Pi.
 
-(Believe it or not, you can also purchase brand new wheel tred and hand gripper rubber to replace the originals, as they often fall apart or turn into gloop. See [Daboo Designs](https://daboodesigns.com/collections/all/tomy-omnibot)) for spares.
+(Believe it or not, you can also purchase brand new wheel tread and hand gripper rubber to replace the originals, as they often fall apart or turn into gloop. See [Daboo Designs](https://daboodesigns.com/collections/all/tomy-omnibot)) for spares.
 
-For this project, I am using an Omnibot 5402 model, given a serious overhaul.
+For this project, I am using an Omnibot 5402 model, given a serious overhaul including retrobrighting, cracked plastic gluing and a deep, deep cleaning.
 
 ## Sensors
 
@@ -30,13 +30,13 @@ The standard Pi camera is mounted on the front of the robot. I hope to use it wi
 
 ![](../images/robot3.png)
 
-[This LiDAR range finder](https://www.amazon.com/dp/B088NVX2L7?psc=1&ref=ppx_yo2ov_dt_b_product_details) works really - much easier to interface with the Raspberry Pi compared to the sonar devices. The disadvantage is that it's harder to use more than one device, so the robot will have to rotate a bit to look around it. It should stop the robot crashing into things.
+[This LiDAR range finder](https://www.amazon.com/dp/B088NVX2L7?psc=1&ref=ppx_yo2ov_dt_b_product_details) works really well - and is much easier to interface with the Raspberry Pi compared to the sonar devices. The disadvantage is that it's harder to use more than one device at a time, so the robot will have to rotate to look around it. It should stop the robot crashing into things. It does have a very tight viewing angle, so I may have mounted it in the wrong place.
 
 [Software for the LiDAR](https://makersportal.com/blog/distance-detection-with-the-tf-luna-lidar-and-raspberry-pi).
 
-### IMU 
+### IMU
 
-No plans for an IMU yet. 
+No plans for an IMU yet. Looking through the collection of robot books I've found in second-hand bookshops, it's clear that "dead reckoning" was a really hard problem to solve up until 10 years ago - and then came affordable, fast, machine vision using deep learning models. Almost all the examples of navigation I've seen in these books have been rendered totally obsolete by a cheap webcam and tensorflow light running on a Raspberry Pi.
 
 ## Accuators / Output
 
@@ -50,7 +50,7 @@ The Omnibot has two 6v DC motors. Nothing fancy, but they're good motors and can
 
 The Omnibot has a pair of LEDs which are controlled by the robot's original circuit board. As these are 1980's LEDs, the 3.3v from a Raspberry Pi output pin can't drive them, so I swapped them for 2000's LEDs which are nice and bright. 
 
-I further updated the LEDs to tri-colour ones. These are LEDs with four legs, and can display Red, Green, Blue or various combinations. It does require three GPIO pins to control them, but worth it.
+I further updated the LEDs to tri-colour ones. These are LEDs with four pins, and they can display Red, Green, Blue or various combinations. It does require three GPIO pins to control them, but worth it just for the light show. 
 
 
 ### Sound
@@ -68,7 +68,7 @@ import os
 os.system('aplay sound-file.wav')
 ```
 
-However, it's a little more fun to use a speech synthesiser. I was going to use one of my classic old 1980's speech chips, but then I found that - of course - it's all possible in software now. A program for the Pi called [Festival](https://learn.adafruit.com/speech-synthesis-on-the-raspberry-pi/installing-the-festival-speech-package) does it all, and even sounds like a 1980's chip. I'm sure there are better quality Text To Speech systems, but this is exactly what I was looking for.
+However, it's a little more fun to use a speech synthesizer. I was going to use one of my classic old 1980's speech chips, but then I found that - of course - it's all possible in software now. A program for the Pi called [Festival](https://learn.adafruit.com/speech-synthesis-on-the-raspberry-pi/installing-the-festival-speech-package) does it all, and even sounds like a 1980's chip. I'm sure there are better quality Text To Speech systems, but this is exactly what I was looking for.
 
 **Install Festival**
 
@@ -86,14 +86,14 @@ os.system('echo "Destroy all humans!" | festival --tts')
 
 ### Display
 
-A SparkFun SerLCD board provides 2 lines of 16 characters of text: just to have some visual clue of what is happening on the front of the robot. The board was originally designed for use with Arduino but works well perfect for the Pi - if you can find the drivers.
+A SparkFun SerLCD board provides 2 lines of 16 characters: just to have some visual clue of what is happening on the front of the robot. The board was originally designed for use with Arduino, but works well on the Pi - if you can find the drivers.
 
 Someone kindly made some: [CircuitPython library for the Sparkfun SerLCD displays](https://github.com/fourstix/Sparkfun_CircuitPython_SerLCD). I did find that about 1 time in 50 the driver crashes, so I needed to wrap all the Python code that displays text in a try/except clause.
 
 
 ### Imports
 
-A list of additional files required.
+For the robot to use the above list of sensors and stuff, a list of additional stuff is required.
 
 ```
 sudo apt-get install python3-flask
@@ -111,6 +111,8 @@ I laser-cut replacement front panels for the Omnibot, and a base for the Raspber
 
 ### Streaming video
 
+Streaming live video from the webcam:
+
 https://github.com/EbenKouao/pi-camera-stream-flask
 
 and then 
@@ -127,11 +129,11 @@ https://github.com/HackerShackOfficial/Smart-Security-Camera/issues/20
 
 and making sure debug message is False, rather than True
 
-Video streaming seems to cause the Raspberry Pi's temp to jump a lot, and so it's a good idea to fit a heatsink and fan. There's plenty of room inside the Omnibot for this. Without the fan, the Pi was getting up to 60' C and crashing / throttling. With a fan and headsink, it stays in the 40' C range.
+Video streaming seems to cause the Raspberry Pi's temperature to jump a lot, and so it's a good idea to fit a heatsink and fan. There's plenty of room inside the Omnibot for this. Without the fan, the Pi was getting up to 60' C and crashing / throttling. With a fan and headsink, it stays in the 40' C range.
 
 ### Ajax
 
-The standard Python Flask examples use a button, causing a jump to a specific URL providing an argument as it does so. The specific URL is, of course, the same page that the button is on. 
+The standard Python Flask examples use a button, causing a jump to a specific URL providing an argument as it does so. The specific URL is, of course, the same page that the button is on.
 
 However, although nice and simple, this means the web page refreshes itself which is slow and annoying, and tends to cause the live video streaming some issues. Much better to use an slightly more modern approach, such as Ajax.
 
