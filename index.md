@@ -16,7 +16,7 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 * [Jupiter Ace stuff](Ace/index.md) - Programs and hardware
 * [Projects](Projects/index.md) - Some notes to work-in-progress projects and experiments
 * [PINIAC](Projects/PINIAC/readme.md) - Notes on trying to model the ENIAC using Raspbery Pi Picos.
-
+* [Robot](https://github.com/GrantMeStrength/retro/blob/gh-pages/robot/robot.md) - Updating a 1980's Tomy Omnibot with some Machine Learning
 
 ## Other repos
 

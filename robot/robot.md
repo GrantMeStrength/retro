@@ -145,8 +145,18 @@ Now things can get interesting. The Pi camera is working and streaming - and tha
 
 Hurray for people way smarter than me who publish notes on how to do this kind of thing! [How to Set Up and Run TensorFlow Lite Object Detection Models on the Raspberry Pi](https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md) is one very useful example. Shame that the Coral hardware is unavailable these days, but it is still working at 4 to 5 frames per second which is fine.
 
+### Continuing work
 
-### Code
+Over the past week I've upgraded the power supply from a pack of AA batteries to a lithium ion recharagable battery pack. The improved current/voltage from the pack (about 7.2 volts, not sure how many amps but not a *huge* ammount) really made the motors work a lot better.
+
+I also added two infrared proximity sensors to the front of the case to try and avoid bumping into walls as it drives down corridors. Unfortunately the range of these are not great, so angling them at 45' from the front edge isn't working. If they were placed more on the sides, they might be more useful. It's an encouragement to create a better Machine Model for navigation, as adding more and more sensors feels like a never-ending list of dealing-with-corner-cases.
+
+Unfortunately the robot had a bit of a disaster today. When I was debugging some software, I accidentally triggered the motors and it jumped off a desk. The ancient plastics didn't take kindly to the fall, so there's now quite a lot of epoxy resin holding the top part together.
+
+In order to allow external users to log into the robot to control it will require some experiments with the network on which the device is running. It might be simplest, believe it or not, to write a plug-in for Teams, the communications platform we use.
+
+
+### Some Code
 
 ```
 # WebRobot2
