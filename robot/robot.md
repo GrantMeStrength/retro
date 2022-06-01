@@ -145,7 +145,7 @@ Now things can get interesting. The Pi camera is working and streaming - and tha
 
 Hurray for people way smarter than me who publish notes on how to do this kind of thing! [How to Set Up and Run TensorFlow Lite Object Detection Models on the Raspberry Pi](https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md) is one very useful example. Shame that the Coral hardware is unavailable these days, but it is still working at 4 to 5 frames per second which is fine.
 
-### Continuing work
+### Power and disaster
 
 Over the past week I've upgraded the power supply from a pack of AA batteries to a lithium ion recharagable battery pack. The improved current/voltage from the pack (about 7.2 volts, not sure how many amps but not a *huge* ammount) really made the motors work a lot better.
 
@@ -153,7 +153,34 @@ I also added two infrared proximity sensors to the front of the case to try and 
 
 Unfortunately the robot had a bit of a disaster today. When I was debugging some software, I accidentally triggered the motors and it jumped off a desk. The ancient plastics didn't take kindly to the fall, so there's now quite a lot of epoxy resin holding the top part together.
 
-In order to allow external users to log into the robot to control it will require some experiments with the network on which the device is running. It might be simplest, believe it or not, to write a plug-in for Teams, the communications platform we use.
+
+### Some practical Python
+
+The little Omnibot has been moving offices a lot, and that means swapping between wireless networks. And in general, accessing the Raspberry Pi can be a little tricky, as the IP address can change every time it starts up, and without a monitor connected, it gets frustrating. So here's my approach.
+
+1. Use [VNC from my laptop to log into the Raspberry Pi](https://www.pitunnel.com/doc/access-vnc-remote-desktop-raspberry-pi-over-internet).
+2. Use [Visual Studio Code's wonderful remote access](https://cloudbytes.dev/snippets/develop-remotely-on-raspberry-pi-using-vscode-remote-ssh) to write Python on the Pi
+3. Use an "dummy" [HDMI dongle](https://www.amazon.com/Headless-Display-Emulator-Headless-1920x1080-Generation/dp/B06XT1Z9TF) to make sure the Pi boots up into a desktop that can be used with VNC
+4. Write a script that launches at startup, that displays the current IP on the LCD.
+
+I found [this posting](https://www.instructables.com/Raspberry-Pi-Launch-Python-script-on-startup/) very useful at getting a Python script to start at power-up.
+
+### Updated speech synth
+
+Although I like the Festival speech synth, I found one that sounds even better (and has a hint of English accent!)
+
+```
+sudo apt-get install espeak
+espeak "Hello, world!"
+```
+
+### Remote access
+
+It's not trivial to let other users access the Omnibot. Heck, it's hard enough for me to control it ;-)
+
+In order to allow external users to log into the robot to play will require some experiments with the network on which the device is running. It might be simplest, believe it or not, to write a plug-in for Teams, the communications platform we use. However, I wonder if "digital twins" is something that would work here, since this is a real "IOT on the Edge" project. More investigation required!
+
+
 
 
 ### Some Code
