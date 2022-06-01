@@ -158,6 +158,8 @@ Unfortunately the robot had a bit of a disaster today. When I was debugging some
 
 The little Omnibot has been moving offices a lot, and that means swapping between wireless networks. And in general, accessing the Raspberry Pi can be a little tricky, as the IP address can change every time it starts up, and without a monitor connected, it gets frustrating. So here's my approach.
 
+![](../images/robot4.jpg)
+
 1. Use [VNC from my laptop to log into the Raspberry Pi](https://www.pitunnel.com/doc/access-vnc-remote-desktop-raspberry-pi-over-internet).
 2. Use [Visual Studio Code's wonderful remote access](https://cloudbytes.dev/snippets/develop-remotely-on-raspberry-pi-using-vscode-remote-ssh) to write Python on the Pi
 3. Use an "dummy" [HDMI dongle](https://www.amazon.com/Headless-Display-Emulator-Headless-1920x1080-Generation/dp/B06XT1Z9TF) to make sure the Pi boots up into a desktop that can be used with VNC
