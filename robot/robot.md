@@ -180,7 +180,13 @@ It's not trivial to let other users access the Omnibot. Heck, it's hard enough f
 
 In order to allow external users to log into the robot to play will require some experiments with the network on which the device is running. It might be simplest, believe it or not, to write a plug-in for Teams, the communications platform we use. However, I wonder if "digital twins" is something that would work here, since this is a real "IOT on the Edge" project. More investigation required!
 
+### Current issues
 
+* The sound and speech output doesn't work when launched from a Python script which is run under Sudo. When the commands are used from a non-Sudo user, they work fine.
+
+* Accessing the robot from outside the local WiFi will be a challenge.
+
+* I need to train a new model to help the navigation process. I can stop the robot from crashing to walls, but making it autonomous (e.g. go visit the kitchen) is a longs way off.
 
 
 ### Some Code
