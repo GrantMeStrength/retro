@@ -50,7 +50,7 @@ The Omnibot has two 6v DC motors. Nothing fancy, but they're good motors and can
 
 The Omnibot has a pair of LEDs which are controlled by the robot's original circuit board. As these are 1980's LEDs, the 3.3v from a Raspberry Pi output pin can't drive them, so I swapped them for 2000's LEDs which are nice and bright. 
 
-I further updated the LEDs to tri-colour ones. These are LEDs with four pins, and they can display Red, Green, Blue or various combinations. It does require three GPIO pins to control them, but worth it just for the light show. 
+I further updated the LEDs to tri-colour ones. These are LEDs with four pins, and they can display Red, Green, Blue or various combinations. It does require three GPIO pins to control them, but its worth it just for the light show.
 
 
 ### Sound
@@ -86,14 +86,14 @@ os.system('echo "Destroy all humans!" | festival --tts')
 
 ### Display
 
-A SparkFun SerLCD board provides 2 lines of 16 characters: just to have some visual clue of what is happening on the front of the robot. The board was originally designed for use with Arduino, but works well on the Pi - if you can find the drivers.
+A SparkFun SerLCD board provides 2 lines of 16 characters: it is reakky just to have some visual clue of what is happening with the robot, and is useful for debugging. The board was originally designed for use with Arduino, but works well on the Pi - if you can find the drivers.
 
 Someone kindly made some: [CircuitPython library for the Sparkfun SerLCD displays](https://github.com/fourstix/Sparkfun_CircuitPython_SerLCD). I did find that about 1 time in 50 the driver crashes, so I needed to wrap all the Python code that displays text in a try/except clause.
 
 
 ### Imports
 
-For the robot to use the above list of sensors and stuff, a list of additional stuff is required.
+For the robot to use the above list of sensors and stuff, a list of additional libraries are required.
 
 ```
 sudo apt-get install python3-flask
@@ -161,9 +161,9 @@ The little Omnibot has been moving offices a lot, and that means swapping betwee
 ![](../images/robot4.jpg)
 
 1. Use [VNC from my laptop to log into the Raspberry Pi](https://www.pitunnel.com/doc/access-vnc-remote-desktop-raspberry-pi-over-internet).
-2. Use [Visual Studio Code's wonderful remote access](https://cloudbytes.dev/snippets/develop-remotely-on-raspberry-pi-using-vscode-remote-ssh) to write Python on the Pi
-3. Use an "dummy" [HDMI dongle](https://www.amazon.com/Headless-Display-Emulator-Headless-1920x1080-Generation/dp/B06XT1Z9TF) to make sure the Pi boots up into a desktop that can be used with VNC
-4. Write a script that launches at startup, that displays the current IP on the LCD.
+2. Use [Visual Studio Code's wonderful remote access](https://cloudbytes.dev/snippets/develop-remotely-on-raspberry-pi-using-vscode-remote-ssh) to write Python on the Pi.
+3. Use an "dummy" [HDMI dongle](https://www.amazon.com/Headless-Display-Emulator-Headless-1920x1080-Generation/dp/B06XT1Z9TF) to make sure the Pi boots up into a desktop that can be used with VNC.
+4. Use a script that launches at startup, and which displays the current IP on the LCD.
 
 I found [this posting](https://www.instructables.com/Raspberry-Pi-Launch-Python-script-on-startup/) very useful at getting a Python script to start at power-up.
 
@@ -190,6 +190,9 @@ In order to allow external users to log into the robot to play will require some
 
 * I need to train a new model to help the navigation process. I can stop the robot from crashing to walls, but making it autonomous (e.g. go visit the kitchen) is a longs way off.
 
+* Should I be using [ROS](https://www.ros.org)?
+
+* The motors are currently either on or off.  Using [PWM](https://www.electronicwings.com/raspberry-pi/raspberry-pi-pwm-generation-using-python-and-c) would give a lot more control over speed and allow smoother movement.
 
 ### Some Code
 
