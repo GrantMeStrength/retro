@@ -194,6 +194,27 @@ In order to allow external users to log into the robot to play will require some
 
 * The motors are currently either on or off.  Using [PWM](https://www.electronicwings.com/raspberry-pi/raspberry-pi-pwm-generation-using-python-and-c) would give a lot more control over speed and allow smoother movement.
 
+
+### Motor driving updates
+
+
+The **L298N Dual H Bridge DC Stepper Motor Driver Controller Board** I was using to control the pair of DC motors was working very well, especially when I started using a better power source for the motors. In fact, it was working *too* well, as the robot was spinning left and right just a little too fast. I needed a little more finesse.
+
+The usual way for controlling the speed of motors is not to simply drop the voltage/current, but to use Pulse Width Modulation. This allows the power supplied to the motors to be controlled in a digital way. The Raspberry Pi has two sets of pins for sending PWM signals, and the L298N board has suitable inputs (by default these are jumpered, so the motors are just ON or OFF). For a little more detail, you can see this [Instructables](https://www.instructables.com/member/tronixlabs/) topic. For me, it meant adding two more wires from the Pi to the L298N board and then tweaking my Python. As a result, the motors now can be speed adjusted from 0 to 100%, although in practice it takes at least 50% to start moving.
+
+### Improved LiDAR
+
+The infrared LiDAR sensor I had on the front of the robot was a good idea, but in the real world it didn't do too much to prevent collisions or help with navigation. The "beam" of light that it used was extremely narrow, and it was very easy for Omnibot to crash into a wall before it registered.
+
+The only real alternative (alternative to adding more sensors in many angles anyway) was to add a fancy spinning LiDAR, which can produce a full 360 degree set of range values. The basic models are not ludicrously expensive ($99 US on Amazon), and connect via USB: perfect for the Raspberry Pi. There are drivers and tutorials from [Adafruit](https://www.adafruit.com/product/4010) but the device I receieved from Amazon had a different firmware version which means these didn't work. However, other drivers exist - such as [RPLidar](https://github.com/Roboticia/RPLidar).
+
+![](../images/robot5.png)
+
+##### Screenshot showing one of the LiDAR code samples looking around the room.
+
+Programming the Omnibot to use the LiDAR data is not trivial, and there are lots and lots of papers and GitHub projects covering SLAM (simultaneous location and mapping) techniques, so this is a rich area of investigation. I'm hoping that I can start by using the LiDAR data to keep the Omnibot in the center of a corridor without drifting too far off course, and combine this with the tensorflow image recognition to find waypoints or other distinguishing features to aid with navigation.
+
+
 ### Some Code
 
 ```
