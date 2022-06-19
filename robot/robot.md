@@ -214,8 +214,83 @@ The only real alternative (alternative to adding more sensors in many angles any
 
 Programming the Omnibot to use the LiDAR data is not trivial, and there are lots and lots of papers and GitHub projects covering SLAM (simultaneous location and mapping) techniques, so this is a rich area of investigation. I'm hoping that I can start by using the LiDAR data to keep the Omnibot in the center of a corridor without drifting too far off course, and combine this with the tensorflow image recognition to find waypoints or other distinguishing features to aid with navigation.
 
+![](../images/robot6.png)
 
-### Some Code
+##### Updated code using pygame to plot obstacles in real-time.
+
+I found a slightly better Python library for working with the LiDAR device I have - PyRPlidar - and it meant I was able to use it with Pygame to plot some real-time images. Here's the code that I wrote:
+
+```
+from pyrplidar import PyRPlidar
+from math import cos,sin,trunc, radians, pi, floor
+import time
+import pygame
+
+
+lidar = PyRPlidar()
+
+lidar.connect(port="/dev/ttyUSB0", baudrate=115200, timeout=3)
+# Linux   : "/dev/ttyUSB0"
+# MacOS   : "/dev/cu.SLAB_USBtoUART"
+# Windows : "COM5"
+
+pygame.init()
+display_surface = pygame.display.set_mode((512, 512 ))
+pygame.display.set_caption('LiDAR')
+display_surface.fill((128,128,128))
+pygame.display.update() 
+
+
+print()
+print("*"*40)
+print()
+
+info = lidar.get_info()
+print("info :", info)
+
+#health = lidar.get_health()
+#print("health :", health)
+
+#samplerate = lidar.get_samplerate()
+#print("samplerate :", samplerate)
+
+
+#scan_modes = lidar.get_scan_modes()
+#print("scan modes :")
+#for scan_mode in scan_modes:
+#print(scan_mode)
+
+lidar.set_motor_pwm(500)
+time.sleep(0.25)
+    
+scan_generator = lidar.force_scan()
+    
+while True:    
+    display_surface.fill((128,128,128))
+    for i, scan in enumerate(scan_generator()):
+        a = scan.angle
+        d = scan.distance
+        
+        if d > 0:
+            x = cos(radians(a))*d/20
+            y = sin(radians(a))*d/20
+            pygame.draw.circle(display_surface,(255,255,255), (256+trunc(x), 256+trunc(y)), 2, 0)
+    
+        
+        if i == 360: break    
+    pygame.display.update()
+
+lidar.stop()
+lidar.set_motor_pwm(0)
+lidar.disconnect()
+
+```
+
+
+<hr>
+
+
+### Some random code until I tidy it all up
 
 ```
 # WebRobot2
@@ -355,75 +430,458 @@ class RobotSound :
 
 
 # Robot-Motor-Control
-
 # Functions for controlling motors and lights
 
 import RPi.GPIO as gpio
 import time
+import random
 
 class RobotMotorControl:
 
-    initialized = False
+    # Class properties
+
+    __pi_pwm1 = None # Use 'None' if you don't know the type yet
+    __pi_pwm2 = None
 
     def __init__(self):
-        RobotMotorControl.initialized = False
+        """ Robot Motor Control Class Initializer """
+        gpio.setmode(gpio.BCM)
+        
+        # PWM Mode
+        gpio.setup(19, gpio.OUT)
+        gpio.setup(13, gpio.OUT)
+        self.__pi_pwm1 = gpio.PWM(19,1000) # Use self. to access the class-wide variable
+        self.__pi_pwm2 = gpio.PWM(13,1000)
+        
+        # Direction control
+        gpio.setup(6, gpio.OUT)
+        gpio.setup(5, gpio.OUT)
+        gpio.setup(12, gpio.OUT)
+        gpio.setup(26, gpio.OUT)
+        
+        #LED
+        gpio.setup(24, gpio.OUT)
+        gpio.setup(23, gpio.OUT)
+        gpio.setup(25, gpio.OUT)
 
-    def init():    
-
-        if RobotMotorControl.initialized == False :
-            gpio.setmode(gpio.BCM)
-            gpio.setup(6, gpio.OUT)
-            gpio.setup(13, gpio.OUT)
-            gpio.setup(12, gpio.OUT)
-            gpio.setup(26, gpio.OUT)
-            gpio.setup(24, gpio.OUT)
-            gpio.setup(23, gpio.OUT)
-            RobotMotorControl.initialized = True
-
-    def stop():
-        RobotMotorControl.init()
+    def stop(self):
         gpio.output(6, False)
-        gpio.output(13, False)
+        gpio.output(5, False)
         gpio.output(12, False)
         gpio.output(26, False)
+        self.__pi_pwm1.stop()
+        self.__pi_pwm2.stop()       # Remember to use self.
 
-    def backward():
-        RobotMotorControl.init()
+    def backward(self):
+        self.__pi_pwm1.start(50)
+        self.__pi_pwm2.start(50)
         gpio.output(6, False)
-        gpio.output(13, True)
+        gpio.output(5, True)
         gpio.output(12, True)
         gpio.output(26, False)
 
-    def forward():
-        RobotMotorControl.init()
+    def forward(self):
+        self.__pi_pwm1.start(100)
+        self.__pi_pwm2.start(100)
         gpio.output(6, True)
-        gpio.output(13, False)
+        gpio.output(5, False)
         gpio.output(12, False)
         gpio.output(26, True)
 
-    def left_turn():
-        RobotMotorControl.init()
+    def forward_slow(self):
+        self.__pi_pwm1.start(50)
+        self.__pi_pwm2.start(50)
         gpio.output(6, True)
-        gpio.output(13, False)
+        gpio.output(5, False)
+        gpio.output(12, False)
+        gpio.output(26, True)
+
+    def left_turn(self):
+        self.__pi_pwm1.start(75)
+        self.__pi_pwm2.start(50)
+        gpio.output(6, True)
+        gpio.output(5, False)
         gpio.output(12, True)
         gpio.output(26, False)
 
-    def right_turn():
-        RobotMotorControl.init()
+    def left_turn_pulse(self):
+        self.__pi_pwm1.start(0)
+        self.__pi_pwm2.start(0)
+        gpio.output(6, True)
+        gpio.output(5, False)
+        gpio.output(12, True)
+        gpio.output(26, False)  
+        for dc in range(4,7):
+            self.__pi_pwm1.start(dc*10)
+            self.__pi_pwm2.start(dc*10)
+            time.sleep(0.06)
+        for dc in range(7,4,-1):
+            self.__pi_pwm1.start(dc*10)
+            self.__pi_pwm2.start(dc*10)
+            time.sleep(0.06)
+    
+        self.__pi_pwm1.start(0)
+        self.__pi_pwm2.start(0)
+        self.stop()
+
+    def right_turn_pulse(self):
+        self.__pi_pwm1.start(0)
+        self.__pi_pwm2.start(0)
         gpio.output(6, False)
-        gpio.output(13, True)
+        gpio.output(5, True)
+        gpio.output(12, False)
+        gpio.output(26, True)  
+        for dc in range(4,7):
+            self.__pi_pwm1.start(dc*10)
+            self.__pi_pwm2.start(dc*10)
+            time.sleep(0.06)
+        for dc in range(7,4,-1):
+            self.__pi_pwm1.start(dc*10)
+            self.__pi_pwm2.start(dc*10)
+            time.sleep(0.06)
+    
+        self.__pi_pwm1.start(0)
+        self.__pi_pwm2.start(0)
+        self.stop()
+
+    def right_turn(self):
+        self.__pi_pwm1.start(50)
+        self.__pi_pwm2.start(50)
+        gpio.output(6, False)
+        gpio.output(5, True)
         gpio.output(12, False)
         gpio.output(26, True)
 
-
-    def blinkOn():
-        RobotMotorControl.init()
-        gpio.output(24, True)
-        gpio.output(23, True)
-
-    def blinkOff():
-        RobotMotorControl.init()
+    def blinkOff(self):
         gpio.output(23, False)
         gpio.output(24, False)
+        gpio.output(25, False)
+
+    def blinkOn(self):
+        a = random.randint(0,1)
+        b = random.randint(0,1)
+        c = random.randint(0,1)
+        self.blinkOff()
+        if a == 1:
+            gpio.output(24, True)
+        if b == 1:	
+            gpio.output(23, True)
+        if c == 1:
+            gpio.output(25, True)
+        if (a + b + c) == 0 :
+            gpio.output(25, True)
+
+    
+
+    def blinkGreen(self):
+        gpio.output(23, True)
+        gpio.output(24, False)
+        gpio.output(25, False)
+
+    def blinkBlue(self):
+        gpio.output(23, False)
+        gpio.output(24, True)
+        gpio.output(25, False)
+
+    def blinkRed(self):
+        gpio.output(23, False)
+        gpio.output(24, False)
+        gpio.output(25, True)
+        
+    def proximity_left(self) :
+        if gpio.input(20) != 1 :
+            return True
+        else :
+            return False
+                      
+    def proximity_right(self) :
+        if gpio.input(21) != 1 :
+            return True
+        else :
+            return False
+                      
+# Webrobot
+
+import RPi.GPIO as gpio
+import time
+import os
+from time import sleep
+from datetime import datetime
+import board
+import serial
+import numpy as np
+from sparkfun_serlcd import Sparkfun_SerLCD_I2C
+from flask import Flask, render_template, Response, request, send_from_directory
+from camera import VideoCamera
+from gpiozero import CPUTemperature
+from threading import Timer
+from RobotMotorControl import *
+from RobotLidar import *
+import socket
+import random
+
+try :
+    pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
+except :
+    print("Could not set up camera. Is script still running in background?")
+
+
+# Enable I2C communication
+from sparkfun_serlcd import Sparkfun_SerLCD_I2C
+
+i2c = board.I2C()
+serlcd = Sparkfun_SerLCD_I2C(i2c)
+ser = serial.Serial("/dev/serial0", 115200,timeout=0) # mini UART serial device
+
+if ser.isOpen() == False:
+    ser.open() # open serial port if not open
+
+
+# Start Motor Control
+RMC = RobotMotorControl()
+
+
+RobotMoving = False
+
+
+def play(sound):
+	#print('Current user is ' + os.system('whoami'))
+	#print("Playing sound: " + sound)
+	#os.system('sudo -u robot aplay ' + sound)
+	os.system('aplay ' + sound)
+
+def speak(text):
+	print("Speaking text: " + text)
+	os.system('echo "' + text + '" | festival --tts')
+
+
+def read_tfluna_data():
+    while True:
+        counter = ser.in_waiting # count the number of bytes of the serial port
+        if counter > 8:
+            bytes_serial = ser.read(9) # read 9 bytes
+            ser.reset_input_buffer() # reset buffer
+
+            if bytes_serial[0] == 0x59 and bytes_serial[1] == 0x59: # check first two bytes
+                distance = bytes_serial[2] + bytes_serial[3]*256 # distance in next two bytes
+                strength = bytes_serial[4] + bytes_serial[5]*256 # signal strength in next two bytes
+                temperature = bytes_serial[6] + bytes_serial[7]*256 # temp in next two bytes
+                temperature = (temperature/8.0) - 256.0 # temp scaling and offset
+                return distance/100.0,strength,temperature
+
+
+if ser.isOpen() == False:
+    ser.open() # open serial port if not open
+
+def displayIP():
+	hostname = socket.gethostname()  
+	hostaddr = socket.gethostbyname(hostname + ".local")
+	try :
+		serlcd.set_cursor(0, 1)
+		serlcd.write(hostaddr)
+	except :
+		print("*")
+
+
+def displayTemp():
+	temp = CPUTemperature().temperature
+	try :
+		serlcd.set_cursor(0, 0)
+		serlcd.write('Temp {0:2.2f} C   '. format(temp))
+	except :
+		print("*")
+
+# Heart beat - update data AND check for collisions
+def update_data(interval):
+	global RobotMoving
+	Timer(interval, update_data, [interval]).start()
+	displayTemp()
+	displayIP()
+"""
+	if RobotMoving :
+		distance,strength,temperature = getData() # read values
+		#RobotLCDDisplay.displayData(distance, strength)
+		if strength > 1000 and distance < 0.50 :
+			print("STOP!!")
+			RobotMoving = False
+			RobotMotorControl.stop()
+		if RobotMotorControl.proximity_left() :
+			print("Boop! Left")
+			RobotMoving = False
+			RobotMotorControl.stop()
+			RobotMotorControl.backward()
+			RobotMoving = False
+			time.sleep(0.5)
+			RobotMotorControl.right_turn()
+			RobotMoving = False
+			time.sleep(0.25)
+			RobotMotorControl.forward()
+			RobotMoving = True
+			
+		if RobotMotorControl.proximity_right() :
+			print("Boop! Right")
+			RobotMoving = False
+			RobotMotorControl.stop()
+			RobotMotorControl.backward()
+			RobotMoving = False
+			time.sleep(0.5)
+			RobotMotorControl.left_turn()
+			RobotMoving = False
+			time.sleep(0.25)
+			RobotMotorControl.forward()
+			RobotMoving = True
+            """
+
+# This is pretty cool - could be used to poll lidar and 
+# check for emergency stops as well as this temp stuff
+update_data(0.5)
+
+
+
+from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route("/", methods=['GET', 'POST'])
+def index():
+	print(request.method)
+	# Read Lidar
+	distance,strength,temperature = read_tfluna_data() # read values
+	temp = CPUTemperature().temperature
+	print(distance, strength, temp)
+	templateData = {
+      'title' : 'Omnibot 25',
+      'lidar_distance'  : distance,
+      'lidar_strength'  : strength,
+	  'pi_temp'  : temp
+      }
+	return render_template('index.html', **templateData)
+
+def gen(camera):
+    #get camera frame
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+	#return nothing
+	return Response(gen(pi_camera),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+#background process happening without any refreshing thanks to jQuery which is awesome
+@app.route('/background_process_test_blinkon')
+def background_process_test_blinkon():
+	#init()
+	RMC.blinkOn()
+	return "nothing"
+
+@app.route('/background_process_test_blinkoff')
+def background_process_test_blinkoff():
+	#init()
+	RMC.blinkOff()
+	return "nothing"
+
+@app.route('/background_process_test_stop')
+def background_process_test_stop():
+	#init()
+	RMC.stop()
+	return "nothing"
+
+@app.route('/background_process_test_sound')
+def background_process_test_sound():
+	play("sound101.wav")
+	return "nothing"
+
+@app.route('/background_process_test_forward')
+def background_process_test_forward():
+	#init()
+	RMC.forward()
+	return "nothing"
+
+@app.route('/background_process_test_forward_slow')
+def background_process_test_forward_slow():
+	RMC.forward_slow()
+	return "nothing"
+
+@app.route('/background_process_test_reverse')
+def background_process_test_reverse():
+	#init()
+	RMC.backward()
+	return "nothing"
+
+@app.route('/background_process_test_left')
+def background_process_test_leftf():
+	#init()
+	RMC.left_turn()
+	return "nothing"
+
+@app.route('/background_process_test_right')
+def background_process_test_right():
+	#init()
+	RMC.right_turn()
+	return "nothing"
+
+@app.route('/background_process_test_left_pulse')
+def background_process_test_left_pulse():
+	#init()
+	RMC.left_turn_pulse()
+	return "nothing"
+
+@app.route('/background_process_test_right_pulse')
+def background_process_test_right_pulse():
+	#init()
+	RMC.right_turn_pulse()
+	return "nothing"
+
+
+@app.route('/background_process_test_talk')
+def background_process_test_talk():
+	speak("Hello human.")
+	return "nothing"
+
+
+@app.route("/<deviceName>/<action>")
+def action(deviceName, action):
+	# Read Lidar
+	distance,strength,temperature = read_tfluna_data() # read values
+	temp = CPUTemperature().temperature
+	print(distance, strength, temp)
+	templateData = {
+      'title' : 'Lidar Status',
+      'lidar_distance'  : distance,
+      'lidar_strength'  : strength,
+	  'pi_temp'  : temp
+      }
+	#init() # raspistill -o Desktop/image.jpg
+	print(deviceName, action)
+	if deviceName == 'forward' and  action == "on" :
+		#RMC.forward(1.0)
+		stop()
+	if deviceName == 'backward' and  action == "on" :
+		#RMC.backward(1.0)	
+		stop()
+	if deviceName == 'left' and  action == "on" :
+		RMC.left_turn_pulse()	
+		stop()
+	if deviceName == 'right' and  action == "on" :
+		RMC.right_turn_pulse()
+		stop()
+	if deviceName == 'camera':
+		os.system('raspistill -o ../static/robot.jpg')
+	if deviceName == 'speak':
+		os.system('echo "' + action + '" | festival --tts')
+	if deviceName == 'sound':
+		play("sound101.wav")
+	if deviceName == 'blink':   
+		if action == "on":
+			blinkOn()
+		if action == "off":
+			blinkOff()
+		        
+	return render_template('index.html', **templateData)
+if __name__ == "__main__":
+   app.run(host='robot4.local', port=80, debug=False) # Set to False in order to stream
+                      
 
 ```
