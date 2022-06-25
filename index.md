@@ -10,6 +10,7 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 
 ## In this repo
 
+* [Rust](rust/intro.md) - Learning Rust
 * [Pico](pico/readme.md) - Some notes about developing on the Raspberry Pi Pico
 * [PDP Minicomputers](PDP/pdp.md) - Information related to the Digital Equipment Corp minicomputers
 * [Zog](zog/zog.md) - Experiments with a Z80-based collection of parts called Zog
