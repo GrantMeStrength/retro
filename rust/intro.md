@@ -1,18 +1,45 @@
 # Rust Programming
 
-Some notes on learning Rust.
+Some notes on learning Rust, a strongly-typed compiled language designed to combine the speed and flexibility of C, with the memory-safety and convenience of Python.
+
+## Installing Rust
+
+[Piece of cake](https://www.rust-lang.org/tools/install). A single command line operation for almost all OSs.
+
+## Cargo
+
+While the Rust compiler is called **rustc** it is more usual to use the **cargo** command to compile, run and manage Rust programs (and packages, called 'crates'). For example, to create a new Rust project:
+
+```
+cargo new my_new_project
+```
+
+and to build and run it:
+
+```
+cd my_new_project
+cargo run
+```
+
+Note: If you are using an IDE such as Visual Studio Code, there are ways to build and run within the editor with a few keypresses (Ctrl Alt N) or menu options.
+
+## Rust source files
+
+By convention, Rust source files end in .rs
+
+Rust uses { } to delimit blocks of code (like C, C++, C# and so on, and not idents with tabs or spaces Python-style). Semi-colons at the ends of lines are required.
 
 ## Variables and Consts
 
 ```
 fn main() {
-	// Comments are like this and /* */
+	// Comments are defined like this or /* */
 	let x = 0;
-	let y : u32 = 0;
+	let y : u32 = 0; // Explicit type
 	let z = “Hello”;
-	const MYPI : f32 = 3.14159;
-	let state = true; // 1
-	x++; // Not allowed
+	const MYPI : f32 = 3.14159; // Style says use caps
+	let state = true; // 1 = true, 0 = false
+	x++; // Not allowed ;-(
 }
 ```
 
@@ -29,7 +56,7 @@ Character	| char
 
 ### Compound types
 
-tuple	
+*tuple*
 
 ```
 let tup1 = (1, true, 's');
@@ -41,7 +68,7 @@ println!("{:?}", tup1);
 println!("{}, {}", tup1.0, tup2.0);
 ```
 
-### array	
+*array*	
 
 ```
 let arr = [1,2,3,4];
@@ -49,12 +76,39 @@ let x = arr[1];
 let mut arr2 : [i32; 5] = [1,2,3,4,5]; 
 ```
 
-2D array	
+*2D array*	
 ```
 let mut grid = [[0 as u8; 10] ; 10];
 let mut array_2d: [[i32; 16]; 8];
 grid[5][5] = 1;
 println!("{:?}", grid);
+```
+
+*Vector*
+
+A **Vec()** is an array that can grow dynamically.
+
+```
+fn main() {
+    
+	let list = "\
+	list, 4
+	of, 2
+	lots, 4
+	of, 2
+	words, 5
+	separated, 8
+	by, 2
+	commas, 6";
+
+	let words = list.lines();
+	let mut myVec: Vec<_> = words.collect();
+	myVec.push("soup, 4"); // Add new item
+
+	for word in myVec {
+		println!("{}", word);
+	}
+}
 ```
 
 ## Logic
@@ -73,8 +127,13 @@ if 2 < 3 {
 } else {
 	println!(“Should not happen”);
 }
+
 ```
-## Casting
+There is an **else-if** structure too.
+
+
+## Casting / type conversion
+
 ```
 	let p  = (MYPI).round() as u16;
 	let f = x as f32;
@@ -86,6 +145,9 @@ if 2 < 3 {
 
 
 ## Loops
+
+The simplest loop will keep looping until you **break**. You cannot use **break** other than in a loop, by the way.
+
 ```
 fn main() {
 	// Loop until condition
@@ -93,6 +155,17 @@ fn main() {
 
 		// keep looping until break; statement
 
+	}
+}
+```
+
+Looping over items in an array is done like this:
+```
+fn main() {
+	array = ["One", "Two", "Three"];
+
+	for item in array.iter() {
+		println!("{}", item); // Sometimes &item
 	}
 }
 ```
@@ -108,4 +181,36 @@ fn main() {
     io::stdin().read_line(&mut input).expect("Failed to read line");
     println!("ok, sure you entered {}", input);
 }
+```
+
+## Functions
+
+Every program has a main() function.
+
+```
+fn main() {
+	// Execution starts here
+}
+```
+
+Other functions in the same file can be defined before _or_ after they are referenced.
+
+```
+fn main() {
+	let x = my_func1(42);
+	let y = my_func2(42);
+
+	println!("{} {}", x, y);
+}
+
+fn my_func1(x : i32) -> i32
+{
+	2 + x
+}
+
+fn my_func2(x : i32) -> i32
+{
+	return my_func1(x) + 1;
+}
+
 ```
