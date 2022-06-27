@@ -1,6 +1,6 @@
 # Rust Programming
 
-Some notes on learning Rust, a strongly-typed compiled language designed to combine the speed and flexibility of C, with the memory-safety and convenience of Python.
+Some notes on learning Rust, a strongly-typed compiled language designed to combine the speed and flexibility of C, with the memory-safety and convenience of Python. 
 
 ## Installing Rust
 
@@ -25,9 +25,9 @@ Note: If you are using an IDE such as Visual Studio Code, there are ways to buil
 
 ## Rust source files
 
-By convention, Rust source files end in .rs
+By convention, Rust source files end in **.rs**
 
-Rust uses { } to delimit blocks of code (like C, C++, C# and so on, and not idents with tabs or spaces Python-style). Semi-colons at the ends of lines are required.
+Rust uses { } to delimit blocks of code (like C, C++, C# and so on, and not idents with tabs or spaces Python-style). Semi-colons at the ends of lines are (almost always) required.
 
 ## Variables and Consts
 
@@ -43,7 +43,7 @@ fn main() {
 }
 ```
 
-## Datatypes
+## Common datatypes
 
 ### Scalar types
 
@@ -60,11 +60,8 @@ Character	| char
 
 ```
 let tup1 = (1, true, 's');
-
 let tup2 : (i32, bool, char) = (2, false, 't');
-
 println!("{:?}", tup1);
-
 println!("{}, {}", tup1.0, tup2.0);
 ```
 
@@ -83,6 +80,19 @@ let mut array_2d: [[i32; 16]; 8];
 grid[5][5] = 1;
 println!("{:?}", grid);
 ```
+
+*Enums*
+```
+enum Soup {
+	TomatoSoup,
+	ChickenSoup,
+}
+
+fn main() {
+	println!("{}", Soup::TomatoSoup as i32);
+}
+```
+
 
 *Vector*
 
@@ -103,11 +113,26 @@ fn main() {
 
 	let words = list.lines();
 	let mut myVec: Vec<_> = words.collect();
+	
 	myVec.push("soup, 4"); // Add new item
+	myVec.push("bread, 5"); // Add new item
+	myVec.pop(); // Remove last item
 
 	for word in myVec {
 		println!("{}", word);
 	}
+}
+```
+```
+fn main() {
+
+	let mut letters = vec!["a", "b", "c"];
+	letters.push("d");
+
+	for alpha in letters {
+		println!("{}", alpha);
+	}	
+
 }
 ```
 
@@ -193,7 +218,7 @@ fn main() {
 }
 ```
 
-Other functions in the same file can be defined before _or_ after they are referenced.
+Other functions in the same file can be defined before _or_ after they are referenced. A **return** keyword is not required in all case (don't use a semicolon if no return statement).
 
 ```
 fn main() {
