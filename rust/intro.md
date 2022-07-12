@@ -239,3 +239,29 @@ fn my_func2(x : i32) -> i32
 }
 
 ```
+
+## Separate code over files
+
+Create multiple files, and add
+
+```
+// This is a file called bob.rs
+
+pub fn otherFunction()
+{
+	// pub is essential
+}
+```
+
+and then in main.rs:
+
+```
+// This is main.rs
+
+mod bob;
+
+fn main()
+{
+	Bob::otherFunction();
+}
+```
