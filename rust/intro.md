@@ -6,7 +6,7 @@ Useful summary video [here](https://youtu.be/zF34dRivLOw).
 
 ## Installing Rust
 
-[Piece of cake](https://www.rust-lang.org/tools/install). A single command line operation for almost all OSs.
+[Piece of cake](https://www.rust-lang.org/tools/install). A single command line operation for almost all OSs. If there is a scary looking error message when compilation is first attempted, maybe try ```xcode-select --install```.
 
 ## Cargo
 
