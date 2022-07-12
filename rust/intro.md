@@ -23,6 +23,25 @@ cargo run
 
 Note: If you are using an IDE such as Visual Studio Code, there are ways to build and run within the editor with a few keypresses (Ctrl Alt N) or menu options.
 
+## Printing
+
+Use the println! macro to display to the terminal. You can optionally use positional arguments, and named arguments.
+
+```
+println!("This is a {} {}", "silly", "test");
+
+println("This is a {0} {1} {2} which is {0} {1}", "very", "silly", "test");
+
+println("This is a {adjective} {noun}", adjective="silly", noun="test");
+
+println!("This is a binary number: {:b} and a hex number {:x}",240,15);
+
+// And for debugging..
+
+println!("{:?}", (1, true, "soup"));
+
+```
+
 ## Rust source files
 
 By convention, Rust source files end in **.rs**
@@ -240,9 +259,9 @@ fn my_func2(x : i32) -> i32
 
 ```
 
-## Separate code over files
+## Separating code over files
 
-Create multiple files, and add
+You can spread the code over multiple files. For example, add a new file called bob.rs:
 
 ```
 // This is a file called bob.rs
