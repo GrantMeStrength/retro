@@ -2,6 +2,8 @@
 
 Some notes on learning Rust, a strongly-typed compiled language designed to combine the speed and flexibility of C, with the memory-safety and convenience of Python. 
 
+Useful summary video [here](https://youtu.be/zF34dRivLOw).
+
 ## Installing Rust
 
 [Piece of cake](https://www.rust-lang.org/tools/install). A single command line operation for almost all OSs.
@@ -204,6 +206,7 @@ fn main() {
 ```
 
 Looping over items in an array is done like this:
+
 ```
 fn main() {
 	array = ["One", "Two", "Three"];
