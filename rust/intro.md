@@ -32,9 +32,9 @@ Use the println! macro to display to the terminal. You can optionally use positi
 ```
 println!("This is a {} {}", "silly", "test");
 
-println("This is a {0} {1} {2} which is {0} {1}", "very", "silly", "test");
+println!("This is a {0} {1} {2} which is {0} {1}", "very", "silly", "test");
 
-println("This is a {adjective} {noun}", adjective="silly", noun="test");
+println!("This is a {adjective} {noun}", adjective="silly", noun="test");
 
 println!("This is a binary number: {:b} and a hex number {:x}",240,15);
 
@@ -284,6 +284,20 @@ mod bob;
 
 fn main()
 {
-	Bob::otherFunction();
+	bob::otherFunction();
 }
 ```
+
+To create variables that are "global", you don't use ```let``` but ```const``` or ```static``` like this:
+
+```
+// This is a file called bob.rs
+
+static bobvar : UIn32 = 0;
+
+pub fn otherFunction()
+{
+	// pub is essential
+}
+```
+You can then access bobvar in other code. However, applying ```mut``` to make this a value that can be changed is deliberately difficult, requiring unsafe compilation and thread control: all to make it safer. The message is clear: don't use global variables if at all possible.
