@@ -64,6 +64,16 @@ fn main() {
 }
 ```
 
+You can *shadow* a variable, by redefining it. Sounds a little risky to me, but it allows you to throw away the original definition. I imagine the intent is to make sure you don't *accidentally* use a variable with the same name, you really nuke the first version of it. You can also completely ignore the original variable type.
+
+```
+    let x = 2;
+	let x = x + 1; // Before x is replaced, it's value is used
+	println!("{}", x);
+	let x = "monkey tennis";
+	println!("{}", x);
+```
+
 ## Common datatypes
 
 ### Scalar types
@@ -84,11 +94,16 @@ let tup1 = (1, true, 's');
 let tup2 : (i32, bool, char) = (2, false, 't');
 println!("{:?}", tup1);
 println!("{}, {}", tup1.0, tup2.0);
+
+// Another way to extract values from a tuple
+let (a,b,c) = tup1;
+println!("{}, {}, {}", a, b, c);
 ```
 
 *array*	
 
 ```
+// Arrays have a fixed number of elements
 let arr = [1,2,3,4];
 let x = arr[1];
 let mut arr2 : [i32; 5] = [1,2,3,4,5]; 
@@ -205,6 +220,29 @@ fn main() {
 }
 ```
 
+You can return a value from a loop:
+
+```
+let result = loop {
+
+	if some_contition {
+		break 42
+	}
+
+}
+```
+
+There is also the ```while``` keyword:
+
+```
+let mut n = 2;
+
+while n < 10 {
+	println!("{}", n);
+	n += 1;
+}
+```
+
 Looping over items in an array is done like this:
 
 ```
@@ -301,3 +339,67 @@ pub fn otherFunction()
 }
 ```
 You can then access bobvar in other code. However, applying ```mut``` to make this a value that can be changed is deliberately difficult, requiring unsafe compilation and thread control: all to make it safer. The message is clear: don't use global variables if at all possible.
+
+
+## Comparisons and Match 
+
+### Match
+
+
+The ```match``` keyword is like ```switch``` but (they say) is more powerful. It has a new syntax.
+
+A convenient way to test a value, is to use ```Ordered``` which can be imported from the standard library (Note: Rust likes to stay small, so requires you to opt-in to things like this).
+
+```
+use std::cmp::Ordering;
+
+fn main() {
+
+    let x = 2;
+
+	match x {
+		1 => println!("one"),
+		2 => {println!("two"); println!("I said 2")}, // Note: a block is required here
+		3 => println!("three"),
+		_ => println!("anything"),
+	}
+
+	match x.cmp(&2)  { // Note use of &
+		Ordering::Less => println!("less than 2"), // Note ,
+		Ordering::Greater => println!("greater than 2"),
+		Ordering::Equal => println!("equal to 2"),
+	}
+
+}
+```
+### If 
+
+```If``` statements work as you expect, although unlike some langauges, the condition being tested does not need to be contained in brackets.
+
+``` 
+let n = 2;
+
+if n == 2 {
+	println!("Yes, n is 2");
+} else {
+	println!("Weird - n is not 2");
+}
+```
+
+You can combine ```if``` and ```let``` in a neat way:
+
+```
+let m = if n == 2 {
+	println!("Yes, n is 2 so make m true");
+	true		// There is no ; so a value is returned
+} else {
+	println!("Weird - n is not 2 so make m false");
+	false
+};
+
+println!("m is {}", m);
+
+```
+
+
+
