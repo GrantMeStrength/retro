@@ -386,7 +386,7 @@ if n == 2 {
 }
 ```
 
-You can combine ```if``` and ```let``` in a neat way:
+Rememeber how leaving out a semicolon can return a value? You can use this to combine ```if``` and ```let``` in a neat way:
 
 ```
 let m = if n == 2 {
@@ -401,5 +401,37 @@ println!("m is {}", m);
 
 ```
 
+## Ownership
 
+Rust does not have a garbage collector mechanism, but neither does it require you to remember to dealloc everything you do on the heap. Instead, it has a strict "out of scope? you're done!" approach to variables and other data that's on the heap.
 
+Note: The *stack* is used by the compiler when passing values into functions, the *heap* is used when you declare new objects that are of user-defined size - like strings. Because using the heap requires work to find space and remember it, it can be an expensive operation.
+
+Rust will, by default, do a shallow copy that is so shallow, it's really a *move*.
+
+```
+fn main() {
+
+	// This works fine, as "Hello, world!" is a string literal
+	let s1 = "Hello";
+	let s2 = s1;
+
+	println!("{}", s1);
+	println!("{}", s2);
+
+	// This doesn't work as s3 is allocated on the heap as a new object - it won't even compile because Rust knows s3 is invalid by the time it has to print it.
+
+	let s3 = String::from("Hello");
+	let s4 = s3;
+
+	println!("{}", s3); // s3 is invalid by now.
+	println!("{}", s4);
+
+}
+```
+
+If you really want to copy s3,
+
+```
+let s4 = s3.clone();
+```
