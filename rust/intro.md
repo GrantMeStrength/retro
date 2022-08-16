@@ -10,7 +10,14 @@ Useful summary video [here](https://youtu.be/zF34dRivLOw).
 
 ## Cargo
 
-While the Rust compiler is called **rustc** it is more usual to use the **cargo** command to compile, run and manage Rust programs (and packages, called 'crates'). For example, to create a new Rust project:
+While the Rust compiler is called **rustc** like this..
+
+```
+rustc my_rust_code.rs
+```
+
+
+..it is more usual to use the **cargo** command to compile, run and manage Rust programs (and packages, called 'crates'). For example, to create a new Rust project:
 
 ```
 cargo new my_new_project
@@ -23,7 +30,7 @@ cd my_new_project
 cargo run
 ```
 
-Note: If you are using an IDE such as Visual Studio Code, there are ways to build and run within the editor with a few keypresses (Ctrl Alt N) or menu options.
+**Note:** If you are using an IDE such as Visual Studio Code, there are ways to build and run within the editor with a few keypresses (Ctrl Alt N) or menu options.
 
 ## Printing
 
@@ -46,7 +53,7 @@ println!("{:?}", (1, true, "soup"));
 
 ## Rust source files
 
-By convention, Rust source files end in **.rs**
+By convention, Rust source files end with the *.rs* suffix.
 
 Rust uses { } to delimit blocks of code (like C, C++, C# and so on, and not idents with tabs or spaces Python-style). Semi-colons at the ends of lines are (almost always) required.
 
@@ -64,7 +71,7 @@ fn main() {
 }
 ```
 
-You can *shadow* a variable, by redefining it. Sounds a little risky to me, but it allows you to throw away the original definition. I imagine the intent is to make sure you don't *accidentally* use a variable with the same name, you really nuke the first version of it. You can also completely ignore the original variable type.
+You can *shadow* a variable, by redefining it. Sounds a little risky, but it allows you to throw away the original definition. I imagine the intent is to make sure you don't *accidentally* use a variable with the same name, you really nuke the first version of it. You can also completely ignore the original variable type.
 
 ```
     let x = 2;
@@ -159,6 +166,8 @@ fn main() {
 	}
 }
 ```
+Here is how to iterate over a Vec.
+
 ```
 fn main() {
 
@@ -183,7 +192,7 @@ fn main() {
 
 
 ```
-if 2 < 3 {
+if 2 < 3 && 3 > 2 {
 	println!(“2 is less than 3”);
 } else {
 	println!(“Should not happen”);
@@ -220,7 +229,7 @@ fn main() {
 }
 ```
 
-You can return a value from a loop:
+You can return a value from a loop, because a Rust statement becomes an expression when you leave out the semi-colon (see *Functions*):
 
 ```
 let result = loop {
@@ -430,8 +439,10 @@ fn main() {
 }
 ```
 
-If you really want to copy s3,
+If you really want to copy s3 so that s3 is still valid, you need to *clone* it, like this:
 
 ```
 let s4 = s3.clone();
 ```
+
+
