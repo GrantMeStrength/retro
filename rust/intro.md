@@ -124,6 +124,37 @@ grid[5][5] = 1;
 println!("{:?}", grid);
 ```
 
+*Structs*
+
+A new type made from existing types.
+
+```
+
+fn main() {
+
+	// Declare a classic Struct
+	struct ComputerSpec {
+    	name: String,
+    	memory: u16,
+    	functional: bool
+	}
+
+	// Declare a tuple struct
+	struct Resolution(u16, u16, u8);
+
+	// Create instances
+	let pc = ComputerSpec {name: String::from("IBM"), memory:1024, functional:true};
+	let monitor = Resolution(1024, 768,8);
+
+	// Access members
+	println!("{} {} {}",pc.name, pc.memory, pc.functional);
+	println!("{} {} {}", monitor.0, monitor.1, monitor.2);
+
+}
+
+```
+
+
 *Enums*
 ```
 enum Soup {
