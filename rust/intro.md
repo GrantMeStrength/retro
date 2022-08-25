@@ -94,7 +94,7 @@ Character	| char
 
 ### Compound types
 
-*tuple*
+*Tuple*
 
 ```
 let tup1 = (1, true, 's');
@@ -107,7 +107,7 @@ let (a,b,c) = tup1;
 println!("{}, {}, {}", a, b, c);
 ```
 
-*array*	
+*Array*	
 
 ```
 // Arrays have a fixed number of elements
@@ -124,9 +124,9 @@ grid[5][5] = 1;
 println!("{:?}", grid);
 ```
 
-*Structs*
+*Struct*
 
-A new type made from existing types.
+A new type made from existing types. There are several forms of *struct* definition.
 
 ```
 
@@ -155,7 +155,7 @@ fn main() {
 ```
 
 
-*Enums*
+*Enum*
 ```
 enum Soup {
 	TomatoSoup,
