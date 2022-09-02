@@ -167,6 +167,32 @@ fn main() {
 }
 ```
 
+Enums can be made from structs, to build up some complicated data structures. You can also define enum variants - the enums share the same name but have different defintions.
+
+
+```
+// THIS IS NONSENSE
+fn main() {
+
+enum CPUStats {
+    
+    Dumb,
+    CPU8Bit(i8, i16),
+    CPU16Bit{data: i16, address: i32}, // Note curly brackets
+}
+
+let terminal = CPUStats::Dumb;
+let zx81 = CPUStats::CPU8Bit(8,64);
+let amiga = CPUStats::CPU16Bit{data: 16, address: 256};
+
+println!("The system database is {:?}",zx81.0);
+println!("The system database is {:?}",amiga.data);
+
+
+}
+
+```
+
 
 *Vector*
 
