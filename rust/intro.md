@@ -171,24 +171,26 @@ Enums can be made from structs, to build up some complicated data structures. Yo
 
 
 ```
-// THIS IS NONSENSE
 fn main() {
-
-enum CPUStats {
-    
-    Dumb,
-    CPU8Bit(i8, i16),
-    CPU16Bit{data: i16, address: i32}, // Note curly brackets
-}
-
-let terminal = CPUStats::Dumb;
-let zx81 = CPUStats::CPU8Bit(8,64);
-let amiga = CPUStats::CPU16Bit{data: 16, address: 256};
-
-println!("The system database is {:?}",zx81.0);
-println!("The system database is {:?}",amiga.data);
-
-
+   
+   enum ComputerType {
+       
+       // An enum which contains multiple variants 
+       // (watch the brackets)
+       
+       // Each variant is not a separate type though.
+       // Any function accepting ComputerType as a param
+       // must accept _all_ variants.
+       
+       // An alternative approach is to define each
+       // variant as a struct, as then you CAN deal
+       // with each variant as a separate type.
+       
+       Analog,
+       EightBit { memory: i16, data: i8 },
+       SixteenBit { memory: i16, data: i32 },
+       RiscV ( i32, i32 ),
+   }
 }
 
 ```
