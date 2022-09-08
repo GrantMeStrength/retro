@@ -74,7 +74,7 @@ fn main() {
 You can *shadow* a variable, by redefining it. Sounds a little risky, but it allows you to throw away the original definition. I imagine the intent is to make sure you don't *accidentally* use a variable with the same name, you really nuke the first version of it. You can also completely ignore the original variable type.
 
 ```
-    let x = 2;
+    	let x = 2;
 	let x = x + 1; // Before x is replaced, it's value is used
 	println!("{}", x);
 	let x = "monkey tennis";
@@ -309,6 +309,14 @@ while n < 10 {
 	println!("{}", n);
 	n += 1;
 }
+```
+A For-Next loop looks like:
+
+```
+	//prints 0 1 2 3 .. 9
+	for x in 0..10 {
+		println!("{0}",x);
+	}
 ```
 
 Looping over items in an array is done like this:
