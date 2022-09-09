@@ -49,6 +49,10 @@ println!("This is a binary number: {:b} and a hex number {:x}",240,15);
 
 println!("{:?}", (1, true, "soup"));
 
+// And you don't need to take a new line if you don't want..
+
+print!("Hello world..");
+
 ```
 
 ## Rust source files
