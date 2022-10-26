@@ -5,24 +5,35 @@ Some notes on Jupiter Ace software, and some [thoughts on rebuilding one](hardwa
 
 ## Jupiter Ace Software
 
-Here you will find a collection of games for the [Jupiter Ace](https://jupiter-ace.co.uk/whatisanace.html) microcomputer, written by me in around 1984, when I was 16 and should have been out of my bedroom learning social skills. They are written mostly in [Forth](https://jupiter-ace.co.uk/whatisforth.html), with the occasional Z80 assembler for sound effects, or extra-fast scrolling routine.
+Here you will find a collection of games for the [Jupiter Ace](https://jupiter-ace.co.uk/whatisanace.html) microcomputer, written by me in around 1984, when I was 16 and should have been out of my bedroom learning social skills. They are written mostly in [Forth](https://jupiter-ace.co.uk/whatisforth.html), with the occasional Z80 assembler for sound effects, or extra-fast scrolling routines.
 
-I had planned to make my fortune by selling these games to Boldfield Limited Computer, the company that had bought the assets of Jupiter Cantab. Sadly that did not work out, so they're still all my intellectual property (I am using the term lightly :)) You will see that name appear in the games though.
+I had planned to make my fortune by selling these games to Boldfield Limited Computer, the company that had bought the assets of Jupiter Cantab. Sadly that did not work out, so they're still all my intellectual property (I am using the term lightly :)) You will see the name "Boldfield" name appear in the games as I submitted them hoping they would be snapped up.
 
 ## Writing games for the Ace
 
 The Jupiter Ace had a character-mapped screen, with a limited number of User Defined Graphics. This meant writing games with smooth animation was a challenge (I would say impossible, but I thought it would be impossible on the ZX81 and someone managed that!)
 
-At one point I investigated if I could fake a kind of higher resolution by displaying the User Defined Graphics on the screen and then writing into them on the fly - hoping to get a 256 by 192 resolution screen, at least in parts of the screen (there aren't enough UDG to cover the entire screen). Unfortunately writing to the UDG memory every frame quickly caused it to be become corrupt, so I had to give up that approach. I believe this to be a hardware "feature" of the original Ace and it's incomplete address decoding, but it's not something I can claim to understand.
+At one point I investigated if I could fake a kind of higher resolution by displaying the User Defined Graphics on the screen and then writing into them on the fly - hoping to get a 256 by 192 resolution display, at least in parts of the screen (there aren't enough UDG to cover the entire screen). Unfortunately writing to the UDG memory every frame quickly caused it to be become corrupt, so I had to give up that approach. I believe this to be a hardware "feature" of the original Ace and its incomplete address decoding / shared CPU and video hardware accessed RAM, but it's not something I can claim to understand.
 
-The Ace was described as "fast", and it was in the sense that instead of a slow BASIC, as on the ZX81 or ZXSpectrum, it came with Forth in ROM. Forth is nothing if not fast, and was perfect for writing simple games. Under the (thin plastic) hood it was still a Z80 and a handful of chips, with a cassette interface for saving and loading programs to tape. Running machine code wasn't any faster than a Spectrum, although the lower-res screen would make animation faster, and the lack of colour meant you didn't have to worry about attribute clashes :-) There was no dedicated hardware for sprites or even a sound chip - sound was made my toggling a bit on and off and feeding that into a piezo speaker.
+The Ace was described as "fast", in fact "the fastest computer in the universe", and it *was* in the sense that instead of a slow BASIC, as on the ZX81 or ZX Spectrum, it came with Forth in ROM. Forth is nothing if not fast, and was perfect for writing simple games. Under the (thin plastic) hood it was still a Z80 and a handful of chips, with a cassette interface for saving and loading programs to tape. Running machine code wasn't any faster than a Spectrum, although the lower-res screen would make animation faster, and the lack of colour meant you didn't have to worry about attribute clashes :-) There was no dedicated hardware for sprites or even a sound chip - sound was made my toggling a bit on and off and feeding that into a piezo speaker, like the ZX Spectrum 16K and 48K models.
 
 ![](jupiter_ace_advert.png)
 
-The Ace was not in production for long (the ZXSpectrum soon stole any of its potential sales, with its flashy games, better case and colour graphics), so it is seen as something of a quirky experiment. Originals turn up on eBay from time to time for silly money (I have seeen ten times the original asking price - and believe me, they are NOT worth that much!), but there is also at least one [kit called the Minstrel4th](https://www.thefuturewas8bit.com/minstrel4th.html) around to recreate it. Remakes of the PCBs also are avalable, although some work better than others. I would trust the work of [Grant Searle](http://searle.x10host.com/JupiterAce/JupiterAce.html) over any others. There are no custom chips, so there are no surprises. If you look on Tindie there is now an [SD card interface called the Jester Ace](https://www.tindie.com/stores/dr_ian_johnson/) to save/load software. It's these kits, and a forthcoming emulator for iPhones and iPads, that encouraged me to get these games uploaded somewhere.
+The Ace was not in production for long (the ZX Spectrum soon stole most of its potential sales, with its flashy games, better case and colour graphics), so it is seen as something of a quirky experiment. Originals turn up on eBay from time to time for silly money (I have seen ten times the original asking price - and believe me, they are NOT worth that much!), but there are also some kits:
 
 
-Here then is what I came up with - mostly adaptations of arcade games I had seen at the time.
+* [Minstrel4D (Turbo)](https://www.thefuturewas8bit.com/shop/tynemouth-products/minstrel4d.html) 
+* [Jupiter Ace II](http://www.a2heaven.com/webshop/index.php?rt=product/product&product_id=175)
+
+I have built the no-longer-available [Minstel4](https://www.thefuturewas8bit.com/minstrel4th.html) and the Jupiter Ace II above, and yes, they work just like the original (with perhaps minor, minor differences due to some I/O lines floating).
+
+Remakes of the PCBs also are avalable, although some work better than others. I would trust the work of genius [Grant Searle](http://searle.x10host.com/JupiterAce/JupiterAce.html) over others. There are no custom chips, so there are not too many surprises. 
+
+There continues to be new hardware made (for some crazy reason). If you look on Tindie there is now an [SD card interface called the Jester Ace](https://www.tindie.com/stores/dr_ian_johnson/) to save/load software, and another to support [a USB keyboard](https://peacockmedia.software/RC2014/minstrelkb/). 
+
+If you have an iPhone or iPad (or Apple Silicon Mac) there's an [excellent emulator](https://apps.apple.com/us/app/jupiter-ace/id1581220883) too. If you have so much as a passing interest, this will be your best introduction to the Jupiter Ace, and it's version of Forth - the first "write only programming language".
+
+So what did I write all those years ago? Well, mostly adaptations of arcade games I had seen at the time.
 
 ![](shot1.png)
 
