@@ -35,9 +35,11 @@ The trouble, as far as I can tell, is the transistor. The 2N2369 isn't easy to g
 
 ## June 5, 2021
 
-The replacement transistor arrived! Hurrah! I made no difference! Boo!
+The replacement transistor arrived! Hurrah! 
 
-No, that's not true at all. The updated transistor meant that the CPU was getting a clock signal, and it was able to run - but the screen was displaying garbage still. RAM was a suspect, so I checked the RAM chips - and half were faulty! JAMECO had let me down! First time for everything, I suppose! I plugged in the first batch chips I had bought and there were enough to replace the broken ones - and there was movement! The keyboard did definitely cause the screen to update as though I were typing, but it was still nonsense. But this means the Z80 is running, the ROMs are working - but the RAM or the RAM control circuitry is broken. I don't trust any of the JAMECO RAM, so it's back to eBay, and another long wait for replacement chips.
+It made no difference! Boo!
+
+No, that's not true at all. The updated transistor meant that the CPU was getting a clock signal, and it was able to run - but the screen was displaying garbage still. RAM was a suspect, so I checked the RAM chips - and half were faulty! JAMECO had let me down! There is a first time for everything, I suppose! I plugged in the first batch chips I had bought and there were enough to replace the broken ones - and there was movement! The keyboard did definitely cause the screen to update as though I were typing, but it was still nonsense. But this means the Z80 is running, the ROMs are working - but the RAM or the RAM control circuitry is broken. I don't trust any of the JAMECO RAM, so it's back to eBay, and another long wait for replacement chips.
 
 ## June 13, 2021
 
