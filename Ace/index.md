@@ -90,9 +90,9 @@ For some reason, you can't move your character over a space that you've just wal
 
 ## More updates
 
-As I help beta test the excellent forthcoming (haha) Jupiter Ace emulator, we found that there are discrepancies between how the original Jupiter Ace and the Minstrel4th handles using IN and OUT to read the keyboard, and drive the speaker. So, some of the comments above about bugs in software might not actually be true - at least, if you are using an original Ace.
+As I helped beta test the excellent Jupiter Ace [emulator](https://apps.apple.com/us/app/jupiter-ace/id1581220883), we found that there are discrepancies between how the original Jupiter Ace and the Minstrel4th handles using IN and OUT to read the keyboard, and drive the speaker. So, some of the comments above about bugs in software might not actually be true - at least, if you are using an original Ace. And I'm sure that means thousands and thousands of you.
 
-Kevin, the author of the Jupiter Ace emulator, is bending over backwards to make the emulator as accurate as possible. Amazing attention to detail.
+Kevin, the author of the Jupiter Ace emulator, bent over backwards to make the emulator as accurate as possible. Amazing attention to detail.
 
 
 ## Thanks
