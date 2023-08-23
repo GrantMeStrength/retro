@@ -10,6 +10,7 @@ I'm always interested in new (old) #retrocomputer projects. You'll find me talki
 
 ## In this repo
 
+* [ZX-WESPI](/wespi/readme.md) - a cheap but wonderful addition to your ZX81/TS1000.
 * [Rust](rust/intro.md) - Learning Rust
 * [Pico](pico/readme.md) - Some notes about developing on the Raspberry Pi Pico
 * [PDP Minicomputers](PDP/pdp.md) - Information related to the Digital Equipment Corp minicomputers
