@@ -26,7 +26,11 @@ Then download the [ZX-WESPI binaries from GitHub](https://github.com/holmatic/zx
 
 ![](wespi5.png)
 
-Program the ESP32 using the instructions in the GitHub files readme. The flashing tool will look like this:
+Program the ESP32 using the instructions in the GitHub files readme file. 
+
+**Remember to select the correct ESP device from the flashing program's options or you'll see SYNC FAIL warnings and it won't work.** 
+
+The flashing tool will need to look like this, with the various files loaded into specific locations:
 
 ![](wespi2.png)
 
