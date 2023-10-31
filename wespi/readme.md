@@ -18,7 +18,7 @@ First, buy the right ESP32. There are many variations, so find one that looks li
 
 It needs to have WiFi, and the WiFi chip shouldn't dangle off the circuit board. It needs to have no pins soldered to it (so it can fit) or you need the ability to remove them. I found this ESP32 ESP-WROOM-32 ESP-32S on Amazon and it works perfectly. It has no pins pre-soldered in place. [Amazon link, not an affiliated link](https://www.amazon.com/dp/B09FX24PJ4)
 
-Second, prepare the ESP32 by flashing it with the correct files. Start by downloading the ESP32 tools from the [espressif site](https://www-espressif-com.translate.goog/en/support/download/other-tools).
+Second, prepare the ESP32 by flashing it with the correct files. Start by downloading the ESP32 tools from the [espressif site](https://www-espressif-com.translate.goog/en/support/download/other-tools). This is a Windows app, there does not appear to be a Mac version, although I seem to recall some python scripts that might do it.
 
 ![](wespi1.png)
 
